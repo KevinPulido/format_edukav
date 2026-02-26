@@ -37,23 +37,24 @@ function xmldb_format_edukav_upgrade($oldversion = 0): bool {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2023052500) {
-        // Create the section break table.
+    if ($oldversion < 2026022601) {
+
         $table = new xmldb_table('format_edukav_break');
 
-        // Add table fields.
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, true);
         $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
         $table->add_field('section', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
-        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, null, null, '');
+        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, null, null, null);
         $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, false, 0);
 
-        // Add keys.
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, [ 'id' ]);
-        $table->add_key('courseid', XMLDB_KEY_FOREIGN, [ 'courseid' ], 'course', [ 'id' ]);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
 
-        $dbman->create_table($table);
-        upgrade_plugin_savepoint(true, 2023052500, 'format', 'edukav');
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        upgrade_plugin_savepoint(true, 2026022601, 'format', 'edukav');
     }
 
     return true;

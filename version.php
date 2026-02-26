@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026022600;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2026022601;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2022112800;        // Requires this Moodle version.
 $plugin->supported = [ 401, 500 ];
 $plugin->component = 'format_edukav';    // Full name of the plugin (used for diagnostics).
