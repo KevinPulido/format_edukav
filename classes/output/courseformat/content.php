@@ -62,14 +62,45 @@ class content extends content_base {
      * @throws moodle_exception
      */
     public function export_for_template(renderer_base $output) {
-        global $PAGE;
+        global $PAGE,$DB;
 
         // Is this a single section page?
         $singlesection = $this->format->get_sectionnum();
 
         $this->hasaddsection = !$singlesection;
+        
 
         $data = parent::export_for_template($output);
+
+
+        $course = $this->format->get_course();
+        $context = \context_course::instance($course->id);
+
+        // Get enrolled students count.
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $students = get_role_users($studentrole->id, $context);
+        $enrolledstudents = count($students);
+
+        // Get course category name.
+        $category = \core_course_category::get($course->category);
+        $categoryName = $category->get_formatted_name();
+
+        // Get course educators.
+        $educators = $this->edukav_course_educators($course->id);
+        
+        $data->showcourseEdukav = !$singlesection;
+        
+        $data->coursesEdukav = [
+            'fullname' => $course->fullname,
+            'summary' => format_text($course->summary, $course->summaryformat),
+            'enrolledcount' => $enrolledstudents,
+            'categoryName' => format_string($categoryName),
+            'startdate' => userdate($course->startdate, '%d %b %Y'),
+            'educators' => $educators,
+            'student1'=>$output->image_url('student1', 'format_edukav')->out(),
+            'student2'=>$output->image_url('student2', 'format_edukav')->out(),
+            'student3'=>$output->image_url('student3', 'format_edukav')->out()
+        ];
 
         // Add version variables.
         $this->add_version_variables($data);
@@ -96,6 +127,7 @@ class content extends content_base {
         }
 
         $this->add_section_navigation($data, $output);
+        
 
         return $data;
     }
@@ -149,5 +181,40 @@ class content extends content_base {
             $data->sectionreturn = $singlesection;
         }
     }
+    function edukav_course_educators($courseid) {
+        global $CFG, $DB;
 
+        require_once($CFG->dirroot.'/user/lib.php');
+
+        $educators = [];
+
+        $context = \context_course::instance($courseid);
+
+        // Obtener roles de profesor
+        $roles = $DB->get_records_list('role', 'shortname', ['editingteacher', 'teacher']);
+
+        foreach ($roles as $role) {
+
+            $teachers = get_role_users(
+                $role->id,
+                $context,
+                false,
+                'u.id, u.firstname, u.lastname, u.picture, u.imagealt'
+            );
+
+            foreach ($teachers as $teacher) {
+
+                $userpicture = new \user_picture($teacher);
+                $userpicture->size = 100;
+
+                $educators[] = [
+                    'educator_name' => fullname($teacher),
+                    'educator_profileurl' => (new \moodle_url('/user/profile.php', ['id' => $teacher->id]))->out(false),
+                    'educator_icon' => $userpicture->get_url($GLOBALS['PAGE'])->out(false),
+                ];
+            }
+        }
+
+        return $educators;
+    }
 }

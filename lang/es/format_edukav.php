@@ -91,3 +91,6 @@ $string['settings:defaults'] = 'Predeterminados';
 $string['settings:defaults:description'] = 'Establecer el valor predeterminado para nuevos cursos que utilizan el formato de tarjetas';
 $string['settings:name'] = 'Configuración del formato edukav';
 $string['showfromothers'] = 'Mostrar';
+
+
+$string['Enrolledusers'] = 'Usuarios matriculados';

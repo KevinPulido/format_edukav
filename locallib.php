@@ -32,7 +32,7 @@
  * @throws dml_exception
  * @throws moodle_exception
  */
-function format_cards_tidy_orphaned_images(?progress_bar $progress = null): void {
+function format_edukav_tidy_orphaned_images(?progress_bar $progress = null): void {
     global $DB;
 
     require_once(__DIR__ . "/lib.php");

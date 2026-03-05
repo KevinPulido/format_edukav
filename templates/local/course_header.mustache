@@ -1,0 +1,89 @@
+{{!
+	This file is part of Moodle - http://moodle.org/
+
+	Moodle is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Moodle is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+
+{{#coursesEdukav}}
+    <div class="edukav-breadcrumb-container">
+        <div class="container">
+        <div class="course-details-content">
+            <div class="row row--20 align-items-center">
+                <div class="col-lg-7">
+                    <div class="d-flex align-items-center gap-3 flex-wrap mb--15">
+                        <div class="profile-share mr--10">
+                            <a href="#" class="avatar" data-tooltip="Mark Jordan" tabindex="0">
+                                <img src="{{student1}}" alt="education">
+                            </a>
+                            <a href="#" class="avatar" data-tooltip="Jordan" tabindex="0">
+                                <img src="{{student2}}" alt="education">
+                            </a>
+                            <a href="#" class="avatar" data-tooltip="Ava Miller" tabindex="0">
+                                <img src="{{student3}}" alt="education">
+                            </a>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h6 class="number mb--0 w-600">{{enrolledcount}}</h6>
+                            <span class="small-text w-500">{{#str}}Enrolledusers,format_edukav{{/str}}</span>
+                        </div>
+                    </div>
+
+                    <h2 class="edukav-breadcrumb-title">{{fullname}}</h2>
+                    <div class="edukav-breadcrumb-description">
+                        {{{summary}}}
+                    </div>
+                    <hr class="divider">
+
+                    <div class="edukav-breadcrumb-meta">
+                        <div class="edukav-feature-sin">
+                            <span class="edukav-icon">
+                                <i class="fa-solid fa-square-poll-horizontal"></i>
+                            </span>
+                            <span class="edukav-feature-text">{{categoryName}}</span>
+                        </div>
+
+                        <div class="edukav-feature-sin">
+                            <span class="edukav-icon">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <span class="edukav-feature-text">{{startdate}}</span>
+                        </div>
+
+                        {{#educators}}
+                        <div class="edukav-feature-sin">
+                            <img src="{{educator_icon}}" class="educator-icon edukav-icon">
+                            <span class="edukav-feature-text">{{educator_name}}</span>
+                        </div>
+                        {{/educators}}
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="mt_md--60 mt_sm--60 mt_mobile--40 overflow-hidden edukav-card">
+                        <div class="plyr__video-embed rbtplayer">
+                            {{^video_url}}
+                                <iframe width="100%" height="230" src="https://www.youtube.com/embed/M26iIqmqWkI?si=AJWfkoWDundxwLi_" 
+                                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                                    encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            {{/video_url}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+{{/coursesEdukav}}

@@ -97,7 +97,7 @@ class stateactions extends stateactions_base {
         array $ids = [],
         ?int $targetsectionid = null,
         ?int $targetcmid = null
-    ): void {
+     ): void {
         global $DB;
 
         $this->validate_sections($course, $ids, __FUNCTION__);

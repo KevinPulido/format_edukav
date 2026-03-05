@@ -91,3 +91,5 @@ $string['settings:defaults'] = 'Defaults';
 $string['settings:defaults:description'] = 'Set the default value for new courses using the cards format';
 $string['settings:name'] = 'Cards format settings';
 $string['showfromothers'] = 'Show';
+
+$string['Enrolledusers'] = 'Enrolled users';
