@@ -1,3 +1,8 @@
+#page.drawers div[role="main"] {
+  padding-left: 0px  !important;
+  padding-right: 0px !important;
+}
+
 .format-edukav .course-content .card-deck.cards {
   justify-content: center;
 }
@@ -222,6 +227,11 @@
   left: 0;
 }
 
+.format-edukav .edukav-progress {
+  background: white;
+  box-shadow: var(--shadow-1);
+}
+
 .format-edukav
   .course-content
   .card-deck
@@ -256,7 +266,7 @@
   .section-completion
   svg
   circle.inner {
-  stroke: #357a32;
+  stroke: #b9f8cf;
   stroke-width: 5;
   fill: none;
   stroke-dasharray: 100;
@@ -403,19 +413,19 @@
 }
 
 /* Icono */
-.format-edukav .edukav-feature-sin .edukav-icon{
+.format-edukav .edukav-feature-sin .edukav-icon {
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(255,255,255,0.25);
+  background-color: rgba(255, 255, 255, 0.25);
   font-size: 15px;
 }
 
 /* Imagen profesor */
-.format-edukav .edukav-feature-sin img{
+.format-edukav .edukav-feature-sin img {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -423,7 +433,7 @@
 }
 
 /* Texto */
-.format-edukav .edukav-feature-sin .edukav-feature-text{
+.format-edukav .edukav-feature-sin .edukav-feature-text {
   display: flex;
   align-items: center; /* 🔥 centra el texto */
   font-size: 15px;
