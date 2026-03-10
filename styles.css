@@ -479,3 +479,91 @@
   position: relative;
   height: 100%;
 }
+
+
+/* CONTENEDOR PRINCIPAL */
+.format-edukav .edukav-splitview{
+    display:flex;
+    gap:32px;
+    margin-top:24px;
+    align-items:flex-start;
+}
+
+/* SIDEBAR */
+.format-edukav .edukav-sidebar{
+    width:300px;
+    border-right:1px solid #e9ecef;
+    padding-right:20px;
+}
+
+/* LISTA ACTIVIDADES */
+.format-edukav .edukav-activities{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+/* ITEM ACTIVIDAD */
+.format-edukav .edukav-activity{
+    margin-bottom:6px;
+}
+
+/* LINK ACTIVIDAD */
+.format-edukav .edukav-activity a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    padding:10px 12px;
+    border-radius:10px;
+    color:#444;
+    font-size:14px;
+    transition:all .2s ease;
+}
+
+/* HOVER */
+.format-edukav .edukav-activity a:hover{
+    background:#f5f7fb;
+}
+
+/* ICONO ACTIVIDAD */
+.format-edukav .activity-icon{
+    width:20px;
+    height:20px;
+    opacity:.8;
+}
+
+/* ACTIVIDAD ACTIVA */
+.format-edukav .edukav-sidebar .activity.current{
+    background:#f5f7fb;
+    border-left:4px solid #0d6efd;
+    border-radius:8px;
+}
+
+/* LINK ACTIVO */
+.format-edukav .edukav-sidebar .activity.current a{
+    font-weight:600;
+    color:#0d6efd;
+}
+
+/* PANEL DERECHO */
+.format-edukav .edukav-main{
+    flex:1;
+    padding:10px 0 40px 10px;
+    min-height:400px;
+}
+
+/* LOADER */
+.format-edukav .edukav-loading{
+    padding:50px;
+    text-align:center;
+    font-size:16px;
+    color:#6c757d;
+}
+
+.format-edukav .edukav-activity-frame{
+    width:100%;
+    height:80vh;
+    border:0;
+    background:white;
+}

@@ -202,17 +202,24 @@
             {{/ format_edukav/local/content/sectionnavigation }}
         {{/sectionnavigation}}
         <ul class="{{format}}">
-        {{#singlesection}}
-            {{$ core_courseformat/local/content/section }}
-                {{> core_courseformat/local/content/section }}
-            {{/ core_courseformat/local/content/section }}
-            {{#cmlist}}
-                {{^hascms}}
-                    {{< core_course/no-courses}}
-                        {{$nocoursestring}}{{#str}} noactivities, format_edukav {{/str}}{{/nocoursestring}}
-                    {{/core_course/no-courses}}
-                {{/hascms}}
-            {{/cmlist}}
+       {{#singlesection}}
+        <div class="edukav-splitview">
+            <aside class="edukav-sidebar">
+                 {{$ core_courseformat/local/content/section }}
+                    {{> core_courseformat/local/content/section }}
+                {{/ core_courseformat/local/content/section }}
+            </aside>
+            <main class="edukav-main">
+                <iframe 
+                    class="edukav-activity-frame"
+                    src=""
+                    frameborder="0"
+                    loading="lazy">
+                </iframe>
+            </main>
+
+        </div>
+
         {{/singlesection}}
         </ul>
         {{#sectionselector}}
@@ -234,8 +241,15 @@
     {{/bulkedittools}}
 </div>
 {{#js}}
-require(['core_courseformat/local/content', 'format_edukav/cards'], function(component, edukav) {
+require([
+    'core_courseformat/local/content',
+    'format_edukav/cards',
+    'format_edukav/splitview'
+], function(component, cards, splitview) {
+
     component.init('{{#moodle500orlater}}#{{/moodle500orlater}}course-format-{{uniqid}}', {}, {{sectionreturn}});
     cards.init('course-format-{{uniqid}}');
+    splitview.init();
+
 });
 {{/js}}
