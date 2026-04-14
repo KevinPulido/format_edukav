@@ -40,9 +40,17 @@ export default class Component {
     setup() {
 
         const availabilityBadges = this.root.querySelectorAll(".section-availability");
+        const datePopovers = this.root.querySelectorAll(".activity-dates-popover");
 
         for (let badge of availabilityBadges) {
             badge.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            });
+        }
+
+        for (let trigger of datePopovers) {
+            trigger.addEventListener('click', function(event) {
                 event.preventDefault();
                 event.stopPropagation();
             });

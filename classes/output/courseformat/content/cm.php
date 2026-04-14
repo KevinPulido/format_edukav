@@ -40,6 +40,16 @@ use stdClass;
 class cm extends cm_base {
 
     /**
+     * Return the format-specific template name.
+     *
+     * @param renderer_base $renderer
+     * @return string
+     */
+    public function get_template_name(renderer_base $renderer): string {
+        return 'format_edukav/local/content/cm';
+    }
+
+    /**
      * Appends the indentation level of a course module to the template
      *
      * @param stdClass $data

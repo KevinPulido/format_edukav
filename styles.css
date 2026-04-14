@@ -350,11 +350,75 @@
   border: none;
 }
 
+.format-edukav #section-0 .section[data-for="cmlist"] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-item {
+  height: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #e6ebf2;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-grid {
+  align-items: center;
+  column-gap: 0.8rem;
+  grid-template-columns: min-content minmax(0, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "icon name";
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-name-area {
+  min-height: auto;
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-name-area .activityname {
+  font-weight: 600;
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-dates,
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-completion {
+  display: none;
+}
+
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-altcontent,
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-availability,
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-actions,
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-groupmode-info,
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-badges,
+.format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper .activity-afterlink {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .format-edukav #section-0 .section[data-for="cmlist"] {
+    grid-template-columns: 1fr;
+  }
+
+  .format-edukav #section-0 .section[data-for="cmlist"] > .activity.activity-wrapper {
+    min-width: 0;
+  }
+}
+
 /* ===== HERO / BREADCRUMB STYLE ===== */
 
 .format-edukav .edukav-breadcrumb-container {
   position: relative;
-  padding: 60px 0;
+  padding: 42px 0 34px;
   overflow: hidden;
   background: linear-gradient(
     135deg,
@@ -381,18 +445,18 @@
 }
 
 .format-edukav .edukav-breadcrumb-title {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 20px;
-  line-height: 1.2;
+  margin-bottom: 14px;
+  line-height: 1.12;
 }
 
 .format-edukav .edukav-breadcrumb-description {
-  font-size: 18px;
-  text-align: justify;
+  font-size: 17px;
+  text-align: left;
   color: #475569;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 /* META INFO */
@@ -400,9 +464,65 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 18px 25px;
   font-size: 14px;
   color: #64748b;
+}
+
+.format-edukav .edukav-course-hero {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.format-edukav .edukav-hero-topmeta {
+  margin-bottom: 0.75rem;
+}
+
+.format-edukav .edukav-hero-summary {
+  max-width: 680px;
+}
+
+.format-edukav .edukav-hero-meta {
+  padding-top: 0.25rem;
+}
+
+.format-edukav .edukav-hero-media-card {
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
+}
+
+.format-edukav .edukav-hero-media-card iframe {
+  display: block;
+  border-radius: 12px;
+}
+
+.format-edukav .edukav-content-intro {
+  max-width: 1200px;
+  margin: 28px auto 18px;
+  padding: 0 8px;
+}
+
+.format-edukav .edukav-content-intro-copy {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 8px;
+}
+
+.format-edukav .edukav-content-intro-title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.format-edukav .edukav-content-intro-text {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.98rem;
 }
 
 /* Item */
@@ -461,12 +581,13 @@
     text-align: center;
   }
 
-  .format-edukav .custom-breadcrumb-title {
-    font-size: 36px;
+  .format-edukav .edukav-breadcrumb-title {
+    font-size: 34px;
   }
 
-  .format-edukav .custom-breadcrumb-media {
-    margin-top: 40px;
+  .format-edukav .edukav-content-intro-copy {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
@@ -491,7 +612,7 @@
 
 /* SIDEBAR */
 .format-edukav .edukav-sidebar{
-    width:300px;
+    width:350px;
     border-right:1px solid #e9ecef;
     padding-right:20px;
 }
@@ -566,4 +687,119 @@
     height:80vh;
     border:0;
     background:white;
+}
+
+/* Ajusta el encabezado de actividades para que las fechas y el estado no queden descolocados. */
+.format-edukav .course-section .activity-item .activity-grid {
+  align-items: start;
+  column-gap: 0.9rem;
+  row-gap: 0.35rem;
+  grid-template-columns: min-content minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto auto auto auto auto auto;
+  grid-template-areas:
+    "icon name dates groupmode"
+    "icon completion completion groupmode"
+    "icon visibility visibility visibility"
+    "icon altcontent altcontent altcontent"
+    "icon afterlink afterlink afterlink"
+    "icon availability availability availability";
+}
+
+.format-edukav .course-section .activity-item .activity-name-area,
+.format-edukav .course-section .activity-item .activity-completion,
+.format-edukav .course-section .activity-item .activity-groupmode-info {
+  align-self: start;
+}
+
+.format-edukav .course-section .activity-item .activity-name-area {
+  display: flex;
+  align-items: center;
+  min-height: 2.2rem;
+}
+
+.format-edukav .course-section .activity-item .activity-dates {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0;
+  white-space: normal;
+}
+
+.format-edukav .course-section .activity-item .activity-dates-tooltip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: #f5f7fb;
+  color: #5b6472;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  cursor: help;
+}
+
+.format-edukav .course-section .activity-item .activity-dates-tooltip .icon {
+  margin-right: 0;
+  font-size: 0.85rem;
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.format-edukav .course-section .activity-item .activity-dates-tooltip-label {
+  font-weight: 600;
+}
+
+.format-edukav .course-section .activity-item .activity-completion {
+  justify-self: start;
+  margin-left: 0;
+  margin-top: 0.15rem;
+}
+
+.format-edukav .course-section .activity-item .activity-completion .btn,
+.format-edukav .course-section .activity-item .activity-completion a[role="button"] {
+  white-space: nowrap;
+}
+
+.format-edukav .course-section .activity-item .activity-dates {
+  justify-self: end;
+}
+
+@media (max-width: 991.98px) {
+  .format-edukav .course-section .activity-item .activity-grid {
+    grid-template-columns: min-content minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "icon name dates"
+      "icon completion completion"
+      "icon visibility visibility"
+      "icon groupmode groupmode"
+      "icon altcontent altcontent"
+      "icon afterlink afterlink"
+      "icon availability availability";
+  }
+}
+
+@media (max-width: 575.98px) {
+  .format-edukav .course-section .activity-item .activity-grid {
+    grid-template-columns: min-content minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "icon name"
+      "icon dates"
+      "icon completion"
+      "visibility visibility"
+      "groupmode groupmode"
+      "altcontent altcontent"
+      "afterlink afterlink"
+      "availability availability";
+  }
+
+  .format-edukav .course-section .activity-item .activity-dates {
+    justify-self: start;
+    justify-content: flex-start;
+  }
+
+  .format-edukav .course-section .activity-item .activity-completion {
+    justify-self: stretch;
+  }
 }

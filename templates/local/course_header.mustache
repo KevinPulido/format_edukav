@@ -18,10 +18,10 @@
 {{#coursesEdukav}}
     <div class="edukav-breadcrumb-container">
         <div class="container">
-        <div class="course-details-content">
+        <div class="course-details-content edukav-course-hero">
             <div class="row row--20 align-items-center">
                 <div class="col-lg-7">
-                    <div class="d-flex align-items-center gap-3 flex-wrap mb--15">
+                    <div class="d-flex align-items-center gap-3 flex-wrap mb--15 edukav-hero-topmeta">
                         <div class="profile-share mr--10">
                             <a href="#" class="avatar" data-tooltip="Mark Jordan" tabindex="0">
                                 <img src="{{student1}}" alt="education">
@@ -40,12 +40,12 @@
                     </div>
 
                     <h2 class="edukav-breadcrumb-title">{{fullname}}</h2>
-                    <div class="edukav-breadcrumb-description">
+                    <div class="edukav-breadcrumb-description edukav-hero-summary">
                         {{{summary}}}
                     </div>
                     <hr class="divider">
 
-                    <div class="edukav-breadcrumb-meta">
+                    <div class="edukav-breadcrumb-meta edukav-hero-meta">
                         <div class="edukav-feature-sin">
                             <span class="edukav-icon">
                                 <i class="fa-solid fa-square-poll-horizontal"></i>
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="col-lg-5">
-                    <div class="mt_md--60 mt_sm--60 mt_mobile--40 overflow-hidden edukav-card">
+                    <div class="overflow-hidden edukav-card edukav-hero-media-card">
                         <div class="plyr__video-embed rbtplayer">
                             {{^video_url}}
                                 <iframe width="100%" height="230" src="https://www.youtube.com/embed/M26iIqmqWkI?si=AJWfkoWDundxwLi_" 
