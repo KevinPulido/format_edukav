@@ -30,7 +30,7 @@ use cache_store;
 use core\output\inplace_editable;
 use core\output\named_templatable;
 use core_courseformat\base as course_format;
-use format_cards\section_break;
+use format_edukav\section_break;
 use lang_string;
 use moodle_exception;
 use moodle_url;
