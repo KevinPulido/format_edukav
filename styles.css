@@ -605,7 +605,6 @@
 /* CONTENEDOR PRINCIPAL */
 .format-edukav .edukav-splitview{
     display:flex;
-    gap:32px;
     margin-top:24px;
     align-items:flex-start;
 }
@@ -614,8 +613,44 @@
 .format-edukav .edukav-sidebar{
     width:400px;
     padding-right:20px;
+    transition:0.3s ease;
 }
 
+.format-edukav .edukav-sidebar.closed{
+    width:0;
+    padding:0;
+    overflow:hidden;
+}
+
+/* MOBILE */
+@media (max-width: 768px){
+
+    .format-edukav .edukav-splitview{
+        display:block;
+    }
+
+    .format-edukav .edukav-sidebar{
+        position:fixed;
+        left:0;
+        top:0;
+        height:100vh;
+        width:320px;
+        background:#fff;
+        z-index:9999;
+        box-shadow:0 10px 30px rgba(0,0,0,.15);
+    }
+
+    .format-edukav .edukav-sidebar.closed{
+        transform:translateX(-100%);
+        width:320px;
+        padding-right:20px;
+        overflow:auto;
+    }
+
+    .format-edukav .edukav-main{
+        width:100%;
+    }
+}
 /* LISTA ACTIVIDADES */
 .format-edukav .edukav-activities{
     list-style:none;
@@ -669,7 +704,7 @@
 /* PANEL DERECHO */
 .format-edukav .edukav-main{
     flex:1;
-    padding:10px 0 40px 10px;
+    padding:20px;
     min-height:400px;
 }
 

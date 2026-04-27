@@ -204,6 +204,7 @@
         <ul class="{{format}}">
        {{#singlesection}}
         <div class="edukav-splitview" data-region="edukav-splitview">
+            
             <aside class="edukav-sidebar">
                  {{$ format_edukav/local/content/section }}
                     {{> format_edukav/local/content/section }}
@@ -212,6 +213,7 @@
             <main class="edukav-main">
                 <div class="edukav-content-panel" data-region="splitview-content">
                     <div class="edukav-content-panel-header">
+                        <button data-toggle="aside">☰</button>
                         <h3 class="edukav-content-panel-title" data-region="splitview-title">Vista previa</h3>
                         <p class="edukav-content-panel-status" data-region="splitview-status">
                             Selecciona una actividad para verla aqui.
@@ -254,11 +256,13 @@
 require([
     'core_courseformat/local/content',
     'format_edukav/cards',
-    'format_edukav/main'
-], function(component, cards,main) {
+    'format_edukav/main',
+    'format_edukav/aside_toggle'
+], function(component, cards,main,aside_toggle) {
 
     component.init('{{#moodle500orlater}}#{{/moodle500orlater}}course-format-{{uniqid}}', {}, {{sectionreturn}});
     cards.init('course-format-{{uniqid}}');
     main.init();
+    aside_toggle.init();
 });
 {{/js}}

@@ -64,7 +64,7 @@ const updatePanel = (splitView, state, activityName = "") => {
 };
 
 /**
- * Cargar actividad en iframe (VERSIÓN FINAL)
+ * Cargar actividad en iframe
  *
  * @param {HTMLElement} splitView
  * @param {HTMLElement} activity
@@ -79,7 +79,6 @@ const loadActivity = (splitView, activity, url, activityName) => {
     return;
   }
 
-  // Agregar contentonly=1 para evitar layout completo de Moodle
   const separator = url.includes("?") ? "&" : "?";
   const finalUrl = url + separator + "contentonly=1";
 
@@ -108,39 +107,39 @@ const setupFrameEvents = (splitView) => {
 
     try {
       const doc = frame.contentDocument;
+
       if (!doc) {
         updatePanel(splitView, "");
         return;
       }
 
-      // 🔥 LIMPIEZA CONTROLADA (NO rompe Moodle)
-      const target =
-        doc.querySelector(".submissionstatustable") ||
-        doc.querySelector("#topofscroll");
+      /**
+       * 🔥 MOSTRAR SOLO #topofscroll
+       */
+      const target = doc.querySelector("#topofscroll");
 
       if (target) {
-        Array.from(doc.body.children).forEach((child) => {
-          if (!child.contains(target) && child !== target) {
-            child.style.display = "none";
-          }
-        });
+        doc.body.innerHTML = "";
+        doc.body.appendChild(target);
+
+        doc.body.style.margin = "0";
+        doc.body.style.padding = "20px";
+        doc.body.style.background = "#fff";
 
         target.style.display = "block";
-        target.style.margin = "20px auto";
-        target.style.maxWidth = "900px";
+        target.style.maxWidth = "1100px";
+        target.style.margin = "0 auto";
       }
 
-      // 🔥 UPDATE DEL PANEL (NO SE PIERDE)
       const frameTitle = doc.title || "";
+
       if (frameTitle) {
         const cleanedTitle = frameTitle.split(":").pop().trim();
         updatePanel(splitView, "", cleanedTitle);
       } else {
         updatePanel(splitView, "");
       }
-
     } catch (e) {
-      // fallback seguro
       updatePanel(splitView, "");
     }
   });
@@ -150,7 +149,6 @@ const setupFrameEvents = (splitView) => {
     updatePanel(splitView, "error");
   });
 };
-
 
 const shouldIgnoreClick = (event, splitView) => {
   if (!isPlainLeftClick(event)) {
@@ -171,7 +169,6 @@ const shouldIgnoreClick = (event, splitView) => {
     ) || !splitView.contains(event.target)
   );
 };
-
 
 /**
  * Inicializar split view
@@ -210,7 +207,6 @@ const initSplitView = (splitView) => {
     );
   });
 
-  // Cargar primera actividad automáticamente
   const firstActivity = splitView.querySelector(SELECTORS.activity);
   const firstLink = firstActivity
     ? getActivityLink(firstActivity)
