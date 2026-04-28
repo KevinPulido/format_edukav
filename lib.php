@@ -399,7 +399,7 @@ class format_edukav extends format_topics {
                 // Reset the break cache if the name changes.
                 $cache = cache::make_from_params(
                     cache_store::MODE_APPLICATION,
-                    'format_cards',
+                    'format_edukav',
                     'section_breaks'
                 );
                 $cache->delete($section->course);

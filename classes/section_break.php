@@ -135,7 +135,7 @@ class section_break extends persistent {
         global $DB;
 
         $records = $DB->get_records_sql('SELECT section_break.*
-FROM {format_cards_break} section_break
+FROM {format_edukav_break} section_break
 JOIN {course_sections} section
     ON section_break.courseid = section.course
     AND section_break.section = section.section

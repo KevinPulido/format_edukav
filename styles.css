@@ -465,6 +465,17 @@
   width: 100%;
 }
 
+.format-edukav .section-break {
+  margin: 1rem 0 0.5rem;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  color: #94a3b8; /* neutro elegante */
+}
+
 @media (max-width: 576px) {
   .format-edukav .course-content .card-deck .card .card-header .card-title {
     /** Try to make card titles responsive on smaller devices */
@@ -787,8 +798,6 @@
   max-width: 90% !important;
 }
 
-
-
 .format-edukav .edukav-single-section-header {
   position: sticky;
   top: 70px; /* ajusta según navbar superior */
@@ -1097,20 +1106,20 @@
 }
 
 .format-edukav .edukav-content-panel {
-    /* alto completo del viewport */
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
+  /* alto completo del viewport */
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
 
-    background: #ffffff;
-    border: 1px solid #eef2f7;
-    border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #eef2f7;
+  border-radius: 20px;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    box-shadow:
-      0 4px 10px rgba(15, 23, 42, 0.03),
-      0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.03),
+    0 10px 24px rgba(15, 23, 42, 0.05);
 }
 
 .format-edukav .button-manage {
@@ -1259,6 +1268,9 @@
 }
 
 /* Ajusta el encabezado de actividades para que las fechas y el estado no queden descolocados. */
+.format-edukav .course-section {
+  margin: 0;
+}
 .format-edukav .course-section .activity-item .activity-grid {
   align-items: start;
   column-gap: 0.2rem;
