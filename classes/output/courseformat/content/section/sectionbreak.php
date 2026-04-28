@@ -105,7 +105,7 @@ class sectionbreak extends inplace_editable implements named_templatable, render
 
         // Setup inplace editable.
         parent::__construct(
-            'format_cards',
+            'format_edukav',
             'sectionbreak',
             $section->id,
             $this->editable,
