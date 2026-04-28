@@ -32,61 +32,42 @@
         "selector": "<select><option>Section 4</option></select>"
     }
 }}
-<div id="sectionnavigation-bottom" class="section-navigation mdl-bottom d-flex justify-content-between">
-    <div class="prevsection d-flex">
+<div id="sectionnavigation-bottom" class="section-navigation mdl-bottom edukav-section-navigation-bar">
+    <div class="prevsection">
         {{#hasprevious}}
             <a href="{{{previousurl}}}"
-               class="btn btn-icon d-flex align-items-center justify-content-center icon-no-margin{{#previoushidden}} text-muted{{/previoushidden}}"
+               class="btn edukav-section-nav-btn edukav-section-nav-btn-prev{{#previoushidden}} text-muted{{/previoushidden}}"
                data-action="previoussection"
-               title="{{#str}}gotosection, format_edukav, {{name}}{{/str}}">
-                <span class="dir-ltr-hide">
-                    {{#pix}}t/right, moodle, {{#str}}gotosection, format_edukav, {{previousname}}{{/str}}{{/pix}}
+               title="{{#str}}gotosection, format_edukav, {{previousname}}{{/str}}">
+                <span class="edukav-section-nav-icon">
+                    <span class="dir-ltr-hide">
+                        {{#pix}}t/right, moodle, {{#str}}gotosection, format_edukav, {{previousname}}{{/str}}{{/pix}}
+                    </span>
+                    <span class="dir-rtl-hide">
+                        {{#pix}}t/left, moodle, {{#str}}gotosection, format_edukav, {{previousname}}{{/str}}{{/pix}}
+                    </span>
                 </span>
-                <span class="dir-rtl-hide">
-                    {{#pix}}t/left, moodle, {{#str}}gotosection, format_edukav, {{previousname}}{{/str}}{{/pix}}
-                </span>
-                <span class="sr-only">
-                    {{#str}}gotosection, format_edukav, {{previousname}}{{/str}}
-                </span>
+                <span class="edukav-section-nav-text">{{#str}}previous, core{{/str}}</span>
             </a>
         {{/hasprevious}}
-        {{#hasparent}}
-            <a href="{{{parenturl}}}"
-               class="btn btn-icon d-flex align-items-center justify-content-center icon-no-margin{{#parenthidden}} text-muted{{/parenthidden}}"
-               data-action="parentsection"
-               title="{{#str}}gotosection, format_edukav, {{parentname}}{{/str}}">
-                {{#pix}}t/up, moodle, {{#str}}gotosection, format_edukav, {{parentname}}{{/str}}{{/pix}}
-                <span class="sr-only">
-                    {{#str}}gotosection, format_edukav, {{parentname}}{{/str}}
-                </span>
-            </a>
-        {{/hasparent}}
-        {{#showcoursehome}}
-            <a href="{{{courseurl}}}"
-               class="btn btn-icon d-flex align-items-center justify-content-center icon-no-margin"
-               data-action="coursehomebutton"
-               title="{{#str}} course {{/str}}">
-                {{#pix}} i/home, core, {{#str}} maincoursepage {{/str}} {{/pix}}
-            </a>
-        {{/showcoursehome}}
     </div>
-    <div>
+    <div class="section-selector">
         {{{selector}}}
     </div>
     <div class="nextsection">
         {{#hasnext}}
             <a href="{{{nexturl}}}"
-               class="btn btn-icon d-flex align-items-center justify-content-center icon-no-margin{{#nexthidden}} text-muted{{/nexthidden}}"
+               class="btn edukav-section-nav-btn edukav-section-nav-btn-next{{#nexthidden}} text-muted{{/nexthidden}}"
                data-action="nextsection"
                title="{{#str}}gotosection, format_edukav, {{nextname}}{{/str}}">
-                <span class="dir-rtl-hide">
-                    {{#pix}}t/right, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}
-                </span>
-                <span class="dir-ltr-hide">
-                    {{#pix}}t/left, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}
-                </span>
-                <span class="sr-only">
-                    {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}
+                <span class="edukav-section-nav-text">{{#str}}next, core{{/str}}</span>
+                <span class="edukav-section-nav-icon">
+                    <span class="dir-rtl-hide">
+                        {{#pix}}t/right, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}
+                    </span>
+                    <span class="dir-ltr-hide">
+                        {{#pix}}t/left, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}
+                    </span>
                 </span>
             </a>
         {{/hasnext}}

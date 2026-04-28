@@ -94,3 +94,5 @@ $string['showfromothers'] = 'Mostrar';
 
 
 $string['Enrolledusers'] = 'Usuarios matriculados';
+$string['ProgressModule']= 'Progreso del módulo';
+$string['ButtonSplitView'] = 'Contenido';

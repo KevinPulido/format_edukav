@@ -179,13 +179,6 @@
 <div id="course-format-{{uniqid}}" {{#subsectionsascards}}class="subsectionsascards"{{/subsectionsascards}}>
     <h2 class="accesshide">{{{title}}}</h2>
     {{{completionhelp}}}
-    <ul class="{{format}}">
-        {{#initialsection}}
-            {{$ format_edukav/local/content/section }}
-                {{> format_edukav/local/content/section}}
-            {{/format_edukav/local/content/section}}
-        {{/initialsection}}
-    </ul>
     <ul class="card-deck dashboard-card-deck {{format}}"
          data-for="course_sectionlist">
         {{#sections}}
@@ -194,27 +187,55 @@
             {{/format_edukav/local/content/section}}
         {{/sections}}
     </ul>
+    <ul class="{{format}}">
+        {{#initialsection}}
+            {{$ format_edukav/local/content/section }}
+                {{> format_edukav/local/content/section}}
+            {{/format_edukav/local/content/section}}
+        {{/initialsection}}
+    </ul>
     {{#hasnavigation}}
     <div class="single-section">
-        {{#sectionnavigation}}
-            {{$ format_edukav/local/content/sectionnavigation }}
-                {{> format_edukav/local/content/sectionnavigation }}
-            {{/ format_edukav/local/content/sectionnavigation }}
-        {{/sectionnavigation}}
-        <ul class="{{format}}">
+        <ul class="edukav-single-section-list">
        {{#singlesection}}
-        <div class="edukav-splitview" data-region="edukav-splitview">
-            
-            <aside class="edukav-sidebar">
+        <div class="edukav-single-section-header">
+            {{#sectionnavigation}}
+                <div class="edukav-single-section-header-nav">
+                    {{$ format_edukav/local/content/sectionnavigation }}
+                        {{> format_edukav/local/content/sectionnavigation }}
+                    {{/ format_edukav/local/content/sectionnavigation }}
+                </div>
+            {{/sectionnavigation}}
+            <div class="edukav-single-section-header-meta">
+                <div class="edukav-single-section-title">
+                    {{{sectionheader.title}}}
+                </div>
+                <div class="edukav-single-section-progress-panel">
+                    <span class="edukav-single-section-progress-label">{{#str}}ProgressModule,format_edukav{{/str}}</span>
+                    {{#sectionprogress}}
+                        <div class="edukav-single-section-progress-bar">
+                            {{> block_myoverview/progress-bar }}
+                        </div>
+                    {{/sectionprogress}}
+                    <span class="edukav-single-section-progress-value">{{sectionprogresspercentage}}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="edukav-splitview" data-region="edukav-splitview">                    
+            <div class="edukav-sidebar-shell">
+                <div class="edukav-sidebar-header">
+                    <span class="edukav-sidebar-header-title">Contenido del módulo</span>
+                </div>
+                <aside class="edukav-sidebar">
                  {{$ format_edukav/local/content/section }}
                     {{> format_edukav/local/content/section }}
                 {{/ format_edukav/local/content/section }}
-            </aside>
+                </aside>
+            </div>
             <main class="edukav-main">
                 <div class="edukav-content-panel" data-region="splitview-content">
                     <div class="edukav-content-panel-header">
-                        <button data-toggle="aside">☰</button>
-                        <h3 class="edukav-content-panel-title" data-region="splitview-title">Vista previa</h3>
+                        {{>format_edukav/local/button_splitview}}
                         <p class="edukav-content-panel-status" data-region="splitview-status">
                             Selecciona una actividad para verla aqui.
                         </p>

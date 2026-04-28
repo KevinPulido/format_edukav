@@ -93,3 +93,5 @@ $string['settings:name'] = 'Cards format settings';
 $string['showfromothers'] = 'Show';
 
 $string['Enrolledusers'] = 'Enrolled users';
+$string['ProgressModule']= 'Module Progress';
+$string['ButtonSplitView'] = 'Content';

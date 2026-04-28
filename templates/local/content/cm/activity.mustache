@@ -36,16 +36,15 @@
         {{#hasdates}}
             <div data-region="activity-dates" class="activity-dates me-sm-2">
                 <button type="button"
-                      class="activity-dates-tooltip activity-dates-popover"
+                      class="activity-dates-tooltip activity-dates-popover edukav-status-pill edukav-status-neutral"
                       data-toggle="popover"
                       data-trigger="focus"
                       data-placement="bottom"
                       data-html="true"
                       data-template='<div class="popover edukav-dates-popover-card" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
-                      title="Fechas"
                       data-content="{{#activitydates}}<div class=&quot;activity-date-row&quot;><div class=&quot;activity-date-label&quot;>{{label}}</div><div class=&quot;activity-date-value&quot;>{{datestring}}</div></div>{{/activitydates}}">
-                    {{#pix}} i/calendar, core, Fechas {{/pix}}
-                    <span class="activity-dates-tooltip-label">Fechas</span>
+                    {{#pix}} i/calendar, core{{/pix}}
+                    <span class="activity-dates-tooltip-label"></span>
                 </button>
             </div>
         {{/hasdates}}

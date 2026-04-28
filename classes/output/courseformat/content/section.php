@@ -18,6 +18,7 @@ namespace format_edukav\output\courseformat\content;
 
 use completion_info;
 use core_courseformat\base as course_format;
+use format_edukav\output\courseformat\content\section\header as section_header_renderer;
 use format_edukav\output\courseformat\content\section\sectionbreak;
 use format_edukav\versionable_template;
 use format_topics\output\courseformat\content\section as section_base;
@@ -44,6 +45,11 @@ class section extends section_base {
     protected sectionbreak $sectionbreak;
 
     /**
+     * @var section_header_renderer Section header renderer
+     */
+    protected section_header_renderer $sectionheader;
+
+    /**
      * Section output constructor.
      *
      * @param course_format $format
@@ -53,6 +59,7 @@ class section extends section_base {
         parent::__construct($format, $section);
 
         $this->sectionbreak = new sectionbreak($format, $section);
+        $this->sectionheader = new section_header_renderer($format, $section);
     }
 
     /**
@@ -127,6 +134,18 @@ class section extends section_base {
 
         $this->add_section_break($data, $output);
 
+        // Reuse the dedicated section header renderer so the single-section top bar can show a consistent title.
+        $data->sectionheader = $this->sectionheader->export_for_template($output);
+
+        // Expose the section progress percentage to the single-section header area.
+        $completion = $this->get_section_completion();
+        $data->completion = $completion;
+        $data->hascompletion = !empty($completion);
+        $data->sectionprogresspercentage = !empty($completion) ? $completion['percentage'] : 0;
+        $data->sectionprogress = [
+            'progress' => $data->sectionprogresspercentage,
+        ];
+
         if (!$showascard) {
             if ($issinglesectionpage) {
                 $data->header = false;
@@ -142,11 +161,6 @@ class section extends section_base {
                 $data->classes[] = "card-square";
                 break;
         }
-
-        // Add completion data.
-        $completion = $this->get_section_completion();
-        $data->completion = $completion;
-        $data->hascompletion = !empty($completion);
 
         // Shorten the card's summary text, if applicable.
         if (!empty($data->summary->summarytext)) {
