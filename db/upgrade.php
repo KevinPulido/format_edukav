@@ -37,7 +37,7 @@ function xmldb_format_edukav_upgrade($oldversion = 0): bool {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2026022601) {
+    if ($oldversion < 2026042910) {
 
         $table = new xmldb_table('format_edukav_break');
 
@@ -54,7 +54,7 @@ function xmldb_format_edukav_upgrade($oldversion = 0): bool {
             $dbman->create_table($table);
         }
 
-        upgrade_plugin_savepoint(true, 2026022601, 'format', 'edukav');
+        upgrade_plugin_savepoint(true, 2026042910, 'format', 'edukav');
     }
 
     return true;

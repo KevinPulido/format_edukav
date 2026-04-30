@@ -16,73 +16,75 @@
 }}
 
 {{#coursesEdukav}}
-    <div class="edukav-breadcrumb-container">
+    <div class="edukav-breadcrumb-container"{{#partner.gradient}} style="--edukav-partner-bg: {{{partner.gradient}}};"{{/partner.gradient}}>
         <div class="container">
-        <div class="course-details-content edukav-course-hero">
-            <div class="row row--20 align-items-center">
-                <div class="col-lg-7">
-                    <div class="d-flex align-items-center gap-3 flex-wrap mb--15 edukav-hero-topmeta">
-                        <div class="profile-share mr--10">
-                            <a href="#" class="avatar" data-tooltip="Mark Jordan" tabindex="0">
-                                <img src="{{student1}}" alt="education">
-                            </a>
-                            <a href="#" class="avatar" data-tooltip="Jordan" tabindex="0">
-                                <img src="{{student2}}" alt="education">
-                            </a>
-                            <a href="#" class="avatar" data-tooltip="Ava Miller" tabindex="0">
-                                <img src="{{student3}}" alt="education">
-                            </a>
+            <div class="course-details-content edukav-course-hero">
+                <div class="row row--20 align-items-center">
+                    <div class="col-lg-7">
+                        <div class="d-flex align-items-center gap-3 flex-wrap mb-2 edukav-course-partner">
+                            {{#partner.logo}}
+                                <img src="{{partner.logo}}" alt="{{partner.name}}" class="edukav-partner-logo">
+                            {{/partner.logo}}
+                            {{#partner.name}}
+                                <span class="edukav-partner-name">{{partner.name}}</span>
+                            {{/partner.name}}
                         </div>
-                        <div class="d-flex flex-column">
-                            <h6 class="number mb--0 w-600">{{enrolledcount}}</h6>
-                            <span class="small-text w-500">{{#str}}Enrolledusers,format_edukav{{/str}}</span>
+
+                        <h2 class="edukav-breadcrumb-title">{{fullname}}</h2>
+                        <div class="edukav-breadcrumb-description edukav-hero-summary">
+                            {{{summary}}}
+                        </div>
+                        <hr class="divider">
+
+                        <div class="edukav-breadcrumb-meta edukav-hero-meta">
+                            <div class="edukav-feature-sin">
+                                <span class="edukav-icon">
+                                    <i class="fa-solid fa-square-poll-horizontal"></i>
+                                </span>
+                                <span class="edukav-feature-text">{{categoryName}}</span>
+                            </div>
+
+                            <div class="edukav-feature-sin">
+                                <span class="edukav-icon">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </span>
+                                <span class="edukav-feature-text">{{startdate}}</span>
+                            </div>
+
+                            {{#educators}}
+                            <div class="edukav-feature-sin">
+                                <img src="{{educator_icon}}" class="educator-icon edukav-icon">
+                                <span class="edukav-feature-text">{{educator_name}}</span>
+                            </div>
+                            {{/educators}}
                         </div>
                     </div>
 
-                    <h2 class="edukav-breadcrumb-title">{{fullname}}</h2>
-                    <div class="edukav-breadcrumb-description edukav-hero-summary">
-                        {{{summary}}}
-                    </div>
-                    <hr class="divider">
-
-                    <div class="edukav-breadcrumb-meta edukav-hero-meta">
-                        <div class="edukav-feature-sin">
-                            <span class="edukav-icon">
-                                <i class="fa-solid fa-square-poll-horizontal"></i>
-                            </span>
-                            <span class="edukav-feature-text">{{categoryName}}</span>
+                    <div class="col-lg-5">
+                        <div class="overflow-hidden edukav-card edukav-hero-media-card">
+                            <div class="plyr__video-embed rbtplayer">
+                                {{#video_url}}
+                                    <iframe width="100%" height="230" 
+                                        src="{{video_url}}" 
+                                        title="Course video" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; 
+                                        encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                        referrerpolicy="strict-origin-when-cross-origin" 
+                                        allowfullscreen>
+                                    </iframe>
+                                {{/video_url}}
+                                {{^video_url}}
+                                    <iframe width="100%" height="230" src="https://www.youtube.com/embed/M26iIqmqWkI?si=AJWfkoWDundxwLi_" 
+                                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                                        encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
+                                        allowfullscreen>
+                                    </iframe>
+                                {{/video_url}}
+                            </div>
                         </div>
-
-                        <div class="edukav-feature-sin">
-                            <span class="edukav-icon">
-                                <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <span class="edukav-feature-text">{{startdate}}</span>
-                        </div>
-
-                        {{#educators}}
-                        <div class="edukav-feature-sin">
-                            <img src="{{educator_icon}}" class="educator-icon edukav-icon">
-                            <span class="edukav-feature-text">{{educator_name}}</span>
-                        </div>
-                        {{/educators}}
                     </div>
                 </div>
-
-                <div class="col-lg-5">
-                    <div class="overflow-hidden edukav-card edukav-hero-media-card">
-                        <div class="plyr__video-embed rbtplayer">
-                            {{^video_url}}
-                                <iframe width="100%" height="230" src="https://www.youtube.com/embed/M26iIqmqWkI?si=AJWfkoWDundxwLi_" 
-                                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-                                    encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
-                                    allowfullscreen>
-                                </iframe>
-                            {{/video_url}}
-                        </div>
-                    </div>
-                </div>
-            </div>
             </div>
         </div>
     </div>

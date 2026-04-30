@@ -236,6 +236,26 @@ class format_edukav extends format_topics {
 
         $options['subsectionsascards'] = $createselect('subsectionsascards', $subsectionoptions, $defaults->subsectionsascards);
 
+        $partneroptions = [0 => new lang_string('partner:none', 'format_edukav')];
+        if (class_exists(\local_edukav\service\partners_service::class)) {
+            $partneroptions = $partneroptions + \local_edukav\service\partners_service::get_partner_options();
+        }
+
+        $options['partnerid'] = [
+            'default' => 0,
+            'type' => PARAM_INT,
+            'label' => new lang_string('partner', 'format_edukav'),
+            'element_type' => 'select',
+            'element_attributes' => [$partneroptions],
+        ];
+
+        $options['banner_video'] = [
+            'default' => '',
+            'type' => PARAM_URL,
+            'label' => new lang_string('banner_video', 'format_edukav'),
+            'element_type' => 'text',
+        ];
+
         return $options;
     }
 
@@ -495,6 +515,8 @@ class format_edukav extends format_topics {
      */
     #[\Override]
     public function create_edit_form_elements(&$mform, $forsection = false): array {
+        global $PAGE;
+
         $elements = parent::create_edit_form_elements($mform, $forsection);
 
         if ($this->course_has_grid_images() && !$forsection) {
@@ -688,6 +710,56 @@ class format_edukav extends format_topics {
         }
 
         return $defaults->$name;
+    }
+
+    /**
+     * Convert common video URLs to embeddable URLs.
+     *
+     * @param string|null $url
+     * @return string|null
+     */
+    public function normalize_video_url(?string $url): ?string {
+        $url = trim((string)$url);
+        if ($url === '') {
+            return null;
+        }
+
+        if (preg_match('~youtube\.com/embed/([^?&/]+)~', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        if (preg_match('~youtube\.com/watch\?v=([^?&/]+)~', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        if (preg_match('~youtu\.be/([^?&/]+)~', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        return $url;
+    }
+
+    /**
+     * Normalize and validate a hexadecimal color value.
+     *
+     * @param string|null $color
+     * @return string|null
+     */
+    public function normalize_hex_color(?string $color): ?string {
+        $color = trim((string)$color);
+        if ($color === '') {
+            return null;
+        }
+
+        if ($color[0] !== '#') {
+            $color = '#' . $color;
+        }
+
+        if (!preg_match('/^#[0-9a-fA-F]{6}$/', $color)) {
+            return null;
+        }
+
+        return strtolower($color);
     }
 
     /**
@@ -943,7 +1015,7 @@ function format_edukav_pluginfile(stdClass $course,
         send_file_not_found();
     }
 
-    if ($filearea != FORMAT_EDUKAV_FILEAREA_IMAGE) {
+    if ($filearea !== FORMAT_EDUKAV_FILEAREA_IMAGE) {
         send_file_not_found();
     }
 

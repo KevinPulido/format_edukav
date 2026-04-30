@@ -611,13 +611,13 @@
   position: relative;
   padding: 42px 0 34px;
   overflow: hidden;
-  background: linear-gradient(
+  background: var(--edukav-partner-bg, linear-gradient(
     135deg,
     #f5f7fb 0%,
     #e6e9f5 35%,
     #c9c3f5 65%,
     #a855f7 100%
-  );
+  ));
 }
 
 .format-edukav .custom-breadcrumb-container {
@@ -671,6 +671,29 @@
 
 .format-edukav .edukav-hero-summary {
   max-width: 680px;
+}
+
+.format-edukav .edukav-partner-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+}
+
+.format-edukav .edukav-partner-name {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
 }
 
 .format-edukav .edukav-hero-meta {
@@ -1209,7 +1232,7 @@
 
 .format-edukav .edukav-activity-frame {
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   border: 0;
   background: white;
   display: block;

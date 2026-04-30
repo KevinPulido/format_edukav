@@ -27,6 +27,7 @@ namespace format_edukav\output\courseformat;
 
 use coding_exception;
 use format_edukav\versionable_template;
+use local_edukav\service\partners_service;
 use format_topics\output\courseformat\content as content_base;
 use moodle_exception;
 use renderer_base;
@@ -87,9 +88,23 @@ class content extends content_base {
 
         // Get course educators.
         $educators = $this->edukav_course_educators($course->id);
-        
+        $partnerdata = [];
+        if (class_exists(partners_service::class)) {
+            $partnerdata = partners_service::get_course_partner_branding($course->id);
+        }
+        $partner = [
+            'id' => $partnerdata['id'] ?? 0,
+            'name' => trim((string)($partnerdata['name'] ?? '')),
+            'logo' => trim((string)($partnerdata['logo'] ?? '')),
+            'brand_color' => trim((string)($partnerdata['brand_color'] ?? '')),
+            'gradient' => trim((string)($partnerdata['gradient'] ?? '')),
+            'style' => trim((string)($partnerdata['style'] ?? '')),
+        ];
+
+        $videourl = $this->format->normalize_video_url($this->format->get_format_option('banner_video'));
+
         $data->showcourseEdukav = !$singlesection;
-        
+
         $data->coursesEdukav = [
             'fullname' => $course->fullname,
             'summary' => format_text($course->summary, $course->summaryformat),
@@ -97,9 +112,8 @@ class content extends content_base {
             'categoryName' => format_string($categoryName),
             'startdate' => userdate($course->startdate, '%d %b %Y'),
             'educators' => $educators,
-            'student1'=>$output->image_url('student1', 'format_edukav')->out(),
-            'student2'=>$output->image_url('student2', 'format_edukav')->out(),
-            'student3'=>$output->image_url('student3', 'format_edukav')->out()
+            'partner' => $partner,
+            'video_url' => $videourl,
         ];
 
         // Add version variables.

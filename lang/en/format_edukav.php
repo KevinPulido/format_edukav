@@ -95,3 +95,16 @@ $string['showfromothers'] = 'Show';
 $string['Enrolledusers'] = 'Enrolled users';
 $string['ProgressModule']= 'Module Progress';
 $string['ButtonSplitView'] = 'Content';
+
+
+//Field course format
+$string['partner_name'] = 'Partner name';
+$string['partner_logo'] = 'Partner logo';
+$string['partner'] = 'Partner';
+$string['partner:none'] = 'No partner';
+$string['brand_color'] = 'Brand color';
+$string['brand_color_help'] = 'Enter a valid hex color like #1e40af, or use the color picker below.';
+$string['brand_color_picker'] = 'Color picker';
+$string['banner_start'] = 'Banner start color';
+$string['banner_end'] = 'Banner end color';
+$string['banner_video'] = 'Banner video';

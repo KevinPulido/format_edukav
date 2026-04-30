@@ -96,3 +96,15 @@ $string['showfromothers'] = 'Mostrar';
 $string['Enrolledusers'] = 'Usuarios matriculados';
 $string['ProgressModule']= 'Progreso del módulo';
 $string['ButtonSplitView'] = 'Contenido';
+
+//Field course format
+$string['partner_name'] = 'Nombre del aliado';
+$string['partner_logo'] = 'Logo del aliado';
+$string['partner'] = 'Partner';
+$string['partner:none'] = 'Sin partner';
+$string['brand_color'] = 'Color principal';
+$string['brand_color_help'] = 'Escribe un color hexadecimal válido como #1e40af, o usa el selector de color debajo.';
+$string['brand_color_picker'] = 'Selector de color';
+$string['banner_start'] = 'Color inicial banner';
+$string['banner_end'] = 'Color final banner';
+$string['banner_video'] = 'Video del banner';
