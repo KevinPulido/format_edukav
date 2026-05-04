@@ -611,13 +611,10 @@
   position: relative;
   padding: 42px 0 34px;
   overflow: hidden;
-  background: var(--edukav-partner-bg, linear-gradient(
-    135deg,
-    #f5f7fb 0%,
-    #e6e9f5 35%,
-    #c9c3f5 65%,
-    #a855f7 100%
-  ));
+  background: var(
+    --edukav-partner-bg,
+    linear-gradient(135deg, #f5f7fb 0%, #e6e9f5 35%, #c9c3f5 65%, #a855f7 100%)
+  );
 }
 
 .format-edukav .custom-breadcrumb-container {
@@ -674,26 +671,32 @@
 }
 
 .format-edukav .edukav-partner-logo {
-  width: 56px;
-  height: 56px;
+  width: 100px;
+  height: 50px;
   object-fit: contain;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.9);
   padding: 6px;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+}
+
+.edukav-partner-info {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 22px;
+  margin-bottom: 15px;
+  background: #f6f6f6;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  border-radius: 6px;
+  color: #6b7385;
 }
 
 .format-edukav .edukav-partner-name {
   display: inline-flex;
   align-items: center;
-  min-height: 2.25rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  color: #0f172a;
+  padding: 0 10px;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  letter-spacing: 0.2em;
 }
 
 .format-edukav .edukav-hero-meta {
@@ -754,7 +757,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.4);
   font-size: 15px;
 }
 

@@ -100,7 +100,7 @@ $string['ButtonSplitView'] = 'Contenido';
 //Field course format
 $string['partner_name'] = 'Nombre del aliado';
 $string['partner_logo'] = 'Logo del aliado';
-$string['partner'] = 'Partner';
+$string['partner'] = 'Aliado';
 $string['partner:none'] = 'Sin partner';
 $string['brand_color'] = 'Color principal';
 $string['brand_color_help'] = 'Escribe un color hexadecimal válido como #1e40af, o usa el selector de color debajo.';

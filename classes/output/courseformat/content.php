@@ -63,7 +63,7 @@ class content extends content_base {
      * @throws moodle_exception
      */
     public function export_for_template(renderer_base $output) {
-        global $PAGE,$DB;
+        global $PAGE,$DB,$CFG;
 
         // Is this a single section page?
         $singlesection = $this->format->get_sectionnum();
@@ -102,9 +102,9 @@ class content extends content_base {
         ];
 
         $videourl = $this->format->normalize_video_url($this->format->get_format_option('banner_video'));
-
+        
         $data->showcourseEdukav = !$singlesection;
-
+        
         $data->coursesEdukav = [
             'fullname' => $course->fullname,
             'summary' => format_text($course->summary, $course->summaryformat),

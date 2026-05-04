@@ -25,17 +25,18 @@
                             {{#partner.logo}}
                                 <img src="{{partner.logo}}" alt="{{partner.name}}" class="edukav-partner-logo">
                             {{/partner.logo}}
-                            {{#partner.name}}
-                                <span class="edukav-partner-name">{{partner.name}}</span>
-                            {{/partner.name}}
                         </div>
-
-                        <h2 class="edukav-breadcrumb-title">{{fullname}}</h2>
+                        {{#partner.name}}
+                            <div class="edukav-partner-info">
+                                <span class="edukav-feature-text">{{#str}}partner, format_edukav{{/str}}:</span>
+                                <span class="edukav-partner-name">{{partner.name}}</span>
+                            </div>
+                        {{/partner.name}}
+                        <h2 class="edukav-breadcrumb-title mt--10">{{fullname}}</h2>
                         <div class="edukav-breadcrumb-description edukav-hero-summary">
                             {{{summary}}}
                         </div>
                         <hr class="divider">
-
                         <div class="edukav-breadcrumb-meta edukav-hero-meta">
                             <div class="edukav-feature-sin">
                                 <span class="edukav-icon">
