@@ -15,7 +15,8 @@
 }
 
 .format-edukav .dashboard-card-deck .dashboard-card {
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   width: 100%;
   min-width: 350px;
   flex-basis: auto;
