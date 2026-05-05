@@ -14,7 +14,7 @@ const SELECTORS = {
   title: '[data-region="splitview-title"]',
   status: '[data-region="splitview-status"]',
   activity: ".activity.activity-wrapper",
-  activityLink: ".activityname a, .aalink",
+  activityLink: ".activityname a, .activityname .aalink",
   actionMenu:
     '.action-menu a, [data-action="open-chooser"], [data-action="toggle"], .dropdown-toggle',
 };
@@ -24,6 +24,16 @@ const TEXT = {
   loading: "Cargando actividad...",
   error: "No fue posible cargar esta actividad.",
 };
+
+const GRADE_URL_PATTERNS = [
+  /[?&]action=grader(?:&|$)/i,
+  /[?&]action=grade(?:&|$)/i,
+  /[?&]action=grading(?:&|$)/i,
+  /\/grade(?:\.php|\/|$)/i,
+  /\/grading(?:\.php|\/|$)/i,
+];
+
+const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
 
 const isPlainLeftClick = (event) => {
   return (
@@ -63,6 +73,109 @@ const updatePanel = (splitView, state, activityName = "") => {
   }
 };
 
+const isGradingUrl = (url = "") => {
+  try {
+    const parsedUrl = new URL(url, window.location.href);
+    const pathname = parsedUrl.pathname || "";
+    const action = (parsedUrl.searchParams.get("action") || "").toLowerCase();
+
+    if (ASSIGN_PATH_PATTERN.test(pathname)) {
+      return action === "grader";
+    }
+
+    return GRADE_URL_PATTERNS.some((pattern) => pattern.test(url));
+  } catch (e) {
+    return GRADE_URL_PATTERNS.some((pattern) => pattern.test(url));
+  }
+};
+
+const getUrlWithoutContentOnly = (url = "") => {
+  try {
+    const parsedUrl = new URL(url, window.location.href);
+    parsedUrl.searchParams.delete("contentonly");
+    return parsedUrl.toString();
+  } catch (e) {
+    return url.replace(/([?&])contentonly=1(&?)/i, "").replace(/[?&]$/, "");
+  }
+};
+
+const getNavigationUrl = (element) => {
+  if (!element) {
+    return "";
+  }
+
+  const link = element.closest("a[href], area[href]");
+  if (link) {
+    return link.getAttribute("href") || "";
+  }
+
+  const submitControl = element.closest(
+    'button[type="submit"], input[type="submit"]'
+  );
+  if (submitControl) {
+    const form = submitControl.form;
+    return form?.getAttribute("action") || form?.action || "";
+  }
+
+  return "";
+};
+
+const redirectToTopWindowIfGrading = (event) => {
+  const target = event.target instanceof Element ? event.target : null;
+  const url = getNavigationUrl(target);
+
+  if (!url) {
+    return false;
+  }
+
+  if (!isGradingUrl(url)) {
+    return false;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  window.top?.location.replace(getUrlWithoutContentOnly(url));
+  return true;
+};
+
+const setupGradingRedirectHandlers = (splitView, doc) => {
+  if (!doc || doc.documentElement.dataset.edukavGradingRedirectBound === "1") {
+    return;
+  }
+
+  doc.documentElement.dataset.edukavGradingRedirectBound = "1";
+
+  doc.addEventListener("pointerdown", redirectToTopWindowIfGrading, true);
+  doc.addEventListener("mousedown", redirectToTopWindowIfGrading, true);
+  doc.addEventListener("click", redirectToTopWindowIfGrading, true);
+  doc.addEventListener(
+    "submit",
+    (event) => {
+      const form = event.target instanceof HTMLFormElement ? event.target : null;
+      const url = form?.getAttribute("action") || form?.action || "";
+
+      if (!url || !isGradingUrl(url)) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      window.top?.location.replace(getUrlWithoutContentOnly(url));
+    },
+    true
+  );
+
+  splitView.dataset.edukavGradingRedirectBound = "1";
+};
+
+const getFrameDocumentUrl = (frame) => {
+  try {
+    return frame?.contentDocument?.location?.href || frame?.contentWindow?.location?.href || "";
+  } catch (e) {
+    return "";
+  }
+};
+
 /**
  * Cargar actividad en iframe
  *
@@ -76,6 +189,11 @@ const loadActivity = (splitView, activity, url, activityName) => {
   const content = splitView.querySelector(SELECTORS.content);
 
   if (!frame || !content || !url) {
+    return;
+  }
+
+  if (isGradingUrl(url)) {
+    window.top?.location.replace(getUrlWithoutContentOnly(url));
     return;
   }
 
@@ -107,6 +225,14 @@ const setupFrameEvents = (splitView) => {
 
     try {
       const doc = frame.contentDocument;
+      const frameUrl = getFrameDocumentUrl(frame);
+
+      setupGradingRedirectHandlers(splitView, doc);
+
+      if (frameUrl && isGradingUrl(frameUrl)) {
+        window.top?.location.replace(getUrlWithoutContentOnly(frameUrl));
+        return;
+      }
 
       if (!doc) {
         updatePanel(splitView, "");
@@ -194,6 +320,12 @@ const initSplitView = (splitView) => {
     const url = link.getAttribute("href");
 
     if (!url || url.startsWith("#")) {
+      return;
+    }
+
+    if (isGradingUrl(url)) {
+      event.preventDefault();
+      window.top?.location.replace(getUrlWithoutContentOnly(url));
       return;
     }
 
