@@ -101,8 +101,10 @@ class content extends content_base {
             'style' => trim((string)($partnerdata['style'] ?? '')),
         ];
 
-        $videourl = $this->format->normalize_video_url($this->format->get_format_option('banner_video'));
-        
+        $bannervideo = $this->format->get_format_option('banner_video');
+        $videourl = $this->format->normalize_video_url($bannervideo);
+        $videoid = $this->format->extract_video_id($bannervideo);
+
         $data->showcourseEdukav = !$singlesection;
         
         $data->coursesEdukav = [
@@ -114,6 +116,8 @@ class content extends content_base {
             'educators' => $educators,
             'partner' => $partner,
             'video_url' => $videourl,
+            'video_id' => $videoid ?? '',
+            'placeholder_image' => $output->image_url('placeholder_video', 'format_edukav')->out(),
         ];
 
         // Add version variables.

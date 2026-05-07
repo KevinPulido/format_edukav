@@ -278,12 +278,14 @@ require([
     'core_courseformat/local/content',
     'format_edukav/cards',
     'format_edukav/main',
-    'format_edukav/aside_toggle'
-], function(component, cards,main,aside_toggle) {
+    'format_edukav/aside_toggle',
+    'format_edukav/plyr'
+], function(component, cards,main,aside_toggle,plyr) {
 
     component.init('{{#moodle500orlater}}#{{/moodle500orlater}}course-format-{{uniqid}}', {}, {{sectionreturn}});
     cards.init('course-format-{{uniqid}}');
     main.init();
     aside_toggle.init();
+    plyr.init();
 });
 {{/js}}

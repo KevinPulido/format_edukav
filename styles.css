@@ -714,6 +714,11 @@
   border-radius: 12px;
 }
 
+.format-edukav .placeholder-image{
+  width: 100%;
+  background-size: cover;
+}
+
 .format-edukav .edukav-content-intro {
   max-width: 1200px;
   margin: 28px auto 18px;

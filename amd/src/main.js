@@ -34,6 +34,10 @@ const GRADE_URL_PATTERNS = [
 ];
 
 const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
+const NORMAL_NAVIGATION_PATTERNS = [
+  /\/mod\/h5pactivity\/view\.php(?:$|\?)/i,
+  /\/mod\/scorm\/view\.php(?:$|\?)/i,
+];
 
 const isPlainLeftClick = (event) => {
   return (
@@ -87,6 +91,10 @@ const isGradingUrl = (url = "") => {
   } catch (e) {
     return GRADE_URL_PATTERNS.some((pattern) => pattern.test(url));
   }
+};
+
+const shouldOpenInNormalNavigation = (url = "") => {
+  return NORMAL_NAVIGATION_PATTERNS.some((pattern) => pattern.test(url));
 };
 
 const getUrlWithoutContentOnly = (url = "") => {
@@ -194,6 +202,11 @@ const loadActivity = (splitView, activity, url, activityName) => {
 
   if (isGradingUrl(url)) {
     window.top?.location.replace(getUrlWithoutContentOnly(url));
+    return;
+  }
+
+  if (shouldOpenInNormalNavigation(url)) {
+    window.top?.location.assign(getUrlWithoutContentOnly(url));
     return;
   }
 
@@ -329,6 +342,12 @@ const initSplitView = (splitView) => {
       return;
     }
 
+    if (shouldOpenInNormalNavigation(url)) {
+      event.preventDefault();
+      window.top?.location.assign(getUrlWithoutContentOnly(url));
+      return;
+    }
+
     event.preventDefault();
 
     loadActivity(
@@ -345,12 +364,16 @@ const initSplitView = (splitView) => {
     : null;
 
   if (firstActivity && firstLink && firstLink.getAttribute("href")) {
-    loadActivity(
-      splitView,
-      firstActivity,
-      firstLink.getAttribute("href"),
-      firstLink.textContent.trim()
-    );
+    const firstUrl = firstLink.getAttribute("href");
+
+    if (!shouldOpenInNormalNavigation(firstUrl)) {
+      loadActivity(
+        splitView,
+        firstActivity,
+        firstUrl,
+        firstLink.textContent.trim()
+      );
+    }
   }
 };
 

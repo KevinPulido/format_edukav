@@ -62,27 +62,13 @@
                     </div>
 
                     <div class="col-lg-5">
-                        <div class="overflow-hidden edukav-card edukav-hero-media-card">
-                            <div class="plyr__video-embed rbtplayer">
-                                {{#video_url}}
-                                    <iframe width="100%" height="230" 
-                                        src="{{video_url}}" 
-                                        title="Course video" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; 
-                                        encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                        referrerpolicy="strict-origin-when-cross-origin" 
-                                        allowfullscreen>
-                                    </iframe>
-                                {{/video_url}}
-                                {{^video_url}}
-                                    <iframe width="100%" height="230" src="https://www.youtube.com/embed/M26iIqmqWkI?si=AJWfkoWDundxwLi_" 
-                                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-                                        encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
-                                        allowfullscreen>
-                                    </iframe>
-                                {{/video_url}}
-                            </div>
+                        <div class="radius-10 overflow-hidden p-4 bg-color-white-opacity mt_md--60 mt_sm--60 mt_mobile--40 edukav-hero-media-card">
+                            {{#video_id}}
+                                <div class="plyr" data-plyr-provider="youtube" data-plyr-embed-id="{{video_id}}"></div>
+                            {{/video_id}}
+                            {{^video_id}}
+                                <img class="placeholder-image" src="{{placeholder_image}}" alt="El video no ha sido cargado" class="img-fluid">
+                            {{/video_id}}
                         </div>
                     </div>
                 </div>
