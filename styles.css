@@ -2,12 +2,50 @@
   display: none;
 }
 
+html.format-edukav.edukav-splitview-page:not(.editing),
+body.format-edukav.edukav-splitview-page:not(.editing) {
+  height: 100%;
+  overflow: hidden;
+}
+
+body.format-edukav.edukav-splitview-page:not(.editing) #page {
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body.format-edukav.edukav-splitview-page:not(.editing) #page-content,
+body.format-edukav.edukav-splitview-page:not(.editing) #region-main,
+body.format-edukav.edukav-splitview-page:not(.editing) .main-inner,
+body.format-edukav.edukav-splitview-page:not(.editing) .course-content {
+  min-height: 0;
+}
+
+body.format-edukav.edukav-splitview-page:not(.editing) #page-content {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+body.format-edukav.edukav-splitview-page:not(.editing) #region-main {
+  height: 100%;
+  overflow: hidden;
+}
+
 .format-edukav .course-content .card-deck.cards {
   justify-content: center;
 }
 
 .format-edukav .edukav-single-section-list {
-  padding: 0 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding:10px;
+  list-style: none;
+  overflow: hidden;
 }
 
 .format-edukav .course-content ul.cards {
@@ -295,9 +333,21 @@
   border: none;
 }
 
+body.format-edukav.edukav-splitview-page:not(.editing) .single-section {
+  display: flex;
+  flex-direction: column;
+  height: var(--edukav-single-section-height, calc(100dvh - 76px));
+  overflow: hidden;
+}
+
+body.format-edukav.edukav-splitview-page.editing .single-section {
+  height: auto;
+  overflow: visible;
+}
+
 .format-edukav .course-content .single-section .section-navigation {
   margin-bottom: 18px;
-  padding: 2rem 1.25rem;
+  padding: 1rem;
   background: #ffffff;
   border: 1px solid #eef2f7;
   border-radius: 18px;
@@ -490,7 +540,7 @@
 
 .format-edukav #section-0 .section[data-for="cmlist"] {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -572,11 +622,6 @@
   #section-0
   .section[data-for="cmlist"]
   > .activity.activity-wrapper
-  .activity-actions,
-.format-edukav
-  #section-0
-  .section[data-for="cmlist"]
-  > .activity.activity-wrapper
   .activity-groupmode-info,
 .format-edukav
   #section-0
@@ -589,6 +634,28 @@
   > .activity.activity-wrapper
   .activity-afterlink {
   display: none;
+}
+
+.format-edukav
+  #section-0
+  .section[data-for="cmlist"]
+  > .activity.activity-wrapper
+  .activity-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-self: end;
+  align-self: start;
+  margin-top: 0.35rem;
+  position: relative;
+  z-index: 2;
+}
+
+.format-edukav
+  #section-0
+  .section[data-for="cmlist"]
+  > .activity.activity-wrapper
+  .activity-actions .dropdown-toggle {
+  min-width: 2rem;
 }
 
 @media (max-width: 767.98px) {
@@ -632,7 +699,7 @@
 }
 
 .format-edukav .edukav-breadcrumb-title {
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 14px;
@@ -644,6 +711,7 @@
   text-align: left;
   color: #475569;
   margin-bottom: 20px;
+  text-align: justify;
 }
 
 /* META INFO */
@@ -830,7 +898,6 @@
 
 .format-edukav .edukav-single-section-header {
   position: sticky;
-  top: 70px; /* ajusta según navbar superior */
 
   z-index: 200;
 
@@ -839,6 +906,7 @@
   gap: 1rem;
 
   margin-top: 1rem;
+  margin-bottom:1rem;
   min-height: 3rem;
 
   background: transparent; /* sin sombra ni fondo extra */
@@ -869,7 +937,7 @@
 .format-edukav .edukav-single-section-title {
   max-width: 100%;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #0f172a;
   line-height: 1.2;
@@ -929,6 +997,9 @@
 .format-edukav .edukav-splitview {
   display: flex;
   align-items: flex-start;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* SIDEBAR */
@@ -940,9 +1011,10 @@
   flex: 0 0 auto;
 
   /* alto completo visible */
+
   height: 100vh;
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 0;
+  max-height: 100%;
 
   padding: 15px;
   margin-right: 18px;
@@ -962,6 +1034,8 @@
   width: 100%;
   transition: 0.3s ease;
   min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
 }
 
 .format-edukav .edukav-sidebar-header {
@@ -1005,6 +1079,7 @@
 .format-edukav .edukav-sidebar-shell.closed {
   width: 0;
   padding: 0;
+  margin: 0;
   overflow: hidden;
   border: none;
 }
@@ -1132,14 +1207,16 @@
 /* PANEL DERECHO */
 .format-edukav .edukav-main {
   flex: 1;
-  min-height: 400px;
+  height: 100%;
+  min-height: 0;
 }
 
 .format-edukav .edukav-content-panel {
-  /* alto completo del viewport */
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 0;
+  max-height: 100%;
 
   background: #ffffff;
   border: 1px solid #eef2f7;
@@ -1239,7 +1316,9 @@
 
 .format-edukav .edukav-activity-frame {
   width: 100%;
-  height: 90vh;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
   border: 0;
   background: white;
   display: block;
@@ -1276,6 +1355,7 @@
 @media (max-width: 991.98px) {
   .format-edukav .edukav-splitview {
     flex-direction: column;
+    overflow: visible;
   }
 
   .format-edukav .edukav-sidebar {
@@ -1288,6 +1368,7 @@
 
   .format-edukav .edukav-main {
     width: 100%;
+    min-height: 65vh;
   }
 
   .format-edukav .edukav-content-panel,
@@ -1311,7 +1392,9 @@
 
 .format-edukav .course-section {
   margin: 0;
+  margin-bottom: 1rem;
 }
+
 .format-edukav .course-section .activity-item .activity-grid {
   align-items: start;
   column-gap: 0.2rem;

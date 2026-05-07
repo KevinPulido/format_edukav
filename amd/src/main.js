@@ -39,6 +39,15 @@ const NORMAL_NAVIGATION_PATTERNS = [
   /\/mod\/scorm\/view\.php(?:$|\?)/i,
 ];
 
+const SINGLE_SECTION_SELECTOR = ".single-section";
+
+const isEditingMode = () => {
+  return (
+    document.body.classList.contains("editing") ||
+    document.body.classList.contains("editingon")
+  );
+};
+
 const isPlainLeftClick = (event) => {
   return (
     event.button === 0 &&
@@ -184,6 +193,50 @@ const getFrameDocumentUrl = (frame) => {
   }
 };
 
+const setFrameLoadingState = (frame, isLoading) => {
+  if (!frame) {
+    return;
+  }
+
+  frame.style.visibility = isLoading ? "hidden" : "visible";
+};
+
+const syncSplitViewHeight = () => {
+  if (isEditingMode()) {
+    return;
+  }
+
+  const viewportHeight = window.visualViewport?.height || window.innerHeight || 0;
+
+  document.querySelectorAll(SINGLE_SECTION_SELECTOR).forEach((container) => {
+    const rect = container.getBoundingClientRect();
+    const availableHeight = Math.max(480, Math.floor(viewportHeight - rect.top - 8));
+
+    container.style.setProperty(
+      "--edukav-single-section-height",
+      `${availableHeight}px`
+    );
+  });
+};
+
+const enableSplitViewPageMode = () => {
+  if (!document.querySelector(SELECTORS.splitView)) {
+    document.documentElement.classList.remove("edukav-splitview-page");
+    document.body.classList.remove("edukav-splitview-page");
+    return false;
+  }
+
+  if (isEditingMode()) {
+    document.documentElement.classList.remove("edukav-splitview-page");
+    document.body.classList.remove("edukav-splitview-page");
+    return false;
+  }
+
+  document.documentElement.classList.add("edukav-splitview-page");
+  document.body.classList.add("edukav-splitview-page");
+  return true;
+};
+
 /**
  * Cargar actividad en iframe
  *
@@ -214,6 +267,7 @@ const loadActivity = (splitView, activity, url, activityName) => {
   const finalUrl = url + separator + "contentonly=1";
 
   content.classList.add("is-loading");
+  setFrameLoadingState(frame, true);
   updatePanel(splitView, "loading", activityName);
   setActiveActivity(splitView, activity);
 
@@ -235,6 +289,7 @@ const setupFrameEvents = (splitView) => {
 
   frame.addEventListener("load", () => {
     content.classList.remove("is-loading");
+    setFrameLoadingState(frame, false);
 
     try {
       const doc = frame.contentDocument;
@@ -257,18 +312,18 @@ const setupFrameEvents = (splitView) => {
        */
       const target = doc.querySelector("#topofscroll");
 
-      if (target) {
-        doc.body.innerHTML = "";
-        doc.body.appendChild(target);
+        if (target) {
+          doc.body.innerHTML = "";
+          doc.body.appendChild(target);
 
-        doc.body.style.margin = "0";
-        doc.body.style.padding = "20px";
-        doc.body.style.background = "#fff";
+          doc.body.style.margin = "0";
+          doc.body.style.padding = "20px";
+          doc.body.style.background = "#fff";
 
-        target.style.display = "block";
-        target.style.maxWidth = "1100px";
-        target.style.margin = "0 auto";
-      }
+          target.style.display = "block";
+          target.style.maxWidth = "1100px";
+          target.style.margin = "0 auto";
+        }
 
       const frameTitle = doc.title || "";
 
@@ -285,6 +340,7 @@ const setupFrameEvents = (splitView) => {
 
   frame.addEventListener("error", () => {
     content.classList.remove("is-loading");
+    setFrameLoadingState(frame, false);
     updatePanel(splitView, "error");
   });
 };
@@ -378,7 +434,27 @@ const initSplitView = (splitView) => {
 };
 
 export const init = () => {
-  document.querySelectorAll(SELECTORS.splitView).forEach(initSplitView);
+  const splitViews = document.querySelectorAll(SELECTORS.splitView);
+
+  if (!splitViews.length) {
+    document.documentElement.classList.remove("edukav-splitview-page");
+    document.body.classList.remove("edukav-splitview-page");
+    return;
+  }
+
+  const splitViewPageModeEnabled = enableSplitViewPageMode();
+  splitViews.forEach(initSplitView);
+  if (splitViewPageModeEnabled) {
+    syncSplitViewHeight();
+  }
+
+  if (!window.__edukavSplitViewResizeBound) {
+    window.__edukavSplitViewResizeBound = true;
+    window.addEventListener("resize", syncSplitViewHeight, { passive: true });
+    window.addEventListener("orientationchange", syncSplitViewHeight, {
+      passive: true,
+    });
+  }
 };
 
 export default {
