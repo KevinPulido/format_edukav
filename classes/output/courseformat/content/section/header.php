@@ -78,12 +78,10 @@ class header extends header_base {
         $course = $format->get_course();
 
         // On the course main page, display this section as a card unless the
-        // user is currently editing the page. Section #0 should never be
-        // displayed as a card.
+        // user is currently editing the page.
         $issinglesectionpage = $this->format->get_sectionnum() != 0;
         $showascard = !$issinglesectionpage
-            && !$PAGE->user_is_editing()
-            && !$this->section->section == 0;
+            && !$PAGE->user_is_editing();
 
         $issubsection = method_exists($this->section, 'is_delegated')
             && $this->section->is_delegated()
@@ -93,11 +91,17 @@ class header extends header_base {
             ? $output->section_title($section, $course)
             : $output->section_title_without_link($section, $course);
 
-        $data->url = course_get_url(
-            $this->section->course,
-            $this->section->section,
-            [ 'sr' => true ]
-        );
+        if ($this->section->section === 0) {
+            $data->url = (new moodle_url('/course/section.php', [
+                'id' => $this->section->id,
+            ]))->out(false);
+        } else {
+            $data->url = course_get_url(
+                $this->section->course,
+                $this->section->section,
+                [ 'sr' => true ]
+            );
+        }
 
         // We want to hide the "go to section" link on Moodle 4.4+.
         if ($CFG->version >= 2024042200 && (!isset($data->controlmenu) || !$data->controlmenu)) {

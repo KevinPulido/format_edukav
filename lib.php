@@ -55,6 +55,8 @@ define('FORMAT_EDUKAV_SECTIONNAVIGATIONHOME_HIDE', '1');
 define('FORMAT_EDUKAV_SECTIONNAVIGATIONHOME_SHOW', '2');
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS', 1);
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_ACTIVITIES', 2);
+define('FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES', 'generalobjectives');
+define('FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA', 'generalcronograma');
 
 /**
  * Course format main class
@@ -178,6 +180,30 @@ class format_edukav extends format_topics {
         ];
 
         $options['section0'] = $createselect('section0', $section0options, $defaults->section0, true);
+
+        $options['generalobjectives'] = [
+            'default' => '',
+            'type' => PARAM_RAW,
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalobjectivesformat'] = [
+            'default' => FORMAT_HTML,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalcronograma'] = [
+            'default' => '',
+            'type' => PARAM_RAW,
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalcronogramaformat'] = [
+            'default' => FORMAT_HTML,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
 
         $sectionnavigationoptions = [
             FORMAT_EDUKAV_SECTIONNAVIGATION_NONE => new lang_string('form:course:sectionnavigation:none', 'format_edukav'),
@@ -306,6 +332,30 @@ class format_edukav extends format_topics {
             'default' => '',
             'type' => PARAM_TEXT,
             'label' => new lang_string('section:break', 'format_cards'),
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalobjectives'] = [
+            'default' => '',
+            'type' => PARAM_RAW,
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalobjectivesformat'] = [
+            'default' => FORMAT_HTML,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalcronograma'] = [
+            'default' => '',
+            'type' => PARAM_RAW,
+            'element_type' => 'hidden',
+        ];
+
+        $options['generalcronogramaformat'] = [
+            'default' => FORMAT_HTML,
+            'type' => PARAM_INT,
             'element_type' => 'hidden',
         ];
 
@@ -1050,7 +1100,13 @@ function format_edukav_pluginfile(stdClass $course,
         send_file_not_found();
     }
 
-    if ($filearea !== FORMAT_EDUKAV_FILEAREA_IMAGE) {
+    $allowedfileareas = [
+        FORMAT_EDUKAV_FILEAREA_IMAGE,
+        FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES,
+        FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+    ];
+
+    if (!in_array($filearea, $allowedfileareas, true)) {
         send_file_not_found();
     }
 

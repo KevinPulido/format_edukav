@@ -67,6 +67,7 @@ class content extends content_base {
 
         // Is this a single section page?
         $singlesection = $this->format->get_sectionnum();
+        $issectionpage = $PAGE->pagetype === 'course-section' || $PAGE->pagetype === 'course-view-section-edukav';
 
         $this->hasaddsection = !$singlesection;
         
@@ -105,7 +106,8 @@ class content extends content_base {
         $videourl = $this->format->normalize_video_url($bannervideo);
         $videoid = $this->format->extract_video_id($bannervideo);
 
-        $data->showcourseEdukav = !$singlesection;
+        // Show the large course hero only on the course home page, not on the dedicated section page.
+        $data->showcourseEdukav = !$singlesection && !$issectionpage;
         
         $data->coursesEdukav = [
             'fullname' => $course->fullname,
@@ -131,18 +133,38 @@ class content extends content_base {
 
         $data->subsectionsascards = $this->format->get_format_option("subsectionsascards") == FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS;
 
-        if (!$singlesection) {
-            return $data;
+        $generalsection = $this->format->get_section(0);
+        $generalobjectives = $generalsection ? $this->format->get_format_option('generalobjectives', $generalsection) : '';
+        $generalobjectivesformat = $generalsection
+            ? (int)$this->format->get_format_option('generalobjectivesformat', $generalsection)
+            : FORMAT_HTML;
+        if ($generalobjectives === '') {
+            $generalobjectives = $this->format->get_format_option('generalobjectives');
+            $generalobjectivesformat = (int)$this->format->get_format_option('generalobjectivesformat');
         }
+        $data->generalobjectiveshtml = !empty($generalobjectives)
+            ? format_text(
+                $generalobjectives,
+                $generalobjectivesformat ?: FORMAT_HTML,
+                ['context' => $context]
+            )
+            : '';
 
-        if ($PAGE->user_is_editing()) {
-            $data->initialsection = '';
-        } else if ($this->format->get_format_option('section0') == FORMAT_EDUKAV_SECTION0_COURSEPAGE) {
-            $data->initialsection = '';
-        } else if (empty($data->initialsection)) {
-            $section0 = new $this->sectionclass($this->format, $this->format->get_section(0));
-            $data->initialsection = $section0->export_for_template($output);
+        $generalcronograma = $generalsection ? $this->format->get_format_option('generalcronograma', $generalsection) : '';
+        $generalcronogramaformat = $generalsection
+            ? (int)$this->format->get_format_option('generalcronogramaformat', $generalsection)
+            : FORMAT_HTML;
+        if ($generalcronograma === '') {
+            $generalcronograma = $this->format->get_format_option('generalcronograma');
+            $generalcronogramaformat = (int)$this->format->get_format_option('generalcronogramaformat');
         }
+        $data->generalcronogramahtml = !empty($generalcronograma)
+            ? format_text(
+                $generalcronograma,
+                $generalcronogramaformat ?: FORMAT_HTML,
+                ['context' => $context]
+            )
+            : '';
 
         $this->add_section_navigation($data, $output);
         

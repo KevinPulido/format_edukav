@@ -994,6 +994,229 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   flex-shrink: 0;
 }
 
+.format-edukav .edukav-general-section {
+  max-width: 1240px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.format-edukav .edukav-general-section-header {
+  margin: 0 0 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 243, 255, 0.95));
+  border: 1px solid rgba(115, 127, 180, 0.14);
+  box-shadow: 0 10px 28px rgba(36, 56, 116, 0.08);
+}
+
+.format-edukav .edukav-general-section-title {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #17213a;
+}
+
+.format-edukav .edukav-general-section-lead {
+  margin: 0.45rem 0 0;
+  max-width: 64ch;
+  color: #5c6681;
+  font-size: 0.98rem;
+}
+
+.format-edukav .edukav-general-objectives {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(115, 127, 180, 0.14);
+  box-shadow: 0 12px 30px rgba(36, 56, 116, 0.08);
+}
+
+.format-edukav .edukav-general-objectives--textonly {
+  grid-template-columns: 1fr;
+}
+
+.format-edukav .edukav-general-objectives-media {
+  min-height: 180px;
+  border-radius: 18px;
+  background-color: #e6ebf9;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.format-edukav .edukav-general-objectives-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+}
+
+.format-edukav .edukav-general-objectives-kicker {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5c63f2;
+}
+
+.format-edukav .edukav-general-objectives-text {
+  color: #25324d;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+.format-edukav .edukav-general-objectives-text :is(h1, h2, h3, h4, h5, h6),
+.format-edukav .edukav-general-chrono-text :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 0.75rem;
+  color: #1f2a44;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.format-edukav .edukav-general-objectives-text h1,
+.format-edukav .edukav-general-chrono-text h1 {
+  font-size: 1.7rem;
+}
+
+.format-edukav .edukav-general-objectives-text h2,
+.format-edukav .edukav-general-chrono-text h2 {
+  font-size: 1.45rem;
+}
+
+.format-edukav .edukav-general-objectives-text h3,
+.format-edukav .edukav-general-chrono-text h3 {
+  font-size: 1.2rem;
+}
+
+.format-edukav .edukav-general-objectives-text p,
+.format-edukav .edukav-general-chrono-text p {
+  margin: 0 0 0.9rem;
+}
+
+.format-edukav .edukav-general-objectives-text ul,
+.format-edukav .edukav-general-objectives-text ol,
+.format-edukav .edukav-general-chrono-text ul,
+.format-edukav .edukav-general-chrono-text ol {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.format-edukav .edukav-general-objectives-text li + li,
+.format-edukav .edukav-general-chrono-text li + li {
+  margin-top: 0.4rem;
+}
+
+.format-edukav .edukav-general-objectives-text a,
+.format-edukav .edukav-general-chrono-text a {
+  color: #4e5af6;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.format-edukav .edukav-general-objectives-text blockquote,
+.format-edukav .edukav-general-chrono-text blockquote {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid rgba(88, 101, 242, 0.35);
+  background: rgba(88, 101, 242, 0.06);
+  border-radius: 0 12px 12px 0;
+  color: #334155;
+}
+
+.format-edukav .edukav-general-objectives-text img,
+.format-edukav .edukav-general-chrono-text img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.format-edukav .edukav-general-objectives-text table,
+.format-edukav .edukav-general-chrono-text table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.format-edukav .edukav-general-objectives-text th,
+.format-edukav .edukav-general-objectives-text td,
+.format-edukav .edukav-general-chrono-text th,
+.format-edukav .edukav-general-chrono-text td {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #dbe3f2;
+  vertical-align: top;
+}
+
+.format-edukav .edukav-general-objectives-text th,
+.format-edukav .edukav-general-chrono-text th {
+  background: #eef2ff;
+  color: #1f2a44;
+  font-weight: 700;
+}
+
+.format-edukav .edukav-general-objectives-text table p:last-child,
+.format-edukav .edukav-general-chrono-text table p:last-child {
+  margin-bottom: 0;
+}
+
+.format-edukav .edukav-general-objectives-text p:last-child,
+.format-edukav .edukav-general-chrono-text p:last-child {
+  margin-bottom: 0;
+}
+
+.format-edukav .edukav-general-objectives-placeholder {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.format-edukav .edukav-general-chrono {
+  margin: 0 0 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 18px;
+  background: linear-gradient(90deg, rgba(88, 101, 242, 0.08), rgba(255, 255, 255, 0.95));
+  border: 1px dashed rgba(88, 101, 242, 0.28);
+}
+
+.format-edukav .edukav-general-chrono-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #2b3a67;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.format-edukav .edukav-general-chrono-text {
+  margin-top: 0.35rem;
+  color: #4f5b75;
+  line-height: 1.5;
+}
+
+.format-edukav .edukav-general-chrono-placeholder {
+  margin-bottom: 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .format-edukav .edukav-general-objectives {
+    grid-template-columns: 1fr;
+  }
+
+  .format-edukav .edukav-general-objectives-media {
+    min-height: 160px;
+  }
+}
+
 .format-edukav .edukav-splitview {
   display: flex;
   align-items: flex-start;

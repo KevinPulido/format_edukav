@@ -80,18 +80,25 @@ class section extends section_base {
      * @return bool
      */
     private function show_as_card(): bool {
-        global $CFG;
+        global $PAGE;
 
         // Check if this section is actually a subsection. If it is, we only display it as a card if we're not in
         // editing mode.
-        if ($CFG->version >= 2024100700 && $this->section->is_delegated() && $this->section->component == 'mod_subsection') {
+        if (method_exists($this->section, 'is_delegated')
+            && $this->section->is_delegated()
+            && $this->section->component == 'mod_subsection') {
             return !$this->format->show_editor();
+        }
+
+        // On the dedicated section page, the general section should render in the normal Moodle layout.
+        if (($PAGE->pagetype === 'course-section' || $PAGE->pagetype === 'course-view-section-edukav')
+            && $this->section->section == 0) {
+            return false;
         }
 
         $issinglesectionpage = $this->format->get_sectionnum() != 0;
         return !$issinglesectionpage
-            && !$this->format->show_editor()
-            && !$this->section->section == 0;
+            && !$this->format->show_editor();
     }
 
     /**
@@ -116,18 +123,12 @@ class section extends section_base {
         }
 
         // On the course main page, display this section as a card unless the
-        // user is currently editing the page. Section #0 should never be
-        // displayed as a card.
+        // user is currently editing the page.
         $issinglesectionpage = $this->format->get_sectionnum() != 0;
         $showascard = $this->show_as_card();
 
         $data->showascard = $showascard;
-
-        // Cards may be highlighted.
-        $data->highlighted = $course->marker == $this->section->section;
-        if ($data->highlighted) {
-            $data->classes[] = "highlighted";
-        }
+        $data->isgeneralsection = $this->section->section == 0;
 
         // Don't show the "insert new topic" button after every section in editing mode.
         $data->insertafter = false;
@@ -287,27 +288,6 @@ class section extends section_base {
             'showpercentage' => !$iscomplete && $progressformat == FORMAT_EDUKAV_PROGRESSFORMAT_PERCENTAGE,
             'showcount' => !$iscomplete && $progressformat == FORMAT_EDUKAV_PROGRESSFORMAT_COUNT,
         ];
-    }
-
-    /**
-     * For section #0, we want to make any rendered subsections believe that they're in a
-     * COURSE_DISPLAY_SINGLEPAGE course. This ensures that subsections are correctly rendered as
-     * collapsible or as cards, depending on the format settings.
-     *
-     * @param stdClass $data
-     * @param renderer_base $output
-     * @return bool
-     */
-    protected function add_cm_data(stdClass &$data, renderer_base $output): bool {
-        if ($this->section->section == 0) {
-            $this->format->set_forced_course_display(COURSE_DISPLAY_SINGLEPAGE);
-        }
-
-        try {
-            return parent::add_cm_data($data, $output);
-        } finally {
-            $this->format->set_forced_course_display(null);
-        }
     }
 
     /**

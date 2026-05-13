@@ -56,6 +56,33 @@ class editcard_form extends editsection_form {
         parent::definition();
 
         $form = $this->_form;
+        $editoroptions = $this->_customdata['editoroptions'];
+        $section = $this->_customdata['cs'];
+
+        if ($section->section === 0) {
+            $form->addElement('header', 'generalcontent', get_string('form:course:generalobjectives', 'format_edukav'));
+            $form->setExpanded('generalcontent');
+
+            $form->addElement(
+                'editor',
+                'generalobjectives_editor',
+                get_string('form:course:generalobjectives', 'format_edukav'),
+                null,
+                $editoroptions
+            );
+            $form->setType('generalobjectives_editor', PARAM_RAW);
+            $form->addHelpButton('generalobjectives_editor', 'form:course:generalobjectives', 'format_edukav');
+
+            $form->addElement(
+                'editor',
+                'generalcronograma_editor',
+                get_string('form:course:generalcronograma', 'format_edukav'),
+                null,
+                $editoroptions
+            );
+            $form->setType('generalcronograma_editor', PARAM_RAW);
+            $form->addHelpButton('generalcronograma_editor', 'form:course:generalcronograma', 'format_edukav');
+        }
 
         $form->addElement('header', 'cardimage', get_string('editcard', 'format_edukav'));
         $form->setExpanded('cardimage');
@@ -75,5 +102,93 @@ class editcard_form extends editsection_form {
         if (array_key_exists('image', $this->_customdata)) {
             $form->setDefault('image', $this->_customdata['image']);
         }
+    }
+
+    /**
+     * Load defaults and prepare the editor files for section 0 content blocks.
+     *
+     * @param stdClass|array $default_values object or array of default values
+     * @return void
+     */
+    public function set_data($default_values) {
+        if (!is_object($default_values)) {
+            $default_values = (object)$default_values;
+        }
+
+        $editoroptions = $this->_customdata['editoroptions'];
+        $section = $this->_customdata['cs'];
+
+        if ($section->section === 0) {
+            $course = $this->_customdata['course'];
+            $courseformat = course_get_format($course);
+            if (empty($default_values->generalobjectives)) {
+                $default_values->generalobjectives = $courseformat->get_format_option('generalobjectives');
+                $default_values->generalobjectivesformat = $courseformat->get_format_option('generalobjectivesformat');
+            }
+            if (empty($default_values->generalcronograma)) {
+                $default_values->generalcronograma = $courseformat->get_format_option('generalcronograma');
+                $default_values->generalcronogramaformat = $courseformat->get_format_option('generalcronogramaformat');
+            }
+        }
+
+        if ($section->section === 0) {
+            $default_values = file_prepare_standard_editor(
+                $default_values,
+                'generalobjectives',
+                $editoroptions,
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES,
+                $default_values->id
+            );
+            $default_values = file_prepare_standard_editor(
+                $default_values,
+                'generalcronograma',
+                $editoroptions,
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+                $default_values->id
+            );
+        }
+
+        parent::set_data($default_values);
+    }
+
+    /**
+     * Postprocess editor data so uploaded files are stored in Moodle file areas.
+     *
+     * @return stdClass|null
+     */
+    public function get_data() {
+        $data = parent::get_data();
+        if ($data === null) {
+            return null;
+        }
+
+        $section = $this->_customdata['cs'];
+        if ($section->section === 0) {
+            $editoroptions = $this->_customdata['editoroptions'];
+            $data = file_postupdate_standard_editor(
+                $data,
+                'generalobjectives',
+                $editoroptions,
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES,
+                $data->id
+            );
+            $data = file_postupdate_standard_editor(
+                $data,
+                'generalcronograma',
+                $editoroptions,
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+                $data->id
+            );
+        }
+
+        return $data;
     }
 }

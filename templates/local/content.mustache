@@ -21,30 +21,6 @@
 
     Example context (json):
     {
-        "initialsection": {
-                "num": 0,
-                "id": 34,
-                "cmlist": {
-                    "cms": [
-                        {
-                            "cmitem": {
-                                "cmformat": {
-                                    "cmname": "<a class=\"aalink\" href=\"#\"><span class=\"instancename\">Forum example</span></a>",
-                                    "hasname": "true"
-                                },
-                                "id": 3,
-                                "module": "forum",
-                                "extraclasses": "newmessages"
-                            }
-                        }
-                    ],
-                    "hascms": true
-                },
-                "iscurrent": true,
-                "summary": {
-                    "summarytext": "Summary text!"
-                }
-            },
         "sections": [
             {
                 "num": 1,
@@ -187,71 +163,112 @@
             {{/format_edukav/local/content/section}}
         {{/sections}}
     </ul>
-    <ul class="{{format}}">
-        {{#initialsection}}
-            {{$ format_edukav/local/content/section }}
-                {{> format_edukav/local/content/section}}
-            {{/format_edukav/local/content/section}}
-        {{/initialsection}}
-    </ul>
     {{#hasnavigation}}
     <div class="single-section">
         <ul class="edukav-single-section-list">
-       {{#singlesection}}
-        <div class="edukav-single-section-header">
-            {{#sectionnavigation}}
-                <div class="edukav-single-section-header-nav">
-                    {{$ format_edukav/local/content/sectionnavigation }}
-                        {{> format_edukav/local/content/sectionnavigation }}
-                    {{/ format_edukav/local/content/sectionnavigation }}
+        {{#singlesection}}
+        {{#isgeneralsection}}
+            <div class="edukav-general-section">
+                <div class="edukav-general-section-header">
+                    <h2 class="edukav-general-section-title">{{{sectionheader.title}}}</h2>
+                    <p class="edukav-general-section-lead">
+                        Recursos de inicio y enlaces clave para arrancar el curso sin perderte.
+                    </p>
                 </div>
-            {{/sectionnavigation}}
-            <div class="edukav-single-section-header-meta">
-                <div class="edukav-single-section-title">
-                    {{{sectionheader.title}}}
-                </div>
-                <div class="edukav-single-section-progress-panel">
-                    <span class="edukav-single-section-progress-label">{{#str}}ProgressModule,format_edukav{{/str}}</span>
-                    {{#sectionprogress}}
-                        <div class="edukav-single-section-progress-bar">
-                            {{> block_myoverview/progress-bar }}
+                <div class="edukav-general-objectives{{^sectionheader.image}} edukav-general-objectives--textonly{{/sectionheader.image}}">
+                    {{#sectionheader.image}}
+                    <div class="edukav-general-objectives-media" style="background-image: url('{{{sectionheader.image}}}')"></div>
+                    {{/sectionheader.image}}
+                    <div class="edukav-general-objectives-copy">
+                        <div class="edukav-general-objectives-kicker">Objetivos del curso</div>
+                        <div class="edukav-general-objectives-text">
+                            {{#generalobjectiveshtml}}
+                                {{{generalobjectiveshtml}}}
+                            {{/generalobjectiveshtml}}
+                            {{^generalobjectiveshtml}}
+                                <p class="edukav-general-objectives-placeholder">
+                                    Aquí puedes colocar los objetivos del curso.
+                                </p>
+                            {{/generalobjectiveshtml}}
                         </div>
-                    {{/sectionprogress}}
-                    <span class="edukav-single-section-progress-value">{{sectionprogresspercentage}}%</span>
-                </div>
-            </div>
-        </div>
-        <div class="edukav-splitview" data-region="edukav-splitview">                    
-            <div class="edukav-sidebar-shell">
-                <div class="edukav-sidebar-header">
-                    <span class="edukav-sidebar-header-title">Contenido del módulo</span>
-                </div>
-                <aside class="edukav-sidebar">
-                 {{$ format_edukav/local/content/section }}
-                    {{> format_edukav/local/content/section }}
-                {{/ format_edukav/local/content/section }}
-                </aside>
-            </div>
-            <main class="edukav-main">
-                <div class="edukav-content-panel" data-region="splitview-content">
-                    <div class="edukav-content-panel-header">
-                        {{>format_edukav/local/button_splitview}}
-                        <p class="edukav-content-panel-status" data-region="splitview-status">
-                            Selecciona una actividad para verla aqui.
-                        </p>
                     </div>
-                    <iframe
-                        class="edukav-activity-frame"
-                        src=""
-                        title="Vista previa de actividad"
-                        data-region="splitview-frame"
-                        frameborder="0"
-                        loading="lazy">
-                    </iframe>
                 </div>
-            </main>
+                <div class="edukav-general-chrono">
+                    <div class="edukav-general-chrono-title">Cronograma</div>
+                    <div class="edukav-general-chrono-text">
+                        {{#generalcronogramahtml}}
+                            {{{generalcronogramahtml}}}
+                        {{/generalcronogramahtml}}
+                        {{^generalcronogramahtml}}
+                            <p class="edukav-general-chrono-placeholder">
+                                Agrega aquí fechas, hitos y el orden recomendado de trabajo.
+                            </p>
+                        {{/generalcronogramahtml}}
+                    </div>
+                </div>
+                <ul class="course-content">
+                    {{$ format_edukav/local/content/section }}
+                        {{> format_edukav/local/content/section }}
+                    {{/ format_edukav/local/content/section }}
+                </ul>
+            </div>
+        {{/isgeneralsection}}
+        {{^isgeneralsection}}
+            <div class="edukav-single-section-header">
+                {{#sectionnavigation}}
+                    <div class="edukav-single-section-header-nav">
+                        {{$ format_edukav/local/content/sectionnavigation }}
+                            {{> format_edukav/local/content/sectionnavigation }}
+                        {{/ format_edukav/local/content/sectionnavigation }}
+                    </div>
+                {{/sectionnavigation}}
+                <div class="edukav-single-section-header-meta">
+                    <div class="edukav-single-section-title">
+                        {{{sectionheader.title}}}
+                    </div>
+                    <div class="edukav-single-section-progress-panel">
+                        <span class="edukav-single-section-progress-label">{{#str}}ProgressModule,format_edukav{{/str}}</span>
+                        {{#sectionprogress}}
+                            <div class="edukav-single-section-progress-bar">
+                                {{> block_myoverview/progress-bar }}
+                            </div>
+                        {{/sectionprogress}}
+                        <span class="edukav-single-section-progress-value">{{sectionprogresspercentage}}%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="edukav-splitview" data-region="edukav-splitview">                    
+                <div class="edukav-sidebar-shell">
+                    <div class="edukav-sidebar-header">
+                        <span class="edukav-sidebar-header-title">Contenido del módulo</span>
+                    </div>
+                    <aside class="edukav-sidebar">
+                     {{$ format_edukav/local/content/section }}
+                        {{> format_edukav/local/content/section }}
+                    {{/ format_edukav/local/content/section }}
+                    </aside>
+                </div>
+                <main class="edukav-main">
+                    <div class="edukav-content-panel" data-region="splitview-content">
+                        <div class="edukav-content-panel-header">
+                            {{>format_edukav/local/button_splitview}}
+                            <p class="edukav-content-panel-status" data-region="splitview-status">
+                                Selecciona una actividad para verla aqui.
+                            </p>
+                        </div>
+                        <iframe
+                            class="edukav-activity-frame"
+                            src=""
+                            title="Vista previa de actividad"
+                            data-region="splitview-frame"
+                            frameborder="0"
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </main>
 
-        </div>
+            </div>
+        {{/isgeneralsection}}
 
         {{/singlesection}}
         </ul>
