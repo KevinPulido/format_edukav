@@ -2,11 +2,6 @@
   display: none;
 }
 
-body.format-edukav #topofscroll,
-body.format-edukav #page.drawers div[role="main"] {
-  padding: 0 !important;
-}
-
 html.format-edukav.edukav-splitview-page:not(.editing),
 body.format-edukav.edukav-splitview-page:not(.editing) {
   height: 100%;
