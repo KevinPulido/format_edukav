@@ -36,7 +36,7 @@
     <div class="prevsection">
         {{#hasprevious}}
             <a href="{{{previousurl}}}"
-               class="btn edukav-section-nav-btn edukav-section-nav-btn-prev{{#previoushidden}} text-muted{{/previoushidden}}"
+               class="btn edukav-section-nav-btn edukav-section-nav-btn-prev{{#previoushidden}} text-muted{{/previoushidden}} btn-sm"
                data-action="previoussection"
                title="{{#str}}gotosection, format_edukav, {{previousname}}{{/str}}">
                 <span class="edukav-section-nav-icon">
@@ -47,7 +47,7 @@
                         {{#pix}}t/left, moodle, {{#str}}gotosection, format_edukav, {{previousname}}{{/str}}{{/pix}}
                     </span>
                 </span>
-                <span class="edukav-section-nav-text">{{#str}}previous, core{{/str}}</span>
+                <span class="edukav-section-nav-text">{{#str}}navigation:previousmodule, format_edukav{{/str}}</span>
             </a>
         {{/hasprevious}}
         {{#showcoursehome}}
@@ -67,7 +67,7 @@
                class="btn edukav-section-nav-btn edukav-section-nav-btn-next{{#nexthidden}} text-muted{{/nexthidden}}"
                data-action="nextsection"
                title="{{#str}}gotosection, format_edukav, {{nextname}}{{/str}}">
-                <span class="edukav-section-nav-text">{{#str}}next, core{{/str}}</span>
+                <span class="edukav-section-nav-text">{{#str}}navigation:nextmodule, format_edukav{{/str}}</span>
                 <span class="edukav-section-nav-icon">
                     <span class="dir-rtl-hide">
                         {{#pix}}t/right, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}

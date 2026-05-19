@@ -46,6 +46,8 @@ $string['form:course:section0:coursepage'] = 'Solo mostrar en la página princip
 $string['form:course:section0_help'] = 'La sección general es la primera sección en su curso, que generalmente contiene la página de anuncios del curso. Puede elegir tener esto visible solo en la página principal del curso, encima de la baraja de tarjetas, o visible en la página principal y cada página de sección individual.';
 $string['form:course:generalobjectives'] = 'Objetivos del curso';
 $string['form:course:generalobjectives_help'] = 'Escribe aquí una presentación breve, los objetivos del curso o contenido introductorio con texto e imágenes.';
+$string['form:course:objectives'] = 'Objetivos';
+$string['form:course:objectives_help'] = 'Escribe aquí la tabla de objetivos del curso.';
 $string['form:course:generalcronograma'] = 'Cronograma';
 $string['form:course:generalcronograma_help'] = 'Agrega aquí fechas, hitos, módulos y el orden recomendado de trabajo.';
 $string['form:course:sectionnavigation'] = 'Navegación de sección';
@@ -112,3 +114,15 @@ $string['brand_color_picker'] = 'Selector de color';
 $string['banner_start'] = 'Color inicial banner';
 $string['banner_end'] = 'Color final banner';
 $string['banner_video'] = 'Video del banner';
+$string['navigation:nextmodule'] = 'Siguiente módulo';
+$string['navigation:previousmodule'] = 'Módulo anterior';
+
+
+$string['general:section_objectives'] = 'Objetivos del curso';
+$string['general:section_schedule'] = 'cronograma del curso';
+$string['general:section:text:table:header:module'] = 'Módulo';
+$string['general:section:text:table:header:generalobjective'] = 'Objetivo General';
+$string['general:section:text:table:header:specificobjectives'] = 'Objetivos Específicos';
+$string['general:section:text:table:instructions:module'] = 'Diligencia el nombre del módulo.';
+$string['genral:section:text:table:instructions:generalobjective'] = 'Diligencia el objetivo general del módulo.';
+$string['general:section:text:table:instructions:specificobjectives'] = 'Diligencia los objetivos específicos del módulo. Agrega cada objetivo específico en una nueva línea.';

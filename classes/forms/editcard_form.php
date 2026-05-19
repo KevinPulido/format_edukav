@@ -65,13 +65,13 @@ class editcard_form extends editsection_form {
 
             $form->addElement(
                 'editor',
-                'generalobjectives_editor',
-                get_string('form:course:generalobjectives', 'format_edukav'),
+                'objectives_editor',
+                get_string('form:course:objectives', 'format_edukav'),
                 null,
                 $editoroptions
             );
-            $form->setType('generalobjectives_editor', PARAM_RAW);
-            $form->addHelpButton('generalobjectives_editor', 'form:course:generalobjectives', 'format_edukav');
+            $form->setType('objectives_editor', PARAM_RAW);
+            $form->addHelpButton('objectives_editor', 'form:course:objectives', 'format_edukav');
 
             $form->addElement(
                 'editor',
@@ -121,11 +121,14 @@ class editcard_form extends editsection_form {
         if ($section->section === 0) {
             $course = $this->_customdata['course'];
             $courseformat = course_get_format($course);
-            if (empty($default_values->generalobjectives)) {
-                $default_values->generalobjectives = $courseformat->get_format_option('generalobjectives');
-                $default_values->generalobjectivesformat = $courseformat->get_format_option('generalobjectivesformat');
+            if (!property_exists($default_values, 'objectives') || trim((string)$default_values->objectives) === '') {
+                $savedobjectives = $courseformat->get_format_option('objectives');
+                $default_values->objectives = trim((string)$savedobjectives) !== ''
+                    ? $savedobjectives
+                    : $this->get_default_objectives_html();
+                $default_values->objectivesformat = $courseformat->get_format_option('objectivesformat') ?: FORMAT_HTML;
             }
-            if (empty($default_values->generalcronograma)) {
+            if (!property_exists($default_values, 'generalcronograma')) {
                 $default_values->generalcronograma = $courseformat->get_format_option('generalcronograma');
                 $default_values->generalcronogramaformat = $courseformat->get_format_option('generalcronogramaformat');
             }
@@ -134,11 +137,11 @@ class editcard_form extends editsection_form {
         if ($section->section === 0) {
             $default_values = file_prepare_standard_editor(
                 $default_values,
-                'generalobjectives',
+                'objectives',
                 $editoroptions,
                 $editoroptions['context'],
                 'format_edukav',
-                \FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES,
+                \FORMAT_EDUKAV_FILEAREA_OBJECTIVES,
                 $default_values->id
             );
             $default_values = file_prepare_standard_editor(
@@ -153,6 +156,48 @@ class editcard_form extends editsection_form {
         }
 
         parent::set_data($default_values);
+    }
+
+    /**
+     * Default objectives table shown in the editor when no content has been written yet.
+     *
+     * @return string
+     */
+    private function get_default_objectives_html(): string {
+        return '
+            <table class="edukav-objectives-table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{#str}}general:section:text:table:header:module{{/str}}</th>
+                        <th scope="col">{{#str}}general:section:text:table:header:generalobjective{{/str}}</th>
+                        <th scope="col">{{#str}}general:section:text:table:header:specificobjectives{{/str}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. {{#str}}general:section:text:table:instructions:module{{/str}}</td>
+                        <td>{{#str}}general:section:text:table:instructions:generalobjective{{/str}}</td>
+                        <td>
+                            <p>{{#str}}general:section:text:table:instructions:specificobjectives{{/str}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2. {{#str}}general:section:text:table:instructions:module{{/str}}</td>
+                        <td>{{#str}}general:section:text:table:instructions:generalobjective{{/str}}</td>
+                        <td>
+                            <p>{{#str}}general:section:text:table:instructions:specificobjectives{{/str}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3. {{#str}}general:section:text:table:instructions:module{{/str}}</td>
+                        <td>{{#str}}general:section:text:table:instructions:generalobjective{{/str}}</td>
+                        <td>
+                            <p>{{#str}}general:section:text:table:instructions:specificobjectives{{/str}}</p>
+                        </td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>';
     }
 
     /**
@@ -171,11 +216,11 @@ class editcard_form extends editsection_form {
             $editoroptions = $this->_customdata['editoroptions'];
             $data = file_postupdate_standard_editor(
                 $data,
-                'generalobjectives',
+                'objectives',
                 $editoroptions,
                 $editoroptions['context'],
                 'format_edukav',
-                \FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES,
+                \FORMAT_EDUKAV_FILEAREA_OBJECTIVES,
                 $data->id
             );
             $data = file_postupdate_standard_editor(
@@ -192,3 +237,4 @@ class editcard_form extends editsection_form {
         return $data;
     }
 }
+

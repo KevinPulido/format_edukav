@@ -134,18 +134,25 @@ class content extends content_base {
         $data->subsectionsascards = $this->format->get_format_option("subsectionsascards") == FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS;
 
         $generalsection = $this->format->get_section(0);
-        $generalobjectives = $generalsection ? $this->format->get_format_option('generalobjectives', $generalsection) : '';
-        $generalobjectivesformat = $generalsection
-            ? (int)$this->format->get_format_option('generalobjectivesformat', $generalsection)
+        $objectives = $generalsection ? $this->format->get_format_option('objectives', $generalsection) : '';
+        $objectivesformat = $generalsection
+            ? (int)$this->format->get_format_option('objectivesformat', $generalsection)
             : FORMAT_HTML;
-        if ($generalobjectives === '') {
-            $generalobjectives = $this->format->get_format_option('generalobjectives');
-            $generalobjectivesformat = (int)$this->format->get_format_option('generalobjectivesformat');
+        if ($objectives === '') {
+            $objectives = $this->format->get_format_option('objectives');
+            $objectivesformat = (int)$this->format->get_format_option('objectivesformat');
         }
-        $data->generalobjectiveshtml = !empty($generalobjectives)
+        $data->objectiveshtml = !empty($objectives)
             ? format_text(
-                $generalobjectives,
-                $generalobjectivesformat ?: FORMAT_HTML,
+                file_rewrite_pluginfile_urls(
+                    $objectives,
+                    'pluginfile.php',
+                    $context->id,
+                    'format_edukav',
+                    FORMAT_EDUKAV_FILEAREA_OBJECTIVES,
+                    $generalsection->id
+                ),
+                $objectivesformat ?: FORMAT_HTML,
                 ['context' => $context]
             )
             : '';
@@ -160,11 +167,49 @@ class content extends content_base {
         }
         $data->generalcronogramahtml = !empty($generalcronograma)
             ? format_text(
-                $generalcronograma,
+                file_rewrite_pluginfile_urls(
+                    $generalcronograma,
+                    'pluginfile.php',
+                    $context->id,
+                    'format_edukav',
+                    FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+                    $generalsection->id
+                ),
                 $generalcronogramaformat ?: FORMAT_HTML,
                 ['context' => $context]
             )
             : '';
+
+        $data->generalnavigation = false;
+        if ($generalsection) {
+            $modinfo = $this->format->get_modinfo();
+            $nextsection = null;
+
+            foreach ($modinfo->get_section_info_all() as $sectioninfo) {
+                if ((int) $sectioninfo->section === 0) {
+                    continue;
+                }
+
+                if (!$sectioninfo->uservisible) {
+                    continue;
+                }
+
+                $nextsection = $sectioninfo;
+                break;
+            }
+
+            if ($nextsection) {
+                $data->generalnavigation = (object) [
+                    'title' => format_string($course->fullname),
+                    'homeurl' => course_get_url($course, null, ['navigation' => true])->out(),
+                    'homename' => get_string('maincoursepage'),
+                    'hasnext' => true,
+                    'nexturl' => $this->format->get_view_url($nextsection, ['navigation' => true])->out(false),
+                    'nextname' => $nextsection->name,
+                    'nexthidden' => !$nextsection->visible,
+                ];
+            }
+        }
 
         $this->add_section_navigation($data, $output);
         

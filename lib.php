@@ -55,7 +55,7 @@ define('FORMAT_EDUKAV_SECTIONNAVIGATIONHOME_HIDE', '1');
 define('FORMAT_EDUKAV_SECTIONNAVIGATIONHOME_SHOW', '2');
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS', 1);
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_ACTIVITIES', 2);
-define('FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES', 'generalobjectives');
+define('FORMAT_EDUKAV_FILEAREA_OBJECTIVES', 'objectives');
 define('FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA', 'generalcronograma');
 
 /**
@@ -181,13 +181,13 @@ class format_edukav extends format_topics {
 
         $options['section0'] = $createselect('section0', $section0options, $defaults->section0, true);
 
-        $options['generalobjectives'] = [
+        $options['objectives'] = [
             'default' => '',
             'type' => PARAM_RAW,
             'element_type' => 'hidden',
         ];
 
-        $options['generalobjectivesformat'] = [
+        $options['objectivesformat'] = [
             'default' => FORMAT_HTML,
             'type' => PARAM_INT,
             'element_type' => 'hidden',
@@ -335,13 +335,13 @@ class format_edukav extends format_topics {
             'element_type' => 'hidden',
         ];
 
-        $options['generalobjectives'] = [
+        $options['objectives'] = [
             'default' => '',
             'type' => PARAM_RAW,
             'element_type' => 'hidden',
         ];
 
-        $options['generalobjectivesformat'] = [
+        $options['objectivesformat'] = [
             'default' => FORMAT_HTML,
             'type' => PARAM_INT,
             'element_type' => 'hidden',
@@ -1096,13 +1096,9 @@ function format_edukav_pluginfile(stdClass $course,
                                  array $args,
                                  $forcedownload,
                                  array $options = []) {
-    if ($context->contextlevel != CONTEXT_COURSE && $context->contextlevel != CONTEXT_SYSTEM) {
-        send_file_not_found();
-    }
-
     $allowedfileareas = [
         FORMAT_EDUKAV_FILEAREA_IMAGE,
-        FORMAT_EDUKAV_FILEAREA_GENERALOBJECTIVES,
+        FORMAT_EDUKAV_FILEAREA_OBJECTIVES,
         FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
     ];
 
@@ -1121,5 +1117,10 @@ function format_edukav_pluginfile(stdClass $course,
 
     $filestorage = get_file_storage();
     $file = $filestorage->get_file($context->id, 'format_edukav', $filearea, $itemid, $filepath, $filename);
+
+    if (!$file) {
+        send_file_not_found();
+    }
+
     send_stored_file($file, 86400, 0, $forcedownload, $options);
 }

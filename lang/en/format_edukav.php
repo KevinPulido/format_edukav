@@ -46,6 +46,8 @@ $string['form:course:section0:coursepage'] = 'Only show on the main course page'
 $string['form:course:section0_help'] = 'The general section is the first section in your course, which usually contains the course\'s announcements page. You can choose to have this visible either only on the course\'s main page, on top of the card deck, or visible on the main page and each individual section page.';
 $string['form:course:generalobjectives'] = 'Course objectives';
 $string['form:course:generalobjectives_help'] = 'Write a short introduction, the course objectives, or any introductory content with text and images.';
+$string['form:course:objectives'] = 'Objectives';
+$string['form:course:objectives_help'] = 'Write the course objectives table here.';
 $string['form:course:generalcronograma'] = 'Schedule';
 $string['form:course:generalcronograma_help'] = 'Add dates, milestones, modules, and the recommended order of work here.';
 $string['form:course:sectionnavigation'] = 'Section navigation';
@@ -112,3 +114,15 @@ $string['brand_color_picker'] = 'Color picker';
 $string['banner_start'] = 'Banner start color';
 $string['banner_end'] = 'Banner end color';
 $string['banner_video'] = 'Banner video';
+$string['navigation:nextmodule'] = 'Next module';
+$string['navigation:previousmodule'] = 'Previous module';
+
+
+$string['general:section_objectives'] = 'Course Objectives';
+$string['general:section_schedule'] = 'Course Schedule';
+$string['general:section:text:table:header:module'] = 'Module';
+$string['general:section:text:table:header:generalobjective'] = 'General objective';
+$string['general:section:text:table:header:specificobjectives'] = 'Specific objectives';
+$string['general:section:text:table:instructions:module'] = 'Fill in the module name.';
+$string['genral:section:text:table:instructions:generalobjective'] = 'Fill in the general objective of the module.';
+$string['general:section:text:table:instructions:specificobjectives'] = 'Fill in the specific objectives of the module. Add each specific objective on a new line.';
