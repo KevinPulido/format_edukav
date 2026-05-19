@@ -1,4 +1,3 @@
-<div class="edukav-welcome-card">
   <div class="edukav-welcome-copy">
     <h3 class="edukav-welcome-title">
       {{#str}}general:welcome_title,format_edukav{{/str}}
@@ -7,6 +6,16 @@
     <p class="edukav-welcome-text">
       {{#str}}general:welcome_text,format_edukav{{/str}}
     </p>
+      {{#generalnavigation}}
+        <a href="{{{homeurl}}}"
+          class="btn edukav-section-nav-btn edukav-section-general-nav-btn-home"
+          data-action="coursehomebutton"
+          title="{{homename}}">
+          <span class="edukav-section-nav-icon">
+            {{#pix}} i/home, core, {{homename}} {{/pix}}
+          </span>
+        </a>
+      {{/generalnavigation}}
   </div>
   <div class="edukav-welcome-points" aria-label="{{#str}}general:welcome_kicker,format_edukav{{/str}}">
     <div class="edukav-welcome-point">
@@ -21,5 +30,22 @@
       <span class="edukav-welcome-point-dot"></span>
       <span>{{#str}}general:welcome_point:modules,format_edukav{{/str}}</span>
     </div>
+    {{#generalnavigation}}
+        {{#hasnext}}
+          <a href="{{{nexturl}}}"
+            class="btn .edukav-section-general-nav-btn edukav-section-nav-btn-next{{#nexthidden}} text-muted{{/nexthidden}} btn-sm"
+            data-action="nextsection"
+            title="{{buttonlabel}}">
+            <span class="edukav-section-nav-text">{{buttonlabel}}</span>
+            <span class="edukav-section-nav-icon">
+              <span class="dir-rtl-hide">
+                {{#pix}}t/right, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}
+              </span>
+              <span class="dir-ltr-hide">
+                {{#pix}}t/left, moodle, {{#str}}gotosection, format_edukav, {{nextname}}{{/str}}{{/pix}}
+              </span>
+            </span>
+          </a>
+        {{/hasnext}}
+    {{/generalnavigation}}
   </div>
-</div>
