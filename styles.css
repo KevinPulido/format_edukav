@@ -580,7 +580,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 
 .format-edukav #section-0 .section[data-for="cmlist"] {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -1046,7 +1046,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 
 .format-edukav .edukav-general-navigation-title {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.45rem;
   line-height: 1.15;
   font-weight: 800;
   color: #17213a;
@@ -1086,9 +1086,9 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 }
 
 .format-edukav .edukav-general-objectives-kicker {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #5c63f2;
 }
@@ -1327,15 +1327,15 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 }
 
 .format-edukav .edukav-general-chrono-title {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: #2b3a67;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .format-edukav .edukav-general-chrono-text {
-  margin-top: 0.35rem;
+  margin-top: 0.5rem;
   color: #4f5b75;
   line-height: 1.5;
 }
