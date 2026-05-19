@@ -1,0 +1,25 @@
+<div class="edukav-welcome-card">
+  <div class="edukav-welcome-copy">
+    <h3 class="edukav-welcome-title">
+      {{#str}}general:welcome_title,format_edukav{{/str}}
+      {{#coursesEdukav}}<span>{{fullname}}</span>{{/coursesEdukav}}
+    </h3>
+    <p class="edukav-welcome-text">
+      {{#str}}general:welcome_text,format_edukav{{/str}}
+    </p>
+  </div>
+  <div class="edukav-welcome-points" aria-label="{{#str}}general:welcome_kicker,format_edukav{{/str}}">
+    <div class="edukav-welcome-point">
+      <span class="edukav-welcome-point-dot"></span>
+      <span>{{#str}}general:welcome_point:objectives,format_edukav{{/str}}</span>
+    </div>
+    <div class="edukav-welcome-point">
+      <span class="edukav-welcome-point-dot"></span>
+      <span>{{#str}}general:welcome_point:schedule,format_edukav{{/str}}</span>
+    </div>
+    <div class="edukav-welcome-point">
+      <span class="edukav-welcome-point-dot"></span>
+      <span>{{#str}}general:welcome_point:modules,format_edukav{{/str}}</span>
+    </div>
+  </div>
+</div>

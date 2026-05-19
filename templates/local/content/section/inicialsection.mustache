@@ -3,6 +3,7 @@
     {{#generalnavigation}}
       {{>format_edukav/local/content/sectionnavegationgeneral}}
     {{/generalnavigation}}
+    {{> format_edukav/local/content/section/inicialsectionwelcome}}
     <ul class="course-content pl-0">
       {{$ format_edukav/local/content/section }}
         {{> format_edukav/local/content/section }}
@@ -39,7 +40,10 @@
         {{/generalcronogramahtml}}
       </div>
     </div>
-    
+    <div class="edukav-chrono-zoom-overlay" aria-hidden="true" hidden>
+      <button type="button" class="edukav-chrono-zoom-close" aria-label="Cerrar vista ampliada">×</button>
+      <img class="edukav-chrono-zoom-image" alt="">
+    </div>
   </div>
 {{/isgeneralsection}}
 {{^isgeneralsection}}

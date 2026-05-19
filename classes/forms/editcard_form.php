@@ -168,31 +168,31 @@ class editcard_form extends editsection_form {
             <table class="edukav-objectives-table">
                 <thead>
                     <tr>
-                        <th scope="col">{{#str}}general:section:text:table:header:module{{/str}}</th>
-                        <th scope="col">{{#str}}general:section:text:table:header:generalobjective{{/str}}</th>
-                        <th scope="col">{{#str}}general:section:text:table:header:specificobjectives{{/str}}</th>
+                        <th scope="col">{{#str}}general:section:text:table:headermodule{{/str}}</th>
+                        <th scope="col">{{#str}}general:section:text:table:headergeneralobjective{{/str}}</th>
+                        <th scope="col">{{#str}}general:section:text:table:headerspecificobjectives{{/str}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1. {{#str}}general:section:text:table:instructions:module{{/str}}</td>
-                        <td>{{#str}}general:section:text:table:instructions:generalobjective{{/str}}</td>
+                        <td>1. {{#str}}general:section:text:table:instructionsmodule{{/str}}</td>
+                        <td>{{#str}}general:section:text:table:instructionsgeneralobjective{{/str}}</td>
                         <td>
-                            <p>{{#str}}general:section:text:table:instructions:specificobjectives{{/str}}</p>
+                            <p>{{#str}}general:section:text:table:instructionsspecificobjectives{{/str}}</p>
                         </td>
                     </tr>
                     <tr>
-                        <td>2. {{#str}}general:section:text:table:instructions:module{{/str}}</td>
-                        <td>{{#str}}general:section:text:table:instructions:generalobjective{{/str}}</td>
+                        <td>2. {{#str}}general:section:text:table:instructionsmodule{{/str}}</td>
+                        <td>{{#str}}general:section:text:table:instructionsgeneralobjective{{/str}}</td>
                         <td>
-                            <p>{{#str}}general:section:text:table:instructions:specificobjectives{{/str}}</p>
+                            <p>{{#str}}general:section:text:table:instructionsspecificobjectives{{/str}}</p>
                         </td>
                     </tr>
                     <tr>
-                        <td>3. {{#str}}general:section:text:table:instructions:module{{/str}}</td>
-                        <td>{{#str}}general:section:text:table:instructions:generalobjective{{/str}}</td>
+                        <td>3. {{#str}}general:section:text:table:instructionsmodule{{/str}}</td>
+                        <td>{{#str}}general:section:text:table:instructionsgeneralobjective{{/str}}</td>
                         <td>
-                            <p>{{#str}}general:section:text:table:instructions:specificobjectives{{/str}}</p>
+                            <p>{{#str}}general:section:text:table:instructionsspecificobjectives{{/str}}</p>
                         </td>
                         </td>
                     </tr>

@@ -512,6 +512,158 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   }
 }
 
+@media (max-width: 480px) {
+  .format-edukav .edukav-general-section {
+    padding: 0 0.45rem;
+  }
+
+  .format-edukav .edukav-general-navigation {
+    gap: 0.35rem;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-btn {
+    min-height: 2.35rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-text {
+    font-size: 0.82rem;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-btn-home {
+    padding: 0.5rem 0.65rem;
+    min-width: 2.6rem;
+  }
+
+  .format-edukav .edukav-welcome-card {
+    padding: 0.8rem;
+    gap: 0.75rem;
+    border-radius: 16px;
+  }
+
+  .format-edukav .edukav-welcome-kicker {
+    margin-bottom: 0.35rem;
+    padding: 0.24rem 0.55rem;
+    font-size: 0.68rem;
+  }
+
+  .format-edukav .edukav-welcome-title {
+    font-size: 0.98rem;
+    line-height: 1.25;
+  }
+
+  .format-edukav .edukav-welcome-text {
+    margin-top: 0.35rem;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .format-edukav .edukav-welcome-points {
+    padding: 0.68rem 0.72rem;
+    border-radius: 14px;
+  }
+
+  .format-edukav .edukav-welcome-point {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .format-edukav .edukav-general-objectives {
+    display: block !important;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    padding: 0.72rem;
+    border-radius: 16px;
+  }
+
+  .format-edukav .edukav-general-objectives-media {
+    display: none !important;
+  }
+
+  .format-edukav .edukav-general-objectives-copy {
+    padding: 0;
+    gap: 0.35rem;
+  }
+
+  .format-edukav .edukav-general-objectives-kicker {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .format-edukav .edukav-general-objectives-text {
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table thead {
+    display: none;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody {
+    display: block;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody tr {
+    display: block;
+    margin: 0 0 0.7rem;
+    border: 1px solid #e2e8f3;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table thead th,
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td {
+    padding: 0.55rem 0.6rem;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td {
+    display: block;
+    width: 100% !important;
+    border-right: 0;
+    border-top: 1px solid #e7edf6;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody tr td:first-child {
+    border-top: 0;
+    background: #f8fbff;
+    font-size: 0.82rem;
+  }
+
+  .format-edukav .edukav-general-chrono {
+    padding: 0.75rem 0.8rem;
+    border-radius: 14px;
+  }
+
+  .format-edukav .edukav-general-chrono-title {
+    font-size: 0.68rem;
+  }
+
+  .format-edukav .edukav-general-chrono-text {
+    margin-top: 0.35rem;
+    text-align: left;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .format-edukav .edukav-general-chrono-text table {
+    min-width: 500px;
+    font-size: 0.8rem;
+  }
+}
+
 .format-edukav .course-content .card-deck .card .card-img-top {
   transition: 0.4s filter ease-in-out;
 }
@@ -1044,6 +1196,89 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   padding: 0 1rem;
 }
 
+.format-edukav .edukav-welcome-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.25rem;
+  align-items: center;
+  margin: 0 0 1rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(92, 99, 242, 0.16), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 255, 0.9));
+  border: 1px solid rgba(115, 127, 180, 0.12);
+  box-shadow: 0 10px 24px rgba(36, 56, 116, 0.06);
+}
+
+.format-edukav .edukav-welcome-copy {
+  min-width: 0;
+}
+
+.format-edukav .edukav-welcome-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(92, 99, 242, 0.08);
+  color: #5c63f2;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.format-edukav .edukav-welcome-title {
+  margin: 0;
+  color: #17213a;
+  font-size: 1.55rem;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.format-edukav .edukav-welcome-title span {
+  color: #5c63f2;
+}
+
+.format-edukav .edukav-welcome-text {
+  margin: 0.75rem 0 0;
+  color: #49566f;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.format-edukav .edukav-welcome-points {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.9rem 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(115, 127, 180, 0.1);
+  min-width: 260px;
+}
+
+.format-edukav .edukav-welcome-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #24324a;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.format-edukav .edukav-welcome-point-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5c63f2, #8a6cf7);
+  box-shadow: 0 0 0 4px rgba(92, 99, 242, 0.12);
+  flex: 0 0 auto;
+}
+
 .format-edukav .edukav-general-navigation-title {
   margin: 0;
   font-size: 1.45rem;
@@ -1059,9 +1294,9 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   margin: 0 0 1rem;
   padding: 1rem;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid rgba(115, 127, 180, 0.14);
-  box-shadow: 0 12px 30px rgba(36, 56, 116, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(115, 127, 180, 0.1);
+  box-shadow: 0 8px 20px rgba(36, 56, 116, 0.05);
 }
 
 .format-edukav .edukav-general-objectives--textonly {
@@ -1088,7 +1323,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 .format-edukav .edukav-general-objectives-kicker {
   font-size: 0.85rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #5c63f2;
 }
@@ -1192,22 +1427,22 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   border-collapse: collapse;
   margin: 0;
   background: #fff;
-  border: 1px solid #d7e0ef;
-  border-radius: 16px;
+  border: 1px solid #e2e8f3;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
 }
 
 .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table thead th {
-  padding: 0.95rem 1rem;
+  padding: 0.85rem 0.95rem;
   text-align: center;
   vertical-align: middle;
-  font-size: 0.98rem;
-  font-weight: 800;
-  color: #17213a;
-  background: linear-gradient(180deg, #f8fbff 0%, #eef3ff 100%);
-  border-right: 1px solid #d7e0ef;
-  border-bottom: 1px solid #c5d0e4;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1f2a44;
+  background: linear-gradient(180deg, #fbfdff 0%, #f4f7fe 100%);
+  border-right: 1px solid #e2e8f3;
+  border-bottom: 1px solid #d8e0ee;
   letter-spacing: 0.01em;
 }
 
@@ -1216,13 +1451,13 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 }
 
 .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td {
-  padding: 1.05rem 1rem;
+  padding: 0.95rem 0.95rem;
   vertical-align: top;
-  font-size: 0.95rem;
-  line-height: 1.58;
-  color: #24324a;
-  border-top: 1px solid #dbe3f1;
-  border-right: 1px solid #dbe3f1;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: #2b3a55;
+  border-top: 1px solid #e7edf6;
+  border-right: 1px solid #e7edf6;
 }
 
 .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td:last-child {
@@ -1267,7 +1502,27 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 }
 
 .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody ul {
-  list-style: disc;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  display: grid;
+}
+
+.format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #93a4be, #6f819d);
+  box-shadow: 0 0 0 4px rgba(111, 129, 157, 0.12);
 }
 
 .format-edukav .edukav-general-objectives-text th,
@@ -1329,7 +1584,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 .format-edukav .edukav-general-chrono-title {
   font-size: 0.85rem;
   font-weight: 800;
-  color: #2b3a67;
+  color: #5c63f2;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -1346,13 +1601,193 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   font-style: italic;
 }
 
+.format-edukav .edukav-chrono-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.format-edukav .edukav-chrono-zoom-overlay[hidden] {
+  display: none;
+}
+
+.format-edukav .edukav-chrono-zoom-image {
+  display: block;
+  max-width: min(96vw, 1100px);
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.format-edukav .edukav-chrono-zoom-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  font-size: 1.5rem;
+  line-height: 1;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.25);
+}
+
+body.edukav-zoom-open {
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
+  .format-edukav .edukav-general-navigation {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-general-navigation-center {
+    display: none;
+  }
+
+  .format-edukav .edukav-general-navigation .nextsection {
+    margin-left: auto;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-btn {
+    width: auto;
+    min-height: 2.5rem;
+    padding: 0.55rem 0.85rem;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-text {
+    font-size: 0.9rem;
+  }
+
+  .format-edukav .edukav-general-section {
+    padding: 0 0.65rem;
+  }
+
+  .format-edukav .edukav-welcome-card {
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding: 0.9rem;
+    gap: 0.85rem;
+    border-radius: 18px;
+  }
+
+  .format-edukav .edukav-welcome-title {
+    font-size: 1.06rem;
+    line-height: 1.25;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .format-edukav .edukav-welcome-title span {
+    display: block;
+  }
+
+  .format-edukav .edukav-welcome-text {
+    margin-top: 0.45rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    max-width: none;
+  }
+
+  .format-edukav .edukav-welcome-points {
+    min-width: 0;
+    width: 100%;
+    padding: 0.75rem 0.8rem;
+    border-radius: 16px;
+  }
+
+  .format-edukav .edukav-welcome-point {
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
   .format-edukav .edukav-general-objectives {
     grid-template-columns: 1fr;
+    gap: 0.85rem;
+    padding: 0.85rem;
+    border-radius: 20px;
   }
 
   .format-edukav .edukav-general-objectives-media {
-    min-height: 160px;
+    min-height: 140px;
+    border-radius: 16px;
+    background-position: center top;
+  }
+
+  .format-edukav .edukav-general-objectives-copy {
+    padding: 0;
+    gap: 0.45rem;
+  }
+
+  .format-edukav .edukav-general-objectives-kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+
+  .format-edukav .edukav-general-objectives-text {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap {
+    margin-top: 0.15rem;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table {
+    min-width: 560px;
+    font-size: 0.86rem;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table thead th,
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td {
+    padding: 0.65rem 0.7rem;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td:first-child {
+    width: 24%;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td:nth-child(2) {
+    width: 32%;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td:nth-child(3) {
+    width: 44%;
+  }
+
+  .format-edukav .edukav-general-chrono {
+    padding: 0.85rem 0.95rem;
+    border-radius: 16px;
+  }
+
+  .format-edukav .edukav-general-chrono-title {
+    font-size: 0.74rem;
+  }
+
+  .format-edukav .edukav-general-chrono-text {
+    margin-top: 0.4rem;
+    text-align: left;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .format-edukav .edukav-general-chrono-text table {
+    min-width: 560px;
+    font-size: 0.86rem;
   }
 }
 
@@ -2095,5 +2530,122 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   .format-edukav .course-section .activity-item .activity-dates-tooltip,
   .format-edukav .course-section .activity-item .edukav-status-pill {
     width: fit-content;
+  }
+}
+
+@media (max-width: 430px) {
+  .format-edukav .edukav-general-section {
+    padding: 0 0.35rem !important;
+  }
+
+  .format-edukav .edukav-general-navigation {
+    gap: 0.25rem !important;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-btn {
+    min-height: 2.2rem !important;
+    padding: 0.45rem 0.65rem !important;
+  }
+
+  .format-edukav .edukav-general-navigation .edukav-section-nav-text {
+    font-size: 0.78rem !important;
+  }
+
+  .format-edukav .edukav-welcome-card {
+    padding: 0.7rem !important;
+    gap: 0.65rem !important;
+    border-radius: 14px !important;
+  }
+
+  .format-edukav .edukav-welcome-kicker {
+    font-size: 0.64rem !important;
+  }
+
+  .format-edukav .edukav-welcome-title {
+    font-size: 0.92rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .format-edukav .edukav-welcome-text {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .format-edukav .edukav-welcome-points {
+    padding: 0.6rem 0.65rem !important;
+    border-radius: 12px !important;
+  }
+
+  .format-edukav .edukav-welcome-point {
+    font-size: 0.76rem !important;
+  }
+
+  .format-edukav .edukav-general-objectives {
+    display: block !important;
+    padding: 0.6rem !important;
+    border-radius: 14px !important;
+  }
+
+  .format-edukav .edukav-general-objectives-media {
+    display: none !important;
+  }
+
+  .format-edukav .edukav-general-objectives-kicker {
+    font-size: 0.64rem !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap {
+    overflow-x: auto !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 0.78rem !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table thead {
+    display: none !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody {
+    display: block !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody tr {
+    display: block !important;
+    margin: 0 0 0.5rem !important;
+    border: 1px solid #e2e8f3 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
+
+  .format-edukav .edukav-general-objectives-text .edukav-objectives-table-wrap table tbody td {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.5rem 0.55rem !important;
+    border-right: 0 !important;
+    line-height: 1.45 !important;
+  }
+
+  .format-edukav .edukav-general-chrono {
+    padding: 0.6rem !important;
+    border-radius: 12px !important;
+  }
+
+  .format-edukav .edukav-general-chrono-title {
+    font-size: 0.64rem !important;
+  }
+
+  .format-edukav .edukav-general-chrono-text {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    text-align: center;
   }
 }

@@ -116,13 +116,19 @@ $string['banner_end'] = 'Banner end color';
 $string['banner_video'] = 'Banner video';
 $string['navigation:nextmodule'] = 'Next module';
 $string['navigation:previousmodule'] = 'Previous module';
+$string['general:welcome_kicker'] = 'Welcome';
+$string['general:welcome_title'] = 'Welcome to';
+$string['general:welcome_text'] = 'Start your learning path step by step. Review the objectives, follow the schedule, and progress module by module at your own pace.';
+$string['general:welcome_point:objectives'] = 'Start with the course objectives';
+$string['general:welcome_point:schedule'] = 'Review the schedule before you begin';
+$string['general:welcome_point:modules'] = 'Progress module by module at your own pace';
 
 
 $string['general:section_objectives'] = 'Course Objectives';
 $string['general:section_schedule'] = 'Course Schedule';
-$string['general:section:text:table:header:module'] = 'Module';
-$string['general:section:text:table:header:generalobjective'] = 'General objective';
-$string['general:section:text:table:header:specificobjectives'] = 'Specific objectives';
-$string['general:section:text:table:instructions:module'] = 'Fill in the module name.';
-$string['genral:section:text:table:instructions:generalobjective'] = 'Fill in the general objective of the module.';
-$string['general:section:text:table:instructions:specificobjectives'] = 'Fill in the specific objectives of the module. Add each specific objective on a new line.';
+$string['general:section:text:table:headermodule'] = 'Module';
+$string['general:section:text:table:headergeneralobjective'] = 'General objective';
+$string['general:section:text:table:headerspecificobjectives'] = 'Specific objectives';
+$string['general:section:text:table:instructionsmodule'] = 'Fill in the module name.';
+$string['genral:section:text:table:instructionsgeneralobjective'] = 'Fill in the general objective of the module.';
+$string['general:section:text:table:instructionsspecificobjectives'] = 'Fill in the specific objectives of the module. Add each specific objective on a new line.';

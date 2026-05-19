@@ -116,13 +116,19 @@ $string['banner_end'] = 'Color final banner';
 $string['banner_video'] = 'Video del banner';
 $string['navigation:nextmodule'] = 'Siguiente módulo';
 $string['navigation:previousmodule'] = 'Módulo anterior';
+$string['general:welcome_kicker'] = 'Bienvenida';
+$string['general:welcome_title'] = 'Te damos la bienvenida a';
+$string['general:welcome_text'] = 'Empieza tu ruta de aprendizaje paso a paso. Revisa los objetivos, sigue el cronograma y avanza módulo a módulo a tu ritmo.';
+$string['general:welcome_point:objectives'] = 'Empieza por los objetivos del curso';
+$string['general:welcome_point:schedule'] = 'Revisa el cronograma antes de comenzar';
+$string['general:welcome_point:modules'] = 'Avanza módulo a módulo a tu ritmo';
 
 
 $string['general:section_objectives'] = 'Objetivos del curso';
 $string['general:section_schedule'] = 'cronograma del curso';
-$string['general:section:text:table:header:module'] = 'Módulo';
-$string['general:section:text:table:header:generalobjective'] = 'Objetivo General';
-$string['general:section:text:table:header:specificobjectives'] = 'Objetivos Específicos';
-$string['general:section:text:table:instructions:module'] = 'Diligencia el nombre del módulo.';
-$string['genral:section:text:table:instructions:generalobjective'] = 'Diligencia el objetivo general del módulo.';
-$string['general:section:text:table:instructions:specificobjectives'] = 'Diligencia los objetivos específicos del módulo. Agrega cada objetivo específico en una nueva línea.';
+$string['general:section:text:table:headermodule'] = 'Módulo';
+$string['general:section:text:table:headergeneralobjective'] = 'Objetivo General';
+$string['general:section:text:table:headerspecificobjectives'] = 'Objetivos Específicos';
+$string['general:section:text:table:instructionsmodule'] = 'Diligencia el nombre del módulo.';
+$string['genral:section:text:table:instructionsgeneralobjective'] = 'Diligencia el objetivo general del módulo.';
+$string['general:section:text:table:instructionsspecificobjectives'] = 'Diligencia los objetivos específicos del módulo. Agrega cada objetivo específico en una nueva línea.';

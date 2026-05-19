@@ -200,7 +200,6 @@ class content extends content_base {
 
             if ($nextsection) {
                 $data->generalnavigation = (object) [
-                    'title' => format_string($course->fullname),
                     'homeurl' => course_get_url($course, null, ['navigation' => true])->out(),
                     'homename' => get_string('maincoursepage'),
                     'hasnext' => true,
