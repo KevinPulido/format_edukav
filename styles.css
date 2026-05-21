@@ -450,6 +450,16 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   border: 1px solid #d7def0;
 }
 
+.format-edukav .edukav-section-nav-btn-splitview {
+  margin-right: 10px;
+  padding: 0.65rem 0.85rem;
+  color: var(--color-primary, #0d6efd);
+  background: #fff;
+  border: 1px solid #d7def0;
+}
+
+
+
 .format-edukav .edukav-section-general-nav-btn-home {
   padding: 0.65rem 0.85rem;
   color: var(--color-primary, #0d6efd);
@@ -1192,28 +1202,6 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   gap: 1rem;
   width: 100%;
   min-height: 3rem;
-}
-
-.format-edukav .edukav-single-section-header-nav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.format-edukav .edukav-single-section-header-nav .section-navigation {
-  flex: 1 1 auto;
-}
-
-.format-edukav .edukav-single-section-header-meta {
-  align-items: center;
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  width: min(66%, 980px);
-  transform: translate(-50%, -50%);
-  flex-shrink: 0;
 }
 
 .format-edukav .edukav-single-section-title {
@@ -2347,6 +2335,7 @@ body.edukav-zoom-open {
   border-bottom: 1px solid #eef2f7;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
+
 
 .format-edukav .edukav-content-panel-title {
   margin: 0;

@@ -1,5 +1,4 @@
 define([], function() {
-
     const init = () => {
         const button = document.querySelector('[data-toggle="aside"]');
         const aside = document.querySelector('.edukav-sidebar-shell');
@@ -12,36 +11,17 @@ define([], function() {
         button.addEventListener('click', () => {
 
             aside.classList.toggle('closed');
+            const isClosed = aside.classList.contains('closed');
 
             /* cambiar icono */
-            if (aside.classList.contains('closed')) {
+            icon.classList.remove('fa-arrow-left', 'fa-bars');
+            icon.classList.add(isClosed ? 'fa-bars' : 'fa-arrow-left');
 
-                icon.classList.remove(
-                    'fa-sharp-duotone',
-                    'fa-solid',
-                    'fa-circle-left'
-                );
-
-                icon.classList.add(
-                    'fa-sharp-duotone',
-                    'fa-solid',
-                    'fa-circle-right'
-                );
-
-            } else {
-
-                icon.classList.remove(
-                    'fa-sharp-duotone',
-                    'fa-solid',
-                    'fa-circle-right'
-                );
-
-                icon.classList.add(
-                    'fa-sharp-duotone',
-                    'fa-solid',
-                    'fa-circle-left'
-                );
-            }
+            button.setAttribute('aria-expanded', String(!isClosed));
+            button.setAttribute(
+                'aria-label',
+                isClosed ? 'Mostrar barra lateral' : 'Ocultar barra lateral'
+            );
         });
     };
 

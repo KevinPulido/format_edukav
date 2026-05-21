@@ -46,31 +46,6 @@
   </div>
 {{/isgeneralsection}}
 {{^isgeneralsection}}
-  <div class="edukav-single-section-header">
-    <div class="edukav-single-section-header-main">
-      {{#sectionnavigation}}
-        <div class="edukav-single-section-header-nav">
-          {{$ format_edukav/local/content/sectionnavigation }}
-            {{> format_edukav/local/content/sectionnavigation }}
-          {{/ format_edukav/local/content/sectionnavigation }}
-        </div>
-      {{/sectionnavigation}}
-        <div class="edukav-single-section-header-meta">
-            <div class="edukav-single-section-title">
-            {{{sectionheader.title}}}
-            </div>
-            <div class="edukav-single-section-progress-panel">
-            <span class="edukav-single-section-progress-label">{{#str}}ProgressModule,format_edukav{{/str}}</span>
-            {{#sectionprogress}}
-                <div class="edukav-single-section-progress-bar">
-                {{> block_myoverview/progress-bar }}
-                </div>
-            {{/sectionprogress}}
-            <span class="edukav-single-section-progress-value">{{sectionprogresspercentage}}%</span>
-            </div>
-      </div>
-    </div>
-  </div>
   <div class="edukav-splitview" data-region="edukav-splitview">
     <div class="edukav-sidebar-shell">
       <div class="edukav-sidebar-header">
@@ -84,12 +59,11 @@
     </div>
     <main class="edukav-main">
       <div class="edukav-content-panel" data-region="splitview-content">
-        <div class="edukav-content-panel-header">
-          {{>format_edukav/local/content/section/button_splitview}}
-          <p class="edukav-content-panel-status" data-region="splitview-status">
-            Selecciona una actividad para verla aqui.
-          </p>
-        </div>
+        {{#sectionnavigation}}
+            {{$ format_edukav/local/content/sectionnavigation }}
+              {{> format_edukav/local/content/sectionnavigation }}
+            {{/ format_edukav/local/content/sectionnavigation }}
+        {{/sectionnavigation}}
         <iframe
           class="edukav-activity-frame"
           src=""

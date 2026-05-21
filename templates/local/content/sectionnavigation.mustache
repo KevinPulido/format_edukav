@@ -32,6 +32,8 @@
         "nextname": "Section 5"
     }
 }}
+
+
 <div id="sectionnavigation-top" class="section-navigation navigationtitle edukav-section-navigation-bar">
     <div class="prevsection">
         {{#hasprevious}}
@@ -50,6 +52,7 @@
                 <span class="edukav-section-nav-text">{{#str}}navigation:previousmodule, format_edukav{{/str}}</span>
             </a>
         {{/hasprevious}}
+        {{>format_edukav/local/content/section/button_splitview}}
         {{#showcoursehome}}
             <a href="{{{courseurl}}}"
                class="btn edukav-section-nav-btn edukav-section-nav-btn-home"
@@ -61,6 +64,20 @@
             </a>
         {{/showcoursehome}}
     </div>
+    <div class="edukav-single-section-header-meta">
+            <div class="edukav-single-section-title">
+            {{{sectionheader.title}}}
+            </div>
+            <div class="edukav-single-section-progress-panel">
+            <span class="edukav-single-section-progress-label">{{#str}}ProgressModule,format_edukav{{/str}}</span>
+            {{#sectionprogress}}
+                <div class="edukav-single-section-progress-bar">
+                {{> block_myoverview/progress-bar }}
+                </div>
+            {{/sectionprogress}}
+            <span class="edukav-single-section-progress-value">{{sectionprogresspercentage}}%</span>
+            </div>
+        </div>
     <div class="nextsection">
         {{#hasnext}}
             <a href="{{{nexturl}}}"

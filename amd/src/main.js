@@ -12,17 +12,10 @@ const SELECTORS = {
   content: '[data-region="splitview-content"]',
   frame: '[data-region="splitview-frame"]',
   title: '[data-region="splitview-title"]',
-  status: '[data-region="splitview-status"]',
   activity: ".activity.activity-wrapper",
   activityLink: ".activityname a, .activityname .aalink",
   actionMenu:
     '.action-menu a, [data-action="open-chooser"], [data-action="toggle"], .dropdown-toggle',
-};
-
-const TEXT = {
-  empty: "Selecciona una actividad para verla aqui.",
-  loading: "Cargando actividad...",
-  error: "No fue posible cargar esta actividad.",
 };
 
 const GRADE_URL_PATTERNS = [
@@ -72,17 +65,11 @@ const setActiveActivity = (splitView, activityToActivate) => {
   });
 };
 
-const updatePanel = (splitView, state, activityName = "") => {
+const updatePanel = (splitView, activityName = "") => {
   const title = splitView.querySelector(SELECTORS.title);
-  const status = splitView.querySelector(SELECTORS.status);
 
   if (title) {
     title.textContent = activityName || "Vista previa";
-  }
-
-  if (status) {
-    status.textContent = TEXT[state] || "";
-    status.hidden = !TEXT[state];
   }
 };
 
@@ -268,7 +255,7 @@ const loadActivity = (splitView, activity, url, activityName) => {
 
   content.classList.add("is-loading");
   setFrameLoadingState(frame, true);
-  updatePanel(splitView, "loading", activityName);
+  updatePanel(splitView, activityName);
   setActiveActivity(splitView, activity);
 
   frame.src = finalUrl;
@@ -303,7 +290,6 @@ const setupFrameEvents = (splitView) => {
       }
 
       if (!doc) {
-        updatePanel(splitView, "");
         return;
       }
 
@@ -329,19 +315,16 @@ const setupFrameEvents = (splitView) => {
 
       if (frameTitle) {
         const cleanedTitle = frameTitle.split(":").pop().trim();
-        updatePanel(splitView, "", cleanedTitle);
-      } else {
-        updatePanel(splitView, "");
+        updatePanel(splitView, cleanedTitle);
       }
     } catch (e) {
-      updatePanel(splitView, "");
+      return;
     }
   });
 
   frame.addEventListener("error", () => {
     content.classList.remove("is-loading");
     setFrameLoadingState(frame, false);
-    updatePanel(splitView, "error");
   });
 };
 
@@ -372,7 +355,6 @@ const shouldIgnoreClick = (event, splitView) => {
  */
 const initSplitView = (splitView) => {
   setupFrameEvents(splitView);
-  updatePanel(splitView, "empty");
 
   splitView.addEventListener("click", (event) => {
     if (shouldIgnoreClick(event, splitView)) {
