@@ -453,9 +453,18 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 .format-edukav .edukav-section-nav-btn-splitview {
   margin-right: 0.35rem;
   padding: 0.65rem 0.85rem;
-  color: var(--color-primary, #0d6efd);
-  background: #fff;
-  border: 1px solid #d7def0;
+  color: #2f5bd7;
+  background: #eef4ff;
+  border: 1px solid #d3dffc;
+  box-shadow: none;
+}
+
+.format-edukav .edukav-section-nav-btn-splitview:hover,
+.format-edukav .edukav-section-nav-btn-splitview:focus-visible {
+  color: #1d4ed8;
+  background: #e1ebff;
+  border-color: #b8cbf7;
+  box-shadow: 0 0 0 0.15rem rgba(71, 105, 220, 0.08);
 }
 
 .format-edukav .edukav-content-panel > .edukav-section-navigation-bar {
