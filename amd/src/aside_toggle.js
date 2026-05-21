@@ -22,6 +22,17 @@ define([], function() {
                 'aria-label',
                 isClosed ? 'Mostrar barra lateral' : 'Ocultar barra lateral'
             );
+
+            if (window.matchMedia('(max-width: 430px)').matches && isClosed) {
+                const panel = document.querySelector('.edukav-content-panel');
+                if (panel) {
+                    window.requestAnimationFrame(() => {
+                        window.requestAnimationFrame(() => {
+                            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
+                    });
+                }
+            }
         });
     };
 
