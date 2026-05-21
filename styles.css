@@ -355,7 +355,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   padding: 1rem;
   background: #ffffff;
   border: 1px solid #eef2f7;
-  border-radius: 18px;
+  border-radius: 18px 0 0 0;
   /* sombra suave */
   box-shadow:
     0 4px 10px rgba(15, 23, 42, 0.03),
@@ -451,11 +451,90 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 }
 
 .format-edukav .edukav-section-nav-btn-splitview {
-  margin-right: 10px;
+  margin-right: 0.35rem;
   padding: 0.65rem 0.85rem;
   color: var(--color-primary, #0d6efd);
   background: #fff;
   border: 1px solid #d7def0;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 0.85rem;
+  width: 100%;
+  margin: 0 0 0.85rem;
+  padding: 0.85rem 0.95rem;
+  background: #fff;
+  border: 1px solid #eef2f7;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.03),
+    0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection,
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection {
+  justify-self: start;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+  justify-self: end;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: auto;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-title {
+  margin-bottom: 0.25rem;
+  font-size: 1.03rem;
+  line-height: 1.15;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-panel {
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-bar {
+  min-width: 150px;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn {
+  min-height: 2.6rem;
+  padding: 0.6rem 0.95rem;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-home,
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-splitview {
+  padding: 0.6rem 0.75rem;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .button-manage {
+  margin-right: 0;
+}
+
+.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-splitview {
+  margin-left: 0.05rem;
+  margin-right: 0.15rem;
 }
 
 
@@ -562,6 +641,26 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 
   .format-edukav .edukav-general-navigation .edukav-section-nav-btn-next {
     min-width: 12rem;
+  }
+
+  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar {
+    grid-template-columns: 1fr;
+    row-gap: 0.7rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection,
+  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta,
+  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+    justify-self: start;
+  }
+
+  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta {
+    text-align: left;
+  }
+
+  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-panel {
+    justify-content: flex-start;
   }
 }
 
@@ -1227,8 +1326,8 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 .format-edukav .edukav-single-section-progress-label {
   margin: 0;
   color: #475569;
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
   white-space: nowrap;
   flex-shrink: 0;
 }

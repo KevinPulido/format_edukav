@@ -14,8 +14,8 @@ define([], function() {
             const isClosed = aside.classList.contains('closed');
 
             /* cambiar icono */
-            icon.classList.remove('fa-arrow-left', 'fa-bars');
-            icon.classList.add(isClosed ? 'fa-bars' : 'fa-arrow-left');
+            icon.classList.remove('fa-chevron-left', 'fa-bars');
+            icon.classList.add(isClosed ? 'fa-bars' : 'fa-chevron-left');
 
             button.setAttribute('aria-expanded', String(!isClosed));
             button.setAttribute(
