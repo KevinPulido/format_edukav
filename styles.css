@@ -2543,7 +2543,7 @@ body.edukav-zoom-open {
 
 /* Ajusta el encabezado de actividades para que las fechas y el estado no queden descolocados. */
 .format-edukav .course-content .section-item {
-  padding: 0 1rem;
+  padding: 2rem 1rem;
   background: #ffffff;
   border: 1px solid #eef2f7;
   border-radius: 18px;
