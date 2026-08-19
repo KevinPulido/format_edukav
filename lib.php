@@ -282,6 +282,13 @@ class format_edukav extends format_topics {
             'element_type' => 'text',
         ];
 
+        $options['duration'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'label' => new lang_string('duration', 'format_edukav'),
+            'element_type' => 'text',
+        ];
+
         return $options;
     }
 
