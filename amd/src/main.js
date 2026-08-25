@@ -27,6 +27,10 @@ const GRADE_URL_PATTERNS = [
   /\/grading(?:\.php|\/|$)/i,
 ];
 
+const NORMAL_NAVIGATION_PATTERNS = [
+  /\/mod\/recordings\/view\.php(?:$|\?)/i,
+];
+
 const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
 const BASE_BODY_CLASSES = new Set(Array.from(document.body.classList));
 const activityCache = new Map();
@@ -153,7 +157,7 @@ const isGradingUrl = (url = "") => {
 };
 
 const shouldOpenInNormalNavigation = (url = "") => {
-  return isGradingUrl(url);
+  return NORMAL_NAVIGATION_PATTERNS.some((pattern) => pattern.test(url));
 };
 
 const getUrlWithoutContentOnly = (url = "") => {
