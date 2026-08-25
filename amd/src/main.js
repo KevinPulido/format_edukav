@@ -33,6 +33,15 @@ const NORMAL_NAVIGATION_PATTERNS = [
 
 const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
 const BASE_BODY_CLASSES = new Set(Array.from(document.body.classList));
+const BLOCKED_BODY_CLASSES = new Set([
+  "drawer-open",
+  "drawer-open-left",
+  "drawer-open-right",
+  "modal-open",
+  "noscroll",
+  "overflow-hidden",
+  "show",
+]);
 const activityCache = new Map();
 const loadedScriptSrcs = new Set();
 let appliedBodyClasses = [];
@@ -218,7 +227,7 @@ const applyBodyClasses = (classes) => {
         .filter(Boolean);
 
   normalized.forEach((className) => {
-    if (!BASE_BODY_CLASSES.has(className)) {
+    if (!BASE_BODY_CLASSES.has(className) && !BLOCKED_BODY_CLASSES.has(className)) {
       document.body.classList.add(className);
       appliedBodyClasses.push(className);
     }
