@@ -2289,7 +2289,7 @@ body.edukav-zoom-open {
     min-height: 0;
   }
 
-  .format-edukav .edukav-activity-frame {
+  .format-edukav .edukav-activity-preview {
     min-height: 62vh;
     height: auto;
   }
@@ -2375,6 +2375,7 @@ body.edukav-zoom-open {
   border-radius: 20px;
 
   overflow: hidden;
+  position: relative;
 
   box-shadow:
     0 4px 10px rgba(15, 23, 42, 0.03),
@@ -2439,46 +2440,108 @@ body.edukav-zoom-open {
   transform: translate(0);
 }
 
-.format-edukav .edukav-content-panel-header {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid #eef2f7;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-}
-
-
-.format-edukav .edukav-content-panel-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.format-edukav .edukav-content-panel-status {
-  margin: 0.35rem 0 0;
-  font-size: 0.92rem;
-  color: #64748b;
-}
-
 /* LOADER */
 .format-edukav .edukav-loading {
-  padding: 50px;
-  text-align: center;
-  font-size: 16px;
-  color: #6c757d;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(2px);
+  color: #475569;
 }
 
-.format-edukav .edukav-activity-frame {
+.format-edukav .edukav-loading-spinner {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 3px solid #d7e0ee;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: edukav-spin 0.9s linear infinite;
+}
+
+@keyframes edukav-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.format-edukav .edukav-activity-preview {
   width: 100%;
   flex: 1 1 auto;
   min-height: 0;
-  height: auto;
-  border: 0;
-  background: white;
-  display: block;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
 }
 
-.format-edukav .edukav-content-panel.is-loading .edukav-activity-frame {
-  opacity: 0.45;
+.format-edukav .edukav-activity-preview-content {
+  position: relative;
+  flex: 1 1 auto;
+  display: block;
+  min-height: 0;
+  overflow: auto;
+  padding: 0rem 3rem;
+}
+
+.format-edukav .edukav-sidebar-shell.closed + .edukav-main .edukav-activity-preview-content {
+  padding: 0.75rem 1.25rem 1.25rem;
+}
+
+.format-edukav .edukav-activity-preview-content #page,
+.format-edukav .edukav-activity-preview-content #page-content,
+.format-edukav .edukav-activity-preview-content #region-main,
+.format-edukav .edukav-activity-preview-content #region-main-box,
+.format-edukav .edukav-activity-preview-content #topofscroll {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  background: transparent !important;
+}
+
+.format-edukav .edukav-activity-preview-content #page > .container,
+.format-edukav .edukav-activity-preview-content #page > .container-fluid {
+  max-width: none !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.format-edukav .edukav-activity-preview-secondary {
+  margin-bottom: 0.5rem;
+}
+
+.format-edukav .edukav-activity-preview-main {
+  min-height: 0;
+}
+
+.format-edukav .edukav-activity-preview-content > :first-child {
+  margin-top: 0;
+}
+
+.format-edukav .edukav-preview-error {
+  padding: 1rem 1.15rem;
+  border: 1px solid #fecaca;
+  border-radius: 14px;
+  background: #fef2f2;
+  color: #991b1b;
+  box-shadow: 0 10px 24px rgba(153, 27, 27, 0.06);
+}
+
+.format-edukav .edukav-preview-error strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.format-edukav .edukav-activity-preview-content.is-loading {
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .format-edukav
@@ -2535,7 +2598,7 @@ body.edukav-zoom-open {
   }
 
   .format-edukav .edukav-content-panel,
-  .format-edukav .edukav-activity-frame {
+  .format-edukav .edukav-activity-preview {
     min-height: 68vh;
     height: auto;
   }

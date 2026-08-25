@@ -10,8 +10,9 @@ const SELECTORS = {
   splitView: ".edukav-splitview",
   sidebar: ".edukav-sidebar",
   content: '[data-region="splitview-content"]',
-  frame: '[data-region="splitview-frame"]',
-  title: '[data-region="splitview-title"]',
+  preview: '[data-region="splitview-preview"]',
+  previewContent: '[data-region="splitview-preview-content"]',
+  loading: '[data-region="splitview-loading"]',
   activity: ".activity.activity-wrapper",
   activityLink: ".activityname a, .activityname .aalink",
   actionMenu:
@@ -27,12 +28,10 @@ const GRADE_URL_PATTERNS = [
 ];
 
 const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
-const NORMAL_NAVIGATION_PATTERNS = [
-  /\/mod\/h5pactivity\/view\.php(?:$|\?)/i,
-  /\/mod\/scorm\/view\.php(?:$|\?)/i,
-];
-
-const SINGLE_SECTION_SELECTOR = ".single-section";
+const BASE_BODY_CLASSES = new Set(Array.from(document.body.classList));
+const activityCache = new Map();
+const loadedScriptSrcs = new Set();
+let appliedBodyClasses = [];
 
 const isEditingMode = () => {
   return (
@@ -51,26 +50,90 @@ const isPlainLeftClick = (event) => {
   );
 };
 
+const cleanText = (value = "") => {
+  return String(value)
+    .replace(/\s+/g, " ")
+    .trim();
+};
+
+const escapeHtml = (value = "") => {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
 const getActivityLink = (activity) => {
-  return activity.querySelector(SELECTORS.activityLink);
+  return activity ? activity.querySelector(SELECTORS.activityLink) : null;
 };
 
-const setActiveActivity = (splitView, activityToActivate) => {
-  splitView.querySelectorAll(SELECTORS.activity).forEach((activity) => {
-    activity.classList.toggle("current", activity === activityToActivate);
-    activity.classList.toggle(
-      "edukav-activity-active",
-      activity === activityToActivate
-    );
-  });
+const getEndpointUrl = (splitView) => {
+  return (
+    splitView?.dataset?.activityContentUrl ||
+    splitView?.closest("[data-activity-content-url]")?.dataset
+      ?.activityContentUrl ||
+    "/course/format/edukav/ajax/activity_content.php"
+  );
 };
 
-const updatePanel = (splitView, activityName = "") => {
-  const title = splitView.querySelector(SELECTORS.title);
-
-  if (title) {
-    title.textContent = activityName || "Vista previa";
+const getSessionKey = () => {
+  if (window.M && window.M.cfg && window.M.cfg.sesskey) {
+    return window.M.cfg.sesskey;
   }
+
+  const hiddenSesskey = document.querySelector('input[name="sesskey"]');
+  return hiddenSesskey ? hiddenSesskey.value : "";
+};
+
+const getActivityCmid = (activity, link) => {
+  const candidates = [
+    activity?.dataset?.cmid,
+    activity?.dataset?.id,
+    link?.dataset?.cmid,
+    link?.dataset?.id,
+  ];
+
+  for (const candidate of candidates) {
+    const value = parseInt(candidate, 10);
+    if (Number.isInteger(value) && value > 0) {
+      return value;
+    }
+  }
+
+  const href = link?.getAttribute("href") || "";
+  if (!href) {
+    return 0;
+  }
+
+  try {
+    const parsedUrl = new URL(href, window.location.href);
+    const urlcmid = parseInt(parsedUrl.searchParams.get("id") || "", 10);
+    return Number.isInteger(urlcmid) && urlcmid > 0 ? urlcmid : 0;
+  } catch (e) {
+    const match = href.match(/[?&]id=(\d+)/i);
+    return match ? parseInt(match[1], 10) : 0;
+  }
+};
+
+const getActivityLabel = (activity, link, fallback = "") => {
+  const candidates = [
+    activity?.dataset?.activityname,
+    activity?.querySelector(".instancename")?.textContent,
+    link?.querySelector(".instancename")?.textContent,
+    link?.textContent,
+    fallback,
+  ];
+
+  for (const candidate of candidates) {
+    const value = cleanText(candidate || "");
+    if (value) {
+      return value;
+    }
+  }
+
+  return "";
 };
 
 const isGradingUrl = (url = "") => {
@@ -90,7 +153,7 @@ const isGradingUrl = (url = "") => {
 };
 
 const shouldOpenInNormalNavigation = (url = "") => {
-  return NORMAL_NAVIGATION_PATTERNS.some((pattern) => pattern.test(url));
+  return isGradingUrl(url);
 };
 
 const getUrlWithoutContentOnly = (url = "") => {
@@ -103,89 +166,299 @@ const getUrlWithoutContentOnly = (url = "") => {
   }
 };
 
-const getNavigationUrl = (element) => {
-  if (!element) {
-    return "";
-  }
-
-  const link = element.closest("a[href], area[href]");
-  if (link) {
-    return link.getAttribute("href") || "";
-  }
-
-  const submitControl = element.closest(
-    'button[type="submit"], input[type="submit"]'
-  );
-  if (submitControl) {
-    const form = submitControl.form;
-    return form?.getAttribute("action") || form?.action || "";
-  }
-
-  return "";
+const setActiveActivity = (splitView, activityToActivate) => {
+  splitView.querySelectorAll(SELECTORS.activity).forEach((activity) => {
+    activity.classList.toggle("current", activity === activityToActivate);
+    activity.classList.toggle(
+      "edukav-activity-active",
+      activity === activityToActivate
+    );
+  });
 };
 
-const redirectToTopWindowIfGrading = (event) => {
-  const target = event.target instanceof Element ? event.target : null;
-  const url = getNavigationUrl(target);
+const setLoadingState = (splitView, isLoading) => {
+  const preview = splitView.querySelector(SELECTORS.preview);
+  const loading = splitView.querySelector(SELECTORS.loading);
+  const content = splitView.querySelector(SELECTORS.previewContent);
 
-  if (!url) {
-    return false;
+  if (preview) {
+    preview.setAttribute("aria-busy", isLoading ? "true" : "false");
   }
 
-  if (!isGradingUrl(url)) {
-    return false;
+  if (loading) {
+    loading.hidden = !isLoading;
   }
 
-  event.preventDefault();
-  event.stopPropagation();
-  window.top?.location.replace(getUrlWithoutContentOnly(url));
-  return true;
+  if (content) {
+    content.classList.toggle("is-loading", isLoading);
+  }
 };
 
-const setupGradingRedirectHandlers = (splitView, doc) => {
-  if (!doc || doc.documentElement.dataset.edukavGradingRedirectBound === "1") {
+const resetBodyClasses = () => {
+  const currentClasses = Array.from(appliedBodyClasses);
+  currentClasses.forEach((className) => {
+    if (!BASE_BODY_CLASSES.has(className)) {
+      document.body.classList.remove(className);
+    }
+  });
+  appliedBodyClasses = [];
+};
+
+const applyBodyClasses = (classes) => {
+  resetBodyClasses();
+
+  const normalized = Array.isArray(classes)
+    ? classes
+    : cleanText(classes || "")
+        .split(/\s+/)
+        .filter(Boolean);
+
+  normalized.forEach((className) => {
+    if (!BASE_BODY_CLASSES.has(className)) {
+      document.body.classList.add(className);
+      appliedBodyClasses.push(className);
+    }
+  });
+};
+
+const parseScriptNode = (html) => {
+  const template = document.createElement("template");
+  template.innerHTML = html || "";
+  return template.content.firstElementChild;
+};
+
+const appendScriptElement = (container, sourceScript) => {
+  if (!sourceScript) {
+    return Promise.resolve();
+  }
+
+  const targetScript = document.createElement("script");
+  Array.from(sourceScript.attributes).forEach((attribute) => {
+    targetScript.setAttribute(attribute.name, attribute.value);
+  });
+
+  if (sourceScript.src) {
+    const normalizedSrc = sourceScript.src;
+    if (loadedScriptSrcs.has(normalizedSrc)) {
+      return Promise.resolve();
+    }
+
+    loadedScriptSrcs.add(normalizedSrc);
+    targetScript.src = normalizedSrc;
+
+    const shouldWait =
+      !sourceScript.hasAttribute("async") && !sourceScript.hasAttribute("defer");
+    const promise = shouldWait
+      ? new Promise((resolve, reject) => {
+          targetScript.addEventListener("load", resolve, { once: true });
+          targetScript.addEventListener("error", reject, { once: true });
+        })
+      : Promise.resolve();
+
+    container.appendChild(targetScript);
+    return promise;
+  }
+
+  targetScript.textContent = sourceScript.textContent || "";
+  container.appendChild(targetScript);
+  return Promise.resolve();
+};
+
+const injectScripts = async (container, scripts = []) => {
+  for (const scriptHtml of scripts) {
+    const sourceScript = parseScriptNode(scriptHtml);
+    if (!sourceScript || sourceScript.tagName !== "SCRIPT") {
+      continue;
+    }
+
+    try {
+      await appendScriptElement(container, sourceScript);
+    } catch (e) {
+      // Optional scripts should not block rendering.
+    }
+  }
+};
+
+const renderPreview = async (splitView, response) => {
+  const content = splitView.querySelector(SELECTORS.previewContent);
+  const secondaryHtml = response?.secondaryHtml || "";
+  const mainHtml = response?.mainHtml || "";
+  const scripts = Array.isArray(response?.scripts) ? response.scripts : [];
+
+  if (!content) {
     return;
   }
 
-  doc.documentElement.dataset.edukavGradingRedirectBound = "1";
+  content.innerHTML = `
+    <div class="edukav-activity-preview-secondary">
+      ${secondaryHtml}
+    </div>
+    <div class="edukav-activity-preview-main">
+      ${mainHtml}
+    </div>
+  `;
 
-  doc.addEventListener("pointerdown", redirectToTopWindowIfGrading, true);
-  doc.addEventListener("mousedown", redirectToTopWindowIfGrading, true);
-  doc.addEventListener("click", redirectToTopWindowIfGrading, true);
-  doc.addEventListener(
-    "submit",
-    (event) => {
-      const form = event.target instanceof HTMLFormElement ? event.target : null;
-      const url = form?.getAttribute("action") || form?.action || "";
+  applyBodyClasses(response?.bodyClasses || []);
+  await injectScripts(content, scripts);
+  setLoadingState(splitView, false);
+};
 
-      if (!url || !isGradingUrl(url)) {
-        return;
-      }
+const renderError = (splitView, message) => {
+  const content = splitView.querySelector(SELECTORS.previewContent);
+  if (content) {
+    content.innerHTML = `
+      <div class="edukav-preview-error" role="alert">
+        <strong>No fue posible cargar la actividad.</strong>
+        <div>${escapeHtml(message)}</div>
+      </div>
+  `;
+  }
 
-      event.preventDefault();
-      event.stopPropagation();
-      window.top?.location.replace(getUrlWithoutContentOnly(url));
+  resetBodyClasses();
+  setLoadingState(splitView, false);
+};
+
+const fetchActivityContent = async (endpointUrl, cmid) => {
+  const body = new URLSearchParams();
+  body.set("cmid", String(cmid));
+  body.set("sesskey", getSessionKey());
+
+  const response = await fetch(endpointUrl, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "X-Requested-With": "XMLHttpRequest",
     },
-    true
-  );
+    body: body.toString(),
+  });
 
-  splitView.dataset.edukavGradingRedirectBound = "1";
-};
-
-const getFrameDocumentUrl = (frame) => {
-  try {
-    return frame?.contentDocument?.location?.href || frame?.contentWindow?.location?.href || "";
-  } catch (e) {
-    return "";
+  const payload = await response.json();
+  if (!response.ok || !payload || payload.success !== true) {
+    const message = payload?.message || `HTTP ${response.status}`;
+    throw new Error(message);
   }
+
+  return payload;
 };
 
-const setFrameLoadingState = (frame, isLoading) => {
-  if (!frame) {
+const loadActivity = async (
+  splitView,
+  activity,
+  link,
+  url,
+  cmid,
+  activityName
+) => {
+  const endpointUrl = getEndpointUrl(splitView);
+  const cacheKey = String(cmid || url || activityName);
+  const cachedResponse = activityCache.get(cacheKey);
+
+  if (isGradingUrl(url)) {
+    window.top?.location.replace(getUrlWithoutContentOnly(url));
     return;
   }
 
-  frame.style.visibility = isLoading ? "hidden" : "visible";
+  setActiveActivity(splitView, activity);
+  setLoadingState(splitView, true);
+
+  if (cachedResponse) {
+    await renderPreview(splitView, cachedResponse);
+    return;
+  }
+
+  try {
+    const payload = await fetchActivityContent(endpointUrl, cmid);
+    activityCache.set(cacheKey, payload);
+    await renderPreview(splitView, payload);
+  } catch (error) {
+    renderError(splitView, error.message || "Hubo un problema inesperado.");
+  }
+};
+
+const shouldIgnoreClick = (event, splitView) => {
+  if (!isPlainLeftClick(event)) {
+    return true;
+  }
+
+  if (event.defaultPrevented) {
+    return true;
+  }
+
+  const target = event.target instanceof Element ? event.target : null;
+  if (!target) {
+    return true;
+  }
+
+  if (target.closest(SELECTORS.actionMenu)) {
+    return true;
+  }
+
+  return !target.closest(`${SELECTORS.sidebar} ${SELECTORS.activityLink}`) ||
+    !splitView.contains(target);
+};
+
+const initSplitView = (splitView) => {
+  splitView.addEventListener("click", (event) => {
+    if (shouldIgnoreClick(event, splitView)) {
+      return;
+    }
+
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target ? target.closest(SELECTORS.activityLink) : null;
+    const activity = target ? target.closest(SELECTORS.activity) : null;
+
+    if (!link || !activity) {
+      return;
+    }
+
+    const url = link.getAttribute("href") || "";
+    if (!url || url.startsWith("#") || link.hasAttribute("download")) {
+      return;
+    }
+
+    if (link.target && link.target !== "_self") {
+      return;
+    }
+
+    if (shouldOpenInNormalNavigation(url)) {
+      event.preventDefault();
+      window.top?.location.assign(getUrlWithoutContentOnly(url));
+      return;
+    }
+
+    const cmid = getActivityCmid(activity, link);
+    if (!cmid) {
+      return;
+    }
+
+    event.preventDefault();
+    void loadActivity(
+      splitView,
+      activity,
+      link,
+      url,
+      cmid,
+      getActivityLabel(activity, link, link.textContent)
+    );
+  });
+
+  const firstActivity = splitView.querySelector(SELECTORS.activity);
+  const firstLink = getActivityLink(firstActivity);
+  if (firstActivity && firstLink) {
+    const firstUrl = firstLink.getAttribute("href") || "";
+    const firstCmid = getActivityCmid(firstActivity, firstLink);
+    if (firstUrl && firstCmid && !shouldOpenInNormalNavigation(firstUrl)) {
+      void loadActivity(
+        splitView,
+        firstActivity,
+        firstLink,
+        firstUrl,
+        firstCmid,
+        getActivityLabel(firstActivity, firstLink, firstLink.textContent)
+      );
+    }
+  }
 };
 
 const syncSplitViewHeight = () => {
@@ -195,7 +468,7 @@ const syncSplitViewHeight = () => {
 
   const viewportHeight = window.visualViewport?.height || window.innerHeight || 0;
 
-  document.querySelectorAll(SINGLE_SECTION_SELECTOR).forEach((container) => {
+  document.querySelectorAll(".single-section").forEach((container) => {
     const rect = container.getBoundingClientRect();
     const availableHeight = Math.max(480, Math.floor(viewportHeight - rect.top - 8));
 
@@ -224,197 +497,6 @@ const enableSplitViewPageMode = () => {
   return true;
 };
 
-/**
- * Cargar actividad en iframe
- *
- * @param {HTMLElement} splitView
- * @param {HTMLElement} activity
- * @param {string} url
- * @param {string} activityName
- */
-const loadActivity = (splitView, activity, url, activityName) => {
-  const frame = splitView.querySelector(SELECTORS.frame);
-  const content = splitView.querySelector(SELECTORS.content);
-
-  if (!frame || !content || !url) {
-    return;
-  }
-
-  if (isGradingUrl(url)) {
-    window.top?.location.replace(getUrlWithoutContentOnly(url));
-    return;
-  }
-
-  if (shouldOpenInNormalNavigation(url)) {
-    window.top?.location.assign(getUrlWithoutContentOnly(url));
-    return;
-  }
-
-  const separator = url.includes("?") ? "&" : "?";
-  const finalUrl = url + separator + "contentonly=1";
-
-  content.classList.add("is-loading");
-  setFrameLoadingState(frame, true);
-  updatePanel(splitView, activityName);
-  setActiveActivity(splitView, activity);
-
-  frame.src = finalUrl;
-};
-
-/**
- * Eventos del iframe
- *
- * @param {HTMLElement} splitView
- */
-const setupFrameEvents = (splitView) => {
-  const frame = splitView.querySelector(SELECTORS.frame);
-  const content = splitView.querySelector(SELECTORS.content);
-
-  if (!frame || !content) {
-    return;
-  }
-
-  frame.addEventListener("load", () => {
-    content.classList.remove("is-loading");
-    setFrameLoadingState(frame, false);
-
-    try {
-      const doc = frame.contentDocument;
-      const frameUrl = getFrameDocumentUrl(frame);
-
-      setupGradingRedirectHandlers(splitView, doc);
-
-      if (frameUrl && isGradingUrl(frameUrl)) {
-        window.top?.location.replace(getUrlWithoutContentOnly(frameUrl));
-        return;
-      }
-
-      if (!doc) {
-        return;
-      }
-
-      /**
-       * 🔥 MOSTRAR SOLO #topofscroll
-       */
-      const target = doc.querySelector("#topofscroll");
-
-        if (target) {
-          doc.body.innerHTML = "";
-          doc.body.appendChild(target);
-
-          doc.body.style.margin = "0";
-          doc.body.style.padding = "20px";
-          doc.body.style.background = "#fff";
-
-          target.style.display = "block";
-          target.style.maxWidth = "1100px";
-          target.style.margin = "0 auto";
-        }
-
-      const frameTitle = doc.title || "";
-
-      if (frameTitle) {
-        const cleanedTitle = frameTitle.split(":").pop().trim();
-        updatePanel(splitView, cleanedTitle);
-      }
-    } catch (e) {
-      return;
-    }
-  });
-
-  frame.addEventListener("error", () => {
-    content.classList.remove("is-loading");
-    setFrameLoadingState(frame, false);
-  });
-};
-
-const shouldIgnoreClick = (event, splitView) => {
-  if (!isPlainLeftClick(event)) {
-    return true;
-  }
-
-  if (event.defaultPrevented) {
-    return true;
-  }
-
-  if (event.target.closest(SELECTORS.actionMenu)) {
-    return true;
-  }
-
-  return (
-    !event.target.closest(
-      `${SELECTORS.sidebar} ${SELECTORS.activityLink}`
-    ) || !splitView.contains(event.target)
-  );
-};
-
-/**
- * Inicializar split view
- *
- * @param {HTMLElement} splitView
- */
-const initSplitView = (splitView) => {
-  setupFrameEvents(splitView);
-
-  splitView.addEventListener("click", (event) => {
-    if (shouldIgnoreClick(event, splitView)) {
-      return;
-    }
-
-    const link = event.target.closest(SELECTORS.activityLink);
-    const activity = event.target.closest(SELECTORS.activity);
-
-    if (!link || !activity) {
-      return;
-    }
-
-    const url = link.getAttribute("href");
-
-    if (!url || url.startsWith("#")) {
-      return;
-    }
-
-    if (isGradingUrl(url)) {
-      event.preventDefault();
-      window.top?.location.replace(getUrlWithoutContentOnly(url));
-      return;
-    }
-
-    if (shouldOpenInNormalNavigation(url)) {
-      event.preventDefault();
-      window.top?.location.assign(getUrlWithoutContentOnly(url));
-      return;
-    }
-
-    event.preventDefault();
-
-    loadActivity(
-      splitView,
-      activity,
-      url,
-      link.textContent.trim()
-    );
-  });
-
-  const firstActivity = splitView.querySelector(SELECTORS.activity);
-  const firstLink = firstActivity
-    ? getActivityLink(firstActivity)
-    : null;
-
-  if (firstActivity && firstLink && firstLink.getAttribute("href")) {
-    const firstUrl = firstLink.getAttribute("href");
-
-    if (!shouldOpenInNormalNavigation(firstUrl)) {
-      loadActivity(
-        splitView,
-        firstActivity,
-        firstUrl,
-        firstLink.textContent.trim()
-      );
-    }
-  }
-};
-
 export const init = () => {
   const splitViews = document.querySelectorAll(SELECTORS.splitView);
 
@@ -426,6 +508,7 @@ export const init = () => {
 
   const splitViewPageModeEnabled = enableSplitViewPageMode();
   splitViews.forEach(initSplitView);
+
   if (splitViewPageModeEnabled) {
     syncSplitViewHeight();
   }

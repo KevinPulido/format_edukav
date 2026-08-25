@@ -111,6 +111,8 @@ class content extends content_base {
 
         // Show the large course hero only on the course home page, not on the dedicated section page.
         $data->showcourseEdukav = !$singlesection && !$issectionpage;
+        $data->courseid = $course->id;
+        $data->activitycontenturl = (new \moodle_url('/course/format/edukav/ajax/activity_content.php'))->out(false);
         
         $data->coursesEdukav = [
             'fullname' => $course->fullname,

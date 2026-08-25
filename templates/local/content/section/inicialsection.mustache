@@ -46,7 +46,7 @@
   </div>
 {{/isgeneralsection}}
 {{^isgeneralsection}}
-  <div class="edukav-splitview" data-region="edukav-splitview">
+  <div class="edukav-splitview" data-region="edukav-splitview" data-course-id="{{courseid}}" data-activity-content-url="{{activitycontenturl}}">
     <div class="edukav-sidebar-shell">
       <div class="edukav-sidebar-header">
         <span class="edukav-sidebar-header-title">Contenido del modulo</span>
@@ -64,14 +64,13 @@
               {{> format_edukav/local/content/sectionnavigation }}
             {{/ format_edukav/local/content/sectionnavigation }}
         {{/sectionnavigation}}
-        <iframe
-          class="edukav-activity-frame"
-          src=""
-          title="Vista previa de actividad"
-          data-region="splitview-frame"
-          frameborder="0"
-          loading="lazy">
-        </iframe>
+        <div class="edukav-activity-preview" data-region="splitview-preview" aria-live="polite" aria-busy="false">
+          <div class="edukav-loading" data-region="splitview-loading" hidden>
+            <div class="edukav-loading-spinner" aria-hidden="true"></div>
+            <span class="sr-only">Cargando actividad</span>
+          </div>
+          <div class="edukav-activity-preview-content" data-region="splitview-preview-content"></div>
+        </div>
       </div>
     </main>
   </div>
