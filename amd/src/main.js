@@ -27,12 +27,12 @@ const GRADE_URL_PATTERNS = [
 ];
 
 const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
-const NORMAL_NAVIGATION_PATTERNS = [
-  /\/mod\/h5pactivity\/view\.php(?:$|\?)/i,
-  /\/mod\/scorm\/view\.php(?:$|\?)/i,
-];
+const NORMAL_NAVIGATION_PATTERNS = [];
 
 const SINGLE_SECTION_SELECTOR = ".single-section";
+const ACTIVITY_RELOAD_GUARD_MS = 1500;
+let activityLoadSequence = 0;
+let resizeAnimationFrameId = 0;
 
 const isEditingMode = () => {
   return (
@@ -188,6 +188,21 @@ const setFrameLoadingState = (frame, isLoading) => {
   frame.style.visibility = isLoading ? "hidden" : "visible";
 };
 
+const scheduleSplitViewHeightSync = () => {
+  if (resizeAnimationFrameId) {
+    return;
+  }
+
+  const schedule =
+    window.requestAnimationFrame ||
+    window.setTimeout.bind(window);
+
+  resizeAnimationFrameId = schedule(() => {
+    resizeAnimationFrameId = 0;
+    syncSplitViewHeight();
+  });
+};
+
 const syncSplitViewHeight = () => {
   if (isEditingMode()) {
     return;
@@ -252,6 +267,26 @@ const loadActivity = (splitView, activity, url, activityName) => {
 
   const separator = url.includes("?") ? "&" : "?";
   const finalUrl = url + separator + "contentonly=1";
+  const requestId = `${++activityLoadSequence}`;
+  const lastLoadedUrl = splitView.dataset.edukavLastLoadedUrl || "";
+  const lastLoadedAt = Number(splitView.dataset.edukavLastLoadedAt || 0);
+  const shouldSkipReload =
+    lastLoadedUrl === finalUrl &&
+    Date.now() - lastLoadedAt <= ACTIVITY_RELOAD_GUARD_MS;
+
+  splitView.dataset.edukavPendingRequestId = requestId;
+  frame.dataset.edukavRequestId = requestId;
+
+  if (shouldSkipReload) {
+    content.classList.remove("is-loading");
+    setFrameLoadingState(frame, false);
+    updatePanel(splitView, activityName);
+    setActiveActivity(splitView, activity);
+    return;
+  }
+
+  splitView.dataset.edukavLastLoadedUrl = finalUrl;
+  splitView.dataset.edukavLastLoadedAt = `${Date.now()}`;
 
   content.classList.add("is-loading");
   setFrameLoadingState(frame, true);
@@ -275,6 +310,13 @@ const setupFrameEvents = (splitView) => {
   }
 
   frame.addEventListener("load", () => {
+    const currentRequestId = splitView.dataset.edukavPendingRequestId || "";
+    const frameRequestId = frame.dataset.edukavRequestId || "";
+
+    if (currentRequestId && frameRequestId && currentRequestId !== frameRequestId) {
+      return;
+    }
+
     content.classList.remove("is-loading");
     setFrameLoadingState(frame, false);
 
@@ -293,23 +335,20 @@ const setupFrameEvents = (splitView) => {
         return;
       }
 
-      /**
-       * 🔥 MOSTRAR SOLO #topofscroll
-       */
       const target = doc.querySelector("#topofscroll");
 
-        if (target) {
-          doc.body.innerHTML = "";
-          doc.body.appendChild(target);
+      if (target && doc.body) {
+        doc.body.innerHTML = "";
+        doc.body.appendChild(target);
 
-          doc.body.style.margin = "0";
-          doc.body.style.padding = "20px";
-          doc.body.style.background = "#fff";
+        doc.body.style.margin = "0";
+        doc.body.style.padding = "20px";
+        doc.body.style.background = "#fff";
 
-          target.style.display = "block";
-          target.style.maxWidth = "1100px";
-          target.style.margin = "0 auto";
-        }
+        target.style.display = "block";
+        target.style.maxWidth = "1100px";
+        target.style.margin = "0 auto";
+      }
 
       const frameTitle = doc.title || "";
 
@@ -432,8 +471,10 @@ export const init = () => {
 
   if (!window.__edukavSplitViewResizeBound) {
     window.__edukavSplitViewResizeBound = true;
-    window.addEventListener("resize", syncSplitViewHeight, { passive: true });
-    window.addEventListener("orientationchange", syncSplitViewHeight, {
+    window.addEventListener("resize", scheduleSplitViewHeightSync, {
+      passive: true,
+    });
+    window.addEventListener("orientationchange", scheduleSplitViewHeightSync, {
       passive: true,
     });
   }
