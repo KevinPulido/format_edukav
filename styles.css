@@ -2118,12 +2118,10 @@ body.edukav-zoom-open {
   display: flex;
   flex-direction: column;
 
-  width: 400px;
+  width: 500px;
   flex: 0 0 auto;
 
   /* alto completo visible */
-
-  height: 100vh;
   min-height: 0;
   max-height: 100%;
 
@@ -2134,10 +2132,7 @@ body.edukav-zoom-open {
   border: 1px solid #eef2f7;
   border-radius: 20px;
 
-  box-shadow:
-    0 4px 10px rgba(15, 23, 42, 0.03),
-    0 10px 24px rgba(15, 23, 42, 0.05);
-
+  box-shadow:var(--shadow-light);
   overflow: hidden;
 }
 
@@ -2381,10 +2376,7 @@ body.edukav-zoom-open {
   border-radius: 20px;
 
   overflow: hidden;
-
-  box-shadow:
-    0 4px 10px rgba(15, 23, 42, 0.03),
-    0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow: var(--shadow-light);
 }
 
 .format-edukav .button-manage {
@@ -2549,13 +2541,11 @@ body.edukav-zoom-open {
 
 /* Ajusta el encabezado de actividades para que las fechas y el estado no queden descolocados. */
 .format-edukav .course-content .section-item {
-  padding: 2rem 1rem;
-  background: #ffffff;
-  border: 1px solid #eef2f7;
+  padding: 1rem;
+  background: transparent;
+  border: none;
   border-radius: 18px;
-  box-shadow:
-    0 4px 10px rgba(15, 23, 42, 0.03),
-    0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow:none;
 }
 
 .format-edukav .course-section {
