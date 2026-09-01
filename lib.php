@@ -289,7 +289,42 @@ class format_edukav extends format_topics {
             'element_type' => 'text',
         ];
 
+        $options['level'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'label' => new lang_string('level', 'format_edukav'),
+            'element_type' => 'select',
+            'element_attributes' => [[
+                '' => new lang_string('level:select', 'format_edukav'),
+                'beginner' => new lang_string('level:beginner', 'format_edukav'),
+                'intermediate' => new lang_string('level:intermediate', 'format_edukav'),
+                'advanced' => new lang_string('level:advanced', 'format_edukav'),
+            ]],
+        ];
+
         return $options;
+    }
+
+    /**
+     * Validate required course format options.
+     *
+     * @param array $data Submitted form data.
+     * @param array $files Submitted files.
+     * @param array $errors Existing form errors.
+     * @return array Form errors for this course format.
+     */
+    public function edit_form_validation($data, $files, $errors) {
+        $formaterrors = [];
+
+        if (empty($data['level'])) {
+            $formaterrors['level'] = get_string('level_required', 'format_edukav');
+        }
+
+        if (empty(trim($data['duration'] ?? ''))) {
+            $formaterrors['duration'] = get_string('duration_required', 'format_edukav');
+        }
+
+        return $formaterrors;
     }
 
     /**
