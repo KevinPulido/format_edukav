@@ -57,6 +57,7 @@ define('FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS', 1);
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_ACTIVITIES', 2);
 define('FORMAT_EDUKAV_FILEAREA_OBJECTIVES', 'objectives');
 define('FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA', 'generalcronograma');
+define('FORMAT_EDUKAV_FILEAREA_BANNER_VIDEO', 'bannervideo');
 
 /**
  * Course format main class
@@ -275,12 +276,49 @@ class format_edukav extends format_topics {
             'element_attributes' => [$partneroptions],
         ];
 
+        $options['banner_video_type'] = [
+            'default' => 'link',
+            'type' => PARAM_ALPHA,
+            'label' => new lang_string('banner_video_type', 'format_edukav'),
+            'element_type' => 'select',
+            'element_attributes' => [[
+                'link' => new lang_string('banner_video_type_link', 'format_edukav'),
+                'upload' => new lang_string('banner_video_type_upload', 'format_edukav'),
+            ]],
+        ];
+
         $options['banner_video'] = [
             'default' => '',
             'type' => PARAM_URL,
             'label' => new lang_string('banner_video', 'format_edukav'),
             'element_type' => 'text',
         ];
+
+        $options['banner_video_file'] = [
+            'default' => 0,
+            'type' => PARAM_INT,
+            'label' => new lang_string('banner_video_file', 'format_edukav'),
+            'element_type' => 'filemanager',
+            'element_attributes' => [null, [
+                'subdirs' => 0,
+                'maxfiles' => 1,
+                'accepted_types' => ['video'],
+            ]],
+        ];
+
+        if ($foreditform && $this->courseid) {
+            $draftitemid = file_get_unused_draft_itemid();
+            file_prepare_draft_area(
+                $draftitemid,
+                \context_course::instance($this->courseid)->id,
+                'format_edukav',
+                FORMAT_EDUKAV_FILEAREA_BANNER_VIDEO,
+                0,
+                ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => ['video']]
+            );
+            $options['banner_video_file']['default'] = $draftitemid;
+            $options['banner_video_file']['element_attributes'][1]['itemid'] = $draftitemid;
+        }
 
         $options['duration'] = [
             'default' => '',
@@ -647,7 +685,27 @@ class format_edukav extends format_topics {
     public function update_course_format_options($data, $oldcourse = null): bool {
         global $DB;
 
+        $videofileitemid = null;
+        if (is_object($data) && property_exists($data, 'banner_video_file')) {
+            $videofileitemid = (int) $data->banner_video_file;
+            unset($data->banner_video_file);
+        } else if (is_array($data) && array_key_exists('banner_video_file', $data)) {
+            $videofileitemid = (int) $data['banner_video_file'];
+            unset($data['banner_video_file']);
+        }
+
         $changes = parent::update_course_format_options($data, $oldcourse);
+
+        if ($videofileitemid) {
+            file_save_draft_area_files(
+                $videofileitemid,
+                \context_course::instance($this->courseid)->id,
+                'format_edukav',
+                FORMAT_EDUKAV_FILEAREA_BANNER_VIDEO,
+                0
+            );
+            $changes = true;
+        }
 
         if (empty($data->importgridimages) || !$this->course_has_grid_images()) {
             return $changes;
@@ -1142,6 +1200,7 @@ function format_edukav_pluginfile(stdClass $course,
         FORMAT_EDUKAV_FILEAREA_IMAGE,
         FORMAT_EDUKAV_FILEAREA_OBJECTIVES,
         FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+        FORMAT_EDUKAV_FILEAREA_BANNER_VIDEO,
     ];
 
     if (!in_array($filearea, $allowedfileareas, true)) {

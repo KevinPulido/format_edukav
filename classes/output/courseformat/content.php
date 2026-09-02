@@ -31,6 +31,7 @@ use format_edukav\versionable_template;
 use local_edukav\service\partners_service;
 use format_topics\output\courseformat\content as content_base;
 use moodle_exception;
+use moodle_url;
 use renderer_base;
 use section_info;
 use stdClass;
@@ -106,8 +107,44 @@ class content extends content_base {
         ];
 
         $bannervideo = $this->format->get_format_option('banner_video');
+        $videotype = (string) $this->format->get_format_option('banner_video_type');
         $videourl = $this->format->normalize_video_url($bannervideo);
         $videoid = $this->format->extract_video_id($bannervideo);
+        $placeholderimage = $output->image_url('placeholder_video', 'format_edukav')->out();
+        $courseimage = '';
+        $courseelement = new \core_course_list_element($course);
+        foreach ($courseelement->get_course_overviewfiles() as $file) {
+            if ($file->is_valid_image()) {
+                $courseimage = moodle_url::make_file_url(
+                    "$CFG->wwwroot/pluginfile.php",
+                    '/' . $file->get_contextid() . '/course/overviewfiles' .
+                        $file->get_filepath() . $file->get_filename()
+                )->out(false);
+                break;
+            }
+        }
+        $videofileurl = null;
+        if ($videotype === 'upload') {
+            $videofiles = get_file_storage()->get_area_files(
+                $context->id,
+                'format_edukav',
+                'bannervideo',
+                0,
+                'filename,filepath',
+                false
+            );
+            $videofile = $videofiles ? reset($videofiles) : null;
+            if ($videofile) {
+                $videofileurl = moodle_url::make_pluginfile_url(
+                    $context->id,
+                    'format_edukav',
+                    'bannervideo',
+                    0,
+                    $videofile->get_filepath(),
+                    $videofile->get_filename()
+                )->out(false);
+            }
+        }
 
         // Show the large course hero only on the course home page, not on the dedicated section page.
         $data->showcourseEdukav = !$singlesection && !$issectionpage;
@@ -122,7 +159,9 @@ class content extends content_base {
             'partner' => $partner,
             'video_url' => $videourl,
             'video_id' => $videoid ?? '',
-            'placeholder_image' => $output->image_url('placeholder_video', 'format_edukav')->out(),
+            'video_file_url' => $videofileurl,
+            'course_image' => $courseimage ?: $placeholderimage,
+            'placeholder_image' => $placeholderimage,
         ];
 
         // Add version variables.

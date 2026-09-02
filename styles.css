@@ -1178,6 +1178,33 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   border-radius: 12px;
 }
 
+.format-edukav .edukav-hero-media-card > .plyr,
+.format-edukav .edukav-hero-media-card > video.edukav-course-video {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111827;
+}
+
+.format-edukav .edukav-hero-media-card > video.edukav-course-video {
+  object-fit: cover !important;
+}
+
+.format-edukav .edukav-hero-media-card > .plyr video {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+}
+
+.format-edukav .edukav-hero-media-card .plyr__poster {
+  background-size: cover !important;
+}
+
 .format-edukav .placeholder-image {
   width: 100%;
   background-size: cover;
