@@ -72,6 +72,13 @@ class format_edukav extends format_topics {
     protected ?int $forcecoursedisplay = null;
 
     /**
+     * Draft area used by the banner video file manager while editing a course.
+     *
+     * @var null|int
+     */
+    protected ?int $bannervideodraftitemid = null;
+
+    /**
      * Cards format allows you to indent course modules
      *
      * @return bool
@@ -296,7 +303,8 @@ class format_edukav extends format_topics {
         ];
 
         if ($foreditform && $this->courseid) {
-            $draftitemid = file_get_unused_draft_itemid();
+            // Start empty so Moodle creates the draft area and copies the saved file into it.
+            $draftitemid = 0;
             file_prepare_draft_area(
                 $draftitemid,
                 \context_course::instance($this->courseid)->id,
@@ -305,6 +313,7 @@ class format_edukav extends format_topics {
                 0,
                 ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => ['video']]
             );
+            $this->bannervideodraftitemid = $draftitemid;
             $options['banner_video_file']['default'] = $draftitemid;
             $options['banner_video_file']['element_attributes'][1]['itemid'] = $draftitemid;
         }
@@ -637,6 +646,11 @@ class format_edukav extends format_topics {
         global $PAGE;
 
         $elements = parent::create_edit_form_elements($mform, $forsection);
+
+        if (!$forsection && $this->bannervideodraftitemid) {
+            // The course form may already contain an empty value from set_data().
+            $mform->setDefault('banner_video_file', $this->bannervideodraftitemid);
+        }
 
         if ($this->course_has_grid_images() && !$forsection) {
             $elements[] = $mform->addElement(
