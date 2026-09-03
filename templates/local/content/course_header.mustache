@@ -63,12 +63,19 @@
 
                     <div class="col-lg-5">
                         <div class="radius-10 overflow-hidden p-4 bg-color-white-opacity mt_md--60 mt_sm--60 mt_mobile--40 edukav-hero-media-card">
+                            {{#video_file_url}}
+                                <video class="plyr edukav-course-video" controls preload="metadata" poster="{{course_image}}">
+                                    <source src="{{video_file_url}}">
+                                </video>
+                            {{/video_file_url}}
+                            {{^video_file_url}}
                             {{#video_id}}
                                 <div class="plyr" data-plyr-provider="youtube" data-plyr-embed-id="{{video_id}}"></div>
                             {{/video_id}}
                             {{^video_id}}
                                 <img class="placeholder-image" src="{{placeholder_image}}" alt="El video no ha sido cargado" class="img-fluid">
                             {{/video_id}}
+                            {{/video_file_url}}
                         </div>
                     </div>
                 </div>

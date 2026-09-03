@@ -1178,6 +1178,33 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   border-radius: 12px;
 }
 
+.format-edukav .edukav-hero-media-card > .plyr,
+.format-edukav .edukav-hero-media-card > video.edukav-course-video {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111827;
+}
+
+.format-edukav .edukav-hero-media-card > video.edukav-course-video {
+  object-fit: cover !important;
+}
+
+.format-edukav .edukav-hero-media-card > .plyr video {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+}
+
+.format-edukav .edukav-hero-media-card .plyr__poster {
+  background-size: cover !important;
+}
+
 .format-edukav .placeholder-image {
   width: 100%;
   background-size: cover;
@@ -2118,12 +2145,10 @@ body.edukav-zoom-open {
   display: flex;
   flex-direction: column;
 
-  width: 400px;
+  width: 500px;
   flex: 0 0 auto;
 
   /* alto completo visible */
-
-  height: 100vh;
   min-height: 0;
   max-height: 100%;
 
@@ -2134,10 +2159,7 @@ body.edukav-zoom-open {
   border: 1px solid #eef2f7;
   border-radius: 20px;
 
-  box-shadow:
-    0 4px 10px rgba(15, 23, 42, 0.03),
-    0 10px 24px rgba(15, 23, 42, 0.05);
-
+  box-shadow:var(--shadow-light);
   overflow: hidden;
 }
 
@@ -2358,27 +2380,30 @@ body.edukav-zoom-open {
 
 /* PANEL DERECHO */
 .format-edukav .edukav-main {
-  flex: 1;
+  flex: 1 1 0;
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .format-edukav .edukav-content-panel {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 1280px;
   height: 100vh;
   min-height: 0;
   max-height: 100%;
+  margin: 0 auto;
 
   background: #ffffff;
   border: 1px solid #eef2f7;
   border-radius: 20px;
 
   overflow: hidden;
-
-  box-shadow:
-    0 4px 10px rgba(15, 23, 42, 0.03),
-    0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow: var(--shadow-light);
 }
 
 .format-edukav .button-manage {
@@ -2543,13 +2568,11 @@ body.edukav-zoom-open {
 
 /* Ajusta el encabezado de actividades para que las fechas y el estado no queden descolocados. */
 .format-edukav .course-content .section-item {
-  padding: 2rem 1rem;
-  background: #ffffff;
-  border: 1px solid #eef2f7;
+  padding: 1rem;
+  background: transparent;
+  border: none;
   border-radius: 18px;
-  box-shadow:
-    0 4px 10px rgba(15, 23, 42, 0.03),
-    0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow:none;
 }
 
 .format-edukav .course-section {
@@ -3133,6 +3156,7 @@ body.edukav-zoom-open {
   }
 
   .format-edukav .edukav-content-panel {
+    max-width: none;
     height: auto;
     min-height: 0;
   }
