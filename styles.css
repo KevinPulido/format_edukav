@@ -1685,6 +1685,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   vertical-align: top;
   font-size: 0.93rem;
   line-height: 1.55;
+  text-align: justify;
   color: #2b3a55;
   border-top: 1px solid #e7edf6;
   border-right: 1px solid #e7edf6;
@@ -1769,7 +1770,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   tbody
   td:first-child {
   width: 22%;
-  font-weight: 700;
+  font-weight: 400;
   color: #1f2a44;
 }
 
