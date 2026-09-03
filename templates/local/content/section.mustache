@@ -108,17 +108,6 @@
         data-sectionname="{{sectionname}}"
         {{#isstealth}} data-orphan="true" {{/isstealth}}
     >
-        {{#addsectionbreak}}
-            {{$ format_edukav/local/content/section/add-break }}
-                {{> format_edukav/local/content/section/add-break }}
-            {{/ format_edukav/local/content/section/add-break }}
-        {{/addsectionbreak}}
-        {{#sectionbreak}}
-            {{$ format_edukav/local/content/section/break }}
-                {{> format_edukav/local/content/section/break }}
-            {{/format_edukav/local/content/section/break}}
-        {{/sectionbreak}}
-
         {{#moodle405orlater}}
         <div class="section-item">
         {{/moodle405orlater}}

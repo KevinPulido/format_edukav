@@ -30,7 +30,6 @@ global $CFG;
 use core\notification;
 use core\output\inplace_editable;
 use format_edukav\forms\editcard_form;
-use format_edukav\section_break;
 
 require_once("$CFG->dirroot/course/format/topics/lib.php");
 
@@ -399,20 +398,6 @@ class format_edukav extends format_topics {
             ],
         ];
 
-        $options['sectionbreak'] = [
-            'default' => false,
-            'type' => PARAM_BOOL,
-            'label' => new lang_string('section:break', 'format_cards'),
-            'element_type' => 'hidden',
-        ];
-
-        $options['sectionbreaktitle'] = [
-            'default' => '',
-            'type' => PARAM_TEXT,
-            'label' => new lang_string('section:break', 'format_cards'),
-            'element_type' => 'hidden',
-        ];
-
         $options['objectives'] = [
             'default' => '',
             'type' => PARAM_RAW,
@@ -506,89 +491,6 @@ class format_edukav extends format_topics {
         }
 
         return $changes;
-    }
-
-    /**
-     * Updates a section break title
-     *
-     * @param stdClass $section Section to update
-     * @param string $itemtype The item type
-     * @param string $newvalue New item value
-     * @return inplace_editable
-     * @throws \core_external\restricted_context_exception
-     * @throws invalid_parameter_exception
-     * @throws required_capability_exception
-     */
-    #[\Override]
-    public function inplace_editable_update_section_name($section, $itemtype, $newvalue): inplace_editable {
-        global $CFG;
-
-        if ($itemtype === 'sectionbreak') {
-
-            $context = context_course::instance($section->course);
-
-            // The external_api class is in a different place in Moodle 4.1.
-            if ($CFG->version < 2023042400) {
-                require_once("$CFG->libdir/externallib.php");
-                \external_api::validate_context($context);
-            } else {
-                \core_external\external_api::validate_context($context);
-            }
-
-            require_capability('moodle/course:update', $context);
-
-            $newtitle = clean_param($newvalue, PARAM_TEXT);
-
-            $break = section_break::get_break_for_section($section);
-            if (strval($break->get('name')) !== strval($newtitle)) {
-                $break->set('name', $newtitle);
-                $break->save();
-
-                // Reset the break cache if the name changes.
-                $cache = cache::make_from_params(
-                    cache_store::MODE_APPLICATION,
-                    'format_edukav',
-                    'section_breaks'
-                );
-                $cache->delete($section->course);
-            }
-
-            return $this->inplace_editable_render_section_break($section, true);
-        }
-
-        return parent::inplace_editable_update_section_name($section, $itemtype, $newvalue);
-    }
-
-    /**
-     * Renders a section break as an inplace editable
-     *
-     * @param stdClass $section Section to update break in
-     * @param bool|null $editable Whether the break should be editable
-     * @return inplace_editable
-     */
-    public function inplace_editable_render_section_break($section, ?bool $editable = null): inplace_editable {
-
-        if ($editable === null) {
-            $editable = $this->show_editor([ 'moodle/course:update' ]);
-        }
-
-        $sectionbreak = section_break::get_break_for_section($section);
-        $break = $sectionbreak->get('name');
-        $display = $break;
-        if (empty($break) && $editable) {
-            $display = get_string('section:break:marker', 'format_edukav');
-        }
-
-        return new inplace_editable(
-            'format_edukav',
-            'sectionbreak',
-            $section->id,
-            $editable,
-            $display,
-            $break,
-            new lang_string('section:break:edit', 'format_edukav'),
-            new lang_string('section:break', 'format_edukav')
-        );
     }
 
     /**
@@ -1168,7 +1070,7 @@ function format_edukav_inplace_editable($itemtype, $itemid, $newvalue) {
     global $DB, $CFG;
     require_once("$CFG->dirroot/course/lib.php");
 
-    if (!in_array($itemtype, ['sectionname', 'sectionnamenl', 'sectionbreak'])) {
+    if (!in_array($itemtype, ['sectionname', 'sectionnamenl'])) {
         return;
     }
 

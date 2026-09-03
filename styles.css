@@ -905,23 +905,6 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   width: 100%;
 }
 
-.format-edukav .course-content .card-deck .section-break {
-  list-style: none;
-  display: block;
-  width: 100%;
-}
-
-.format-edukav .section-break {
-  margin: 1rem 0 0.5rem;
-
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-
-  color: #94a3b8; /* neutro elegante */
-}
-
 @media (max-width: 576px) {
   .format-edukav .course-content .card-deck .card .card-header .card-title {
     /** Try to make card titles responsive on smaller devices */
