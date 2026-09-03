@@ -929,6 +929,223 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   }
 }
 
+/* Public module cards. Editing mode keeps the original Moodle layout above. */
+body.format-edukav:not(.editing) .course-content .dashboard-card-deck {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 16px;
+  align-items: stretch;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+body.format-edukav:not(.editing) .course-content .dashboard-card-deck .edukav-module-card {
+  display: flex;
+  aspect-ratio: auto !important;
+  width: 100% !important;
+  max-width: 280px !important;
+  justify-self: center;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  overflow: hidden;
+  border: 1px solid #e7e9f3;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(32, 45, 82, 0.08);
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .card-main-content {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column;
+  width: 100%;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .edukav-module-card-media {
+  position: relative !important;
+  inset: auto !important;
+  flex: 0 0 124px;
+  height: 124px !important;
+  min-height: 124px !important;
+  padding: 8px 8px 0;
+  border-radius: 15px 15px 0 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #f5f6fa;
+  background-origin: content-box !important;
+  background-clip: content-box !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  transform: none !important;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .edukav-module-card-body {
+  display: flex !important;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 12px;
+  background: #fff;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .card-title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: #18233d !important;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .summary {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: #59627a !important;
+  font-size: 12px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .section-completion {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  z-index: 2;
+  display: flex !important;
+  width: 60px !important;
+  height: 60px !important;
+  min-width: 60px;
+  min-height: 60px;
+  color: #26334d;
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 2px 8px rgba(20, 35, 70, 0.14);
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .section-completion svg {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 50px;
+  height: 50px;
+  transform: rotate(-90deg);
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .section-completion svg circle.outer {
+  stroke: #e6e6e6;
+  stroke-width: 5;
+  fill: none;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .section-completion svg circle.inner {
+  stroke: #05DF72;
+  stroke-width: 5;
+  fill: none;
+  stroke-dasharray: 100;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card.is-inprogress .section-completion svg circle.inner {
+  stroke: #2563eb;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card .section-completion svg circle.inner.complete {
+  stroke-dasharray: 0;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 5px 0;
+  color: #59627a;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  font-size: 12px;
+  line-height: 1;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status.is-inprogress {
+  color: #2563eb;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status.is-inprogress .edukav-module-card-status-icon {
+  color: #2563eb;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status.is-complete {
+  color: #16a34a;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status.is-complete .edukav-module-card-status-icon {
+  color: #16a34a;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .edukav-module-card-status-icon {
+  color: #b9bec8;
+}
+
+@media (max-width: 1199px) {
+  body.format-edukav:not(.editing) .course-content .dashboard-card-deck {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body.format-edukav:not(.editing) .course-content .dashboard-card-deck {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 575px) {
+  body.format-edukav:not(.editing) .course-content .dashboard-card-deck {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    padding: 0 40px !important;
+  }
+
+  body.format-edukav:not(.editing) .course-content .dashboard-card-deck .edukav-module-card {
+    max-width: none !important;
+  }
+  
+  .format-edukav .edukav-hero-media-card{
+    padding: 10px;
+  }
+}
+
 .format-edukav .course-content .section-item .activity:first-of-type {
   border: none;
 }
@@ -1071,12 +1288,15 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 
 .format-edukav .edukav-breadcrumb-container {
   position: relative;
-  padding: 20px 0;
+  padding: 30px;
+  border-radius: 15px;
   overflow: hidden;
   background: var(
     --edukav-partner-bg,
     linear-gradient(135deg, #f5f7fb 0%, #e6e9f5 35%, #c9c3f5 65%, #a855f7 100%)
   );
+  margin: 1rem 0;
+  box-shadow:0 0 10px 0 rgba(0, 0, 0, 0.06);
 }
 
 .format-edukav .custom-breadcrumb-container {
@@ -1167,7 +1387,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 }
 
 .format-edukav .edukav-hero-media-card {
-  padding: 10px;
+  padding: 25px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);

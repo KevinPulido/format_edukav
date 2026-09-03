@@ -38,9 +38,6 @@ define('FORMAT_EDUKAV_FILEAREA_IMAGE', 'image');
 define('FORMAT_EDUKAV_USEDEFAULT', 0);
 define('FORMAT_EDUKAV_SECTION0_COURSEPAGE', 1);
 define('FORMAT_EDUKAV_SECTION0_ALLPAGES', 2);
-define('FORMAT_EDUKAV_ORIENTATION_VERTICAL', 1);
-define('FORMAT_EDUKAV_ORIENTATION_HORIZONTAL', 2);
-define('FORMAT_EDUKAV_ORIENTATION_SQUARE', 3);
 define('FORMAT_EDUKAV_SHOWSUMMARY_SHOW', 1);
 define('FORMAT_EDUKAV_SHOWSUMMARY_HIDE', 2);
 define('FORMAT_EDUKAV_SHOWPROGRESS_SHOW', 1);
@@ -226,14 +223,6 @@ class format_edukav extends format_topics {
             $sectionnavigationhomeoptions,
             $defaults->sectionnavigationhome
         );
-
-        $orientationoptions = [
-            FORMAT_EDUKAV_ORIENTATION_VERTICAL => new lang_string('form:course:cardorientation:vertical', 'format_edukav'),
-            FORMAT_EDUKAV_ORIENTATION_HORIZONTAL => new lang_string('form:course:cardorientation:horizontal', 'format_edukav'),
-            FORMAT_EDUKAV_ORIENTATION_SQUARE => new lang_string('form:course:cardorientation:square', 'format_edukav'),
-        ];
-
-        $options['cardorientation'] = $createselect('cardorientation', $orientationoptions, $defaults->cardorientation);
 
         $summaryoptions = [
             FORMAT_EDUKAV_SHOWSUMMARY_SHOW => new lang_string('form:course:showsummary:show', 'format_edukav'),

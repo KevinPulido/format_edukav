@@ -154,13 +154,9 @@ class section extends section_base {
             return $data;
         }
 
-        switch ($this->format->get_format_option('cardorientation')) {
-            case FORMAT_EDUKAV_ORIENTATION_HORIZONTAL:
-                $data->classes[] = "card-horizontal";
-                break;
-            case FORMAT_EDUKAV_ORIENTATION_SQUARE:
-                $data->classes[] = "card-square";
-                break;
+        if (!empty($data->header) && is_object($data->header)) {
+            // Keep completion available inside the public card header context.
+            $data->header->completion = $completion;
         }
 
         // Shorten the card's summary text, if applicable.
