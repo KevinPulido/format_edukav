@@ -60,8 +60,15 @@
                     {{> core_courseformat/local/content/section/badges }}
                 {{/ core_courseformat/local/content/section/badges }}
                 <h3 id="section-{{num}}-title" class="card-title">{{{name}}}</h3>
+                <div class="edukav-module-card-meta">
+                {{^isgeneralsection}}
+                    {{#haslessoncount}}
+                        <span><i class="bi bi-journal-text" aria-hidden="true"></i> {{lessoncount}} {{#str}}section:lessons, format_edukav{{/str}}</span>
+                    {{/haslessoncount}}
+                {{/isgeneralsection}}
+                {{#hasmoduleduration}}<span><i class="bi bi-clock" aria-hidden="true"></i> {{moduleduration}}</span>{{/hasmoduleduration}}
                 {{#completion}}
-                    <div class="edukav-module-card-status{{#iscomplete}} is-complete{{/iscomplete}}{{^iscomplete}}{{#hasprogress}} is-inprogress{{/hasprogress}}{{^hasprogress}} is-notstarted{{/hasprogress}}{{/iscomplete}}">
+                    <span class="edukav-module-card-status{{#iscomplete}} is-complete{{/iscomplete}}{{^iscomplete}}{{#hasprogress}} is-inprogress{{/hasprogress}}{{^hasprogress}} is-notstarted{{/hasprogress}}{{/iscomplete}}">
                         {{#iscomplete}}
                             <i class="bi bi-check-circle-fill edukav-module-card-status-icon" aria-hidden="true"></i>
                             <span>{{#str}}section:status:completed, format_edukav{{/str}}</span>
@@ -76,8 +83,9 @@
                                 <span>{{#str}}section:status:notstarted, format_edukav{{/str}}</span>
                             {{/hasprogress}}
                         {{/iscomplete}}
-                    </div>
+                    </span>
                 {{/completion}}
+                </div>
                 {{#summary}}
                     {{#summarytext}}<div class="summary">{{{summarytext}}}</div>{{/summarytext}}
                 {{/summary}}

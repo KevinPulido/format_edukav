@@ -173,6 +173,8 @@ class content extends content_base {
 
         $data->userisediting = $PAGE->user_is_editing();
 
+        $data->moduleprogress = $this->get_module_progress();
+
         $data->subsectionsascards = $this->format->get_format_option("subsectionsascards") == FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS;
 
         $generalsection = $this->format->get_section(0);
@@ -228,6 +230,49 @@ class content extends content_base {
         
 
         return $data;
+    }
+
+    /**
+     * Build the course-level module progress summary for the card view.
+     *
+     * Only visible non-general sections with at least one completable
+     * activity are included, so the summary reflects actual Moodle progress.
+     *
+     * @return array
+     */
+    private function get_module_progress(): array {
+        if (isguestuser() || !$this->format->get_course()->enablecompletion) {
+            return [];
+        }
+
+        $total = 0;
+        $completed = 0;
+        foreach ($this->format->get_modinfo()->get_section_info_all() as $section) {
+            if ((int) $section->section === 0 || !$section->uservisible) {
+                continue;
+            }
+
+            $completion = $this->get_section_completion_for($section);
+            if (empty($completion)) {
+                continue;
+            }
+
+            $total++;
+            if ($completion['iscomplete']) {
+                $completed++;
+            }
+        }
+
+        if ($total === 0) {
+            return [];
+        }
+
+        return [
+            'completed' => $completed,
+            'total' => $total,
+            'percentage' => round(($completed / $total) * 100),
+            'dashoffset' => 100 - round(($completed / $total) * 100),
+        ];
     }
 
     /**

@@ -422,6 +422,15 @@ class format_edukav extends format_topics {
             'element_type' => 'hidden',
         ];
 
+        $options['moduleduration'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'label' => new lang_string('form:section:moduleduration', 'format_edukav'),
+            'element_type' => 'text',
+            'help' => 'form:section:moduleduration',
+            'help_component' => 'format_edukav',
+        ];
+
         return $options;
     }
 

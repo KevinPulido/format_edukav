@@ -136,6 +136,11 @@ class section extends section_base {
             'progress' => $data->sectionprogresspercentage,
         ];
 
+        $data->moduleduration = trim((string) $this->format->get_format_option('moduleduration', $this->section));
+        $data->hasmoduleduration = $data->moduleduration !== '';
+        $data->lessoncount = $this->get_section_lesson_count();
+        $data->haslessoncount = $data->lessoncount > 0;
+
         if (!$showascard) {
             if ($issinglesectionpage) {
                 $data->header = false;
@@ -168,6 +173,35 @@ class section extends section_base {
         }
 
         return $data;
+    }
+
+    /**
+     * Count the visible activities represented by this section.
+     *
+     * The count is informational only; it is intentionally independent from
+     * the manually entered module duration.
+     *
+     * @return int
+     */
+    private function get_section_lesson_count(): int {
+        $modinfo = $this->section->modinfo;
+        $lessonmodules = ['lesson', 'book', 'page', 'h5pactivity', 'imscp', 'scorm'];
+
+        if (!array_key_exists($this->section->section, $modinfo->sections)) {
+            return 0;
+        }
+
+        $count = 0;
+        foreach ($modinfo->sections[$this->section->section] as $cmid) {
+            $cminfo = $modinfo->cms[$cmid];
+            if (!$cminfo->uservisible || $cminfo->deletioninprogress
+                || !in_array($cminfo->modname, $lessonmodules, true)) {
+                continue;
+            }
+            $count++;
+        }
+
+        return $count;
     }
 
     /**

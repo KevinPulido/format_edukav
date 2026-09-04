@@ -999,6 +999,97 @@ body.format-edukav:not(.editing) .edukav-module-card .card-title {
   -webkit-line-clamp: 3;
 }
 
+body.format-edukav:not(.editing) .edukav-module-card-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  color: #59627a;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-meta i {
+  color: #64748b;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  min-height: 32px;
+  padding:16px;
+  border: 1px solid #e7e9f3;
+  border-radius: 12px;
+  background: #fff;
+  color: #18233d;
+  box-shadow: 0 4px 12px rgba(32, 45, 82, 0.05);
+  font-size: 12px;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-ring {
+  position: relative;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-ring svg {
+  width: 20px;
+  height: 20px;
+  transform: rotate(-90deg);
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-ring circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-ring circle.outer {
+  stroke: #e6eaf0;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-ring circle.inner {
+  stroke: #05df72;
+  stroke-dasharray: 100;
+  stroke-linecap: round;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-summary-label {
+  color: #59627a;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-summary-percentage {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
+  margin-left: auto;
+}
+
+@media (max-width: 575px) {
+  body.format-edukav:not(.editing) .edukav-course-progress-summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
+    margin-left: 0;
+  }
+}
+
 body.format-edukav:not(.editing) .edukav-module-card .summary {
   display: -webkit-box;
   margin: 0;
@@ -1070,6 +1161,10 @@ body.format-edukav:not(.editing) .edukav-module-card-status {
   color: #59627a;
   font-size: 12px;
   font-weight: 600;
+}
+
+body.format-edukav:not(.editing) .edukav-module-card-meta .edukav-module-card-status {
+  margin: 0;
 }
 
 body.format-edukav:not(.editing) .edukav-module-card-status-icon {
