@@ -102,7 +102,6 @@ class content extends content_base {
             'name' => trim((string)($partnerdata['name'] ?? '')),
             'logo' => trim((string)($partnerdata['logo'] ?? '')),
             'brand_color' => trim((string)($partnerdata['brand_color'] ?? '')),
-            'gradient' => trim((string)($partnerdata['gradient'] ?? '')),
             'style' => trim((string)($partnerdata['style'] ?? '')),
         ];
 

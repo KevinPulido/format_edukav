@@ -1369,10 +1369,7 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
   padding: 30px;
   border-radius: 15px;
   overflow: hidden;
-  background: var(
-    --edukav-partner-bg,
-    linear-gradient(135deg, #f5f7fb 0%, #e6e9f5 35%, #c9c3f5 65%, #a855f7 100%)
-  );
+  background: #fff;
   margin: 1rem 0;
   box-shadow:0 0 10px 0 rgba(0, 0, 0, 0.06);
 }
