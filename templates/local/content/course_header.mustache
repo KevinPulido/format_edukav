@@ -16,11 +16,11 @@
 }}
 
 {{#coursesEdukav}}
-    <div class="edukav-breadcrumb-container"{{#partner.gradient}} style="--edukav-partner-bg: {{{partner.gradient}}};"{{/partner.gradient}}>
+    <div class="edukav-breadcrumb-container" style="background-image: url('{{{hero_background}}}');">
         <div class="container">
             <div class="course-details-content edukav-course-hero">
                 <div class="row row--20 align-items-center">
-                    <div class="col-lg-7">
+                    <div class="col-lg-6">
                         <div class="d-flex align-items-center gap-3 flex-wrap mb-2 edukav-course-partner">
                             {{#partner.logo}}
                                 <img src="{{partner.logo}}" alt="{{partner.name}}" class="edukav-partner-logo">
@@ -36,33 +36,32 @@
                         <div class="edukav-breadcrumb-description edukav-hero-summary">
                             {{{summary}}}
                         </div>
-                        <hr class="divider">
-                        <div class="edukav-breadcrumb-meta edukav-hero-meta">
-                            <div class="edukav-feature-sin">
-                                <span class="edukav-icon">
-                                    <i class="fa-solid fa-square-poll-horizontal"></i>
-                                </span>
-                                <span class="edukav-feature-text">{{categoryName}}</span>
-                            </div>
-
-                            <div class="edukav-feature-sin">
-                                <span class="edukav-icon">
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                </span>
-                                <span class="edukav-feature-text">{{startdate}}</span>
-                            </div>
-
-                            {{#educators}}
-                            <div class="edukav-feature-sin">
-                                <img src="{{educator_icon}}" class="educator-icon edukav-icon">
-                                <span class="edukav-feature-text">{{educator_name}}</span>
-                            </div>
-                            {{/educators}}
+                        <div class="edukav-hero-metadata">
+                            {{#duration}}
+                                <span class="edukav-hero-chip"><i class="bi bi-clock"></i>{{duration}}</span>
+                            {{/duration}}
+                            {{#modulecount}}
+                                <span class="edukav-hero-chip"><i class="bi bi-layers"></i>{{modulecount}} módulos</span>
+                            {{/modulecount}}
+                            {{#level}}
+                                <span class="edukav-hero-chip"><i class="bi bi-bar-chart"></i>{{level}}</span>
+                            {{/level}}
                         </div>
+                        {{#activityprogress}}
+                            <div class="edukav-hero-progress" aria-label="Tu progreso {{percentage}}%">
+                                <div class="edukav-hero-progress-heading">
+                                    <span>Tu progreso</span>
+                                    <strong>{{percentage}}%</strong>
+                                </div>
+                                <div class="edukav-hero-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{percentage}}">
+                                    <span class="edukav-hero-progress-value" style="width: {{percentage}}%;"></span>
+                                </div>
+                            </div>
+                        {{/activityprogress}}
                     </div>
 
-                    <div class="col-lg-5">
-                        <div class="radius-10 overflow-hidden p-4 bg-color-white-opacity mt_md--60 mt_sm--60 mt_mobile--40 edukav-hero-media-card">
+                    <div class="col-lg-6">
+                        <div class="radius-10 overflow-hidden bg-color-white-opacity mt_md--60 mt_sm--60 mt_mobile--40 edukav-hero-media-card">
                             {{#video_file_url}}
                                 <video class="plyr edukav-course-video" controls preload="metadata" poster="{{course_image}}">
                                     <source src="{{video_file_url}}">

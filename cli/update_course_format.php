@@ -95,7 +95,6 @@ $count = count($courses);
 foreach ($courses as $course) {
     $course->format = 'edukav';
     $course->section0 = FORMAT_EDUKAV_USEDEFAULT;
-    $course->cardorientation = FORMAT_EDUKAV_USEDEFAULT;
     $course->importgridimages = true;
 
     try {

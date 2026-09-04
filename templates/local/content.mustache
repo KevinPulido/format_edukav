@@ -151,6 +151,20 @@
 }}
 {{#showcourseEdukav}}
     {{> format_edukav/local/content/course_header}}
+
+    {{#moduleprogress}}
+        <div class="edukav-course-progress-summary" role="status">
+            <span class="edukav-course-progress-ring" aria-hidden="true">
+                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="outer" cx="20" cy="20" r="16"></circle>
+                    <circle class="inner" cx="20" cy="20" r="16" stroke-dashoffset="{{dashoffset}}"></circle>
+                </svg>
+            </span>
+            <span class="edukav-course-progress-summary-label">{{#str}}progresssummary, format_edukav{{/str}}</span>
+            <span class="edukav-course-progress-summary-percentage">{{percentage}}%</span>
+            <strong class="edukav-course-progress-summary-count">{{completed}} {{#str}}progresssummaryof, format_edukav{{/str}} {{total}} {{#str}}progresssummarymodules, format_edukav{{/str}}</strong>
+        </div>
+    {{/moduleprogress}}
 {{/showcourseEdukav}}
 <div id="course-format-{{uniqid}}" {{#subsectionsascards}}class="subsectionsascards"{{/subsectionsascards}}>
     <h2 class="accesshide">{{{title}}}</h2>

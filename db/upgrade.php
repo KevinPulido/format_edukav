@@ -57,5 +57,9 @@ function xmldb_format_edukav_upgrade($oldversion = 0): bool {
         upgrade_plugin_savepoint(true, 2026042910, 'format', 'edukav');
     }
 
+    if ($oldversion < 2026042916) {
+        upgrade_plugin_savepoint(true, 2026042916, 'format', 'edukav');
+    }
+
     return true;
 }

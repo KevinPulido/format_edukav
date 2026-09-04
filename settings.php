@@ -72,17 +72,6 @@ if ($hassiteconfig) {
         ]
     ));
 
-    $settings->add(new admin_setting_configselect('format_edukav/cardorientation',
-        get_string('form:course:cardorientation', 'format_edukav'),
-        '',
-        FORMAT_EDUKAV_ORIENTATION_VERTICAL,
-        [
-            FORMAT_EDUKAV_ORIENTATION_VERTICAL => get_string('form:course:cardorientation:vertical', 'format_edukav'),
-            FORMAT_EDUKAV_ORIENTATION_HORIZONTAL => get_string('form:course:cardorientation:horizontal', 'format_edukav'),
-            FORMAT_EDUKAV_ORIENTATION_SQUARE => get_string('form:course:cardorientation:square', 'format_edukav'),
-        ]
-    ));
-
     $settings->add(new admin_setting_configselect('format_edukav/showsummary',
         get_string('form:course:showsummary', 'format_edukav'),
         '',

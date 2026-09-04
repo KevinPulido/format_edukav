@@ -102,15 +102,19 @@ class content extends content_base {
             'name' => trim((string)($partnerdata['name'] ?? '')),
             'logo' => trim((string)($partnerdata['logo'] ?? '')),
             'brand_color' => trim((string)($partnerdata['brand_color'] ?? '')),
-            'gradient' => trim((string)($partnerdata['gradient'] ?? '')),
             'style' => trim((string)($partnerdata['style'] ?? '')),
         ];
 
         $bannervideo = $this->format->get_format_option('banner_video');
         $videotype = (string) $this->format->get_format_option('banner_video_type');
+        $level = trim((string) $this->format->get_format_option('level'));
+        $leveldisplay = $level !== '' && get_string_manager()->string_exists('level:' . $level, 'format_edukav')
+            ? get_string('level:' . $level, 'format_edukav')
+            : $level;
         $videourl = $this->format->normalize_video_url($bannervideo);
         $videoid = $this->format->extract_video_id($bannervideo);
         $placeholderimage = $output->image_url('placeholder_video', 'format_edukav')->out();
+        $herobackground = $output->image_url('hero-video-background', 'format_edukav')->out(false);
         $courseimage = '';
         $courseelement = new \core_course_list_element($course);
         foreach ($courseelement->get_course_overviewfiles() as $file) {
@@ -149,6 +153,8 @@ class content extends content_base {
         // Show the large course hero only on the course home page, not on the dedicated section page.
         $data->showcourseEdukav = !$singlesection && !$issectionpage;
         
+        $moodlecourseprogress = $this->get_moodle_course_progress($output);
+
         $data->coursesEdukav = [
             'fullname' => $course->fullname,
             'summary' => format_text($course->summary, $course->summaryformat),
@@ -162,6 +168,11 @@ class content extends content_base {
             'video_file_url' => $videofileurl,
             'course_image' => $courseimage ?: $placeholderimage,
             'placeholder_image' => $placeholderimage,
+            'hero_background' => $herobackground,
+            'duration' => trim((string) $this->format->get_format_option('duration')),
+            'level' => $leveldisplay,
+            'modulecount' => $this->get_visible_module_count(),
+            'activityprogress' => $moodlecourseprogress,
         ];
 
         // Add version variables.
@@ -172,6 +183,8 @@ class content extends content_base {
         $data->nocoursesimg = $output->image_url('courses', 'block_myoverview')->out();
 
         $data->userisediting = $PAGE->user_is_editing();
+
+        $data->moduleprogress = $this->get_module_progress($moodlecourseprogress);
 
         $data->subsectionsascards = $this->format->get_format_option("subsectionsascards") == FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS;
 
@@ -228,6 +241,99 @@ class content extends content_base {
         
 
         return $data;
+    }
+
+    /**
+     * Build the course-level module progress summary for the card view.
+     *
+     * Only visible non-general sections with at least one completable
+     * activity are included, so the summary reflects actual Moodle progress.
+     *
+     * @param array $courseprogress Official Moodle course progress data.
+     * @return array
+     */
+    private function get_module_progress(array $courseprogress = []): array {
+        if (isguestuser() || !$this->format->get_course()->enablecompletion) {
+            return [];
+        }
+
+        $total = 0;
+        $completed = 0;
+        foreach ($this->format->get_modinfo()->get_section_info_all() as $section) {
+            if ((int) $section->section === 0 || !$section->uservisible) {
+                continue;
+            }
+
+            $completion = $this->get_section_completion_for($section);
+            if (empty($completion)) {
+                continue;
+            }
+
+            $total++;
+            if ($completion['iscomplete']) {
+                $completed++;
+            }
+        }
+
+        if ($total === 0) {
+            return [];
+        }
+
+        // Keep the module completion count independent from the official
+        // activity-based percentage displayed by Moodle's course card.
+        $percentage = isset($courseprogress['percentage']) ? (int) $courseprogress['percentage'] : 0;
+
+        return [
+            'completed' => $completed,
+            'total' => $total,
+            'percentage' => $percentage,
+            'dashoffset' => 100 - $percentage,
+        ];
+    }
+
+    /**
+     * Count visible course modules represented as sections, excluding General.
+     *
+     * @return int
+     */
+    private function get_visible_module_count(): int {
+        $count = 0;
+
+        foreach ($this->format->get_modinfo()->get_section_info_all() as $section) {
+            if ((int) $section->section !== 0 && $section->uservisible) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * Get the course progress from the same Moodle exporter used by the
+     * dashboard course card.
+     *
+     * @param renderer_base $output
+     * @return array
+     */
+    private function get_moodle_course_progress(renderer_base $output): array {
+        if (isguestuser()) {
+            return [];
+        }
+
+        $course = $this->format->get_course();
+        $exporter = new \core_course\external\course_summary_exporter(
+            $course,
+            ['context' => \context_course::instance($course->id), 'isfavourite' => false]
+        );
+        $coursecard = $exporter->export($output);
+
+        if (!property_exists($coursecard, 'progress')) {
+            return [];
+        }
+
+        return [
+            'percentage' => $coursecard->progress,
+        ];
     }
 
     /**

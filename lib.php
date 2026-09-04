@@ -30,7 +30,6 @@ global $CFG;
 use core\notification;
 use core\output\inplace_editable;
 use format_edukav\forms\editcard_form;
-use format_edukav\section_break;
 
 require_once("$CFG->dirroot/course/format/topics/lib.php");
 
@@ -38,9 +37,6 @@ define('FORMAT_EDUKAV_FILEAREA_IMAGE', 'image');
 define('FORMAT_EDUKAV_USEDEFAULT', 0);
 define('FORMAT_EDUKAV_SECTION0_COURSEPAGE', 1);
 define('FORMAT_EDUKAV_SECTION0_ALLPAGES', 2);
-define('FORMAT_EDUKAV_ORIENTATION_VERTICAL', 1);
-define('FORMAT_EDUKAV_ORIENTATION_HORIZONTAL', 2);
-define('FORMAT_EDUKAV_ORIENTATION_SQUARE', 3);
 define('FORMAT_EDUKAV_SHOWSUMMARY_SHOW', 1);
 define('FORMAT_EDUKAV_SHOWSUMMARY_HIDE', 2);
 define('FORMAT_EDUKAV_SHOWPROGRESS_SHOW', 1);
@@ -73,6 +69,13 @@ class format_edukav extends format_topics {
      * @var null|int
      */
     protected ?int $forcecoursedisplay = null;
+
+    /**
+     * Draft area used by the banner video file manager while editing a course.
+     *
+     * @var null|int
+     */
+    protected ?int $bannervideodraftitemid = null;
 
     /**
      * Cards format allows you to indent course modules
@@ -227,14 +230,6 @@ class format_edukav extends format_topics {
             $defaults->sectionnavigationhome
         );
 
-        $orientationoptions = [
-            FORMAT_EDUKAV_ORIENTATION_VERTICAL => new lang_string('form:course:cardorientation:vertical', 'format_edukav'),
-            FORMAT_EDUKAV_ORIENTATION_HORIZONTAL => new lang_string('form:course:cardorientation:horizontal', 'format_edukav'),
-            FORMAT_EDUKAV_ORIENTATION_SQUARE => new lang_string('form:course:cardorientation:square', 'format_edukav'),
-        ];
-
-        $options['cardorientation'] = $createselect('cardorientation', $orientationoptions, $defaults->cardorientation);
-
         $summaryoptions = [
             FORMAT_EDUKAV_SHOWSUMMARY_SHOW => new lang_string('form:course:showsummary:show', 'format_edukav'),
             FORMAT_EDUKAV_SHOWSUMMARY_HIDE => new lang_string('form:course:showsummary:hide', 'format_edukav'),
@@ -307,7 +302,8 @@ class format_edukav extends format_topics {
         ];
 
         if ($foreditform && $this->courseid) {
-            $draftitemid = file_get_unused_draft_itemid();
+            // Start empty so Moodle creates the draft area and copies the saved file into it.
+            $draftitemid = 0;
             file_prepare_draft_area(
                 $draftitemid,
                 \context_course::instance($this->courseid)->id,
@@ -316,6 +312,7 @@ class format_edukav extends format_topics {
                 0,
                 ['subdirs' => 0, 'maxfiles' => 1, 'accepted_types' => ['video']]
             );
+            $this->bannervideodraftitemid = $draftitemid;
             $options['banner_video_file']['default'] = $draftitemid;
             $options['banner_video_file']['element_attributes'][1]['itemid'] = $draftitemid;
         }
@@ -401,20 +398,6 @@ class format_edukav extends format_topics {
             ],
         ];
 
-        $options['sectionbreak'] = [
-            'default' => false,
-            'type' => PARAM_BOOL,
-            'label' => new lang_string('section:break', 'format_cards'),
-            'element_type' => 'hidden',
-        ];
-
-        $options['sectionbreaktitle'] = [
-            'default' => '',
-            'type' => PARAM_TEXT,
-            'label' => new lang_string('section:break', 'format_cards'),
-            'element_type' => 'hidden',
-        ];
-
         $options['objectives'] = [
             'default' => '',
             'type' => PARAM_RAW,
@@ -437,6 +420,15 @@ class format_edukav extends format_topics {
             'default' => FORMAT_HTML,
             'type' => PARAM_INT,
             'element_type' => 'hidden',
+        ];
+
+        $options['moduleduration'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'label' => new lang_string('form:section:moduleduration', 'format_edukav'),
+            'element_type' => 'text',
+            'help' => 'form:section:moduleduration',
+            'help_component' => 'format_edukav',
         ];
 
         return $options;
@@ -511,89 +503,6 @@ class format_edukav extends format_topics {
     }
 
     /**
-     * Updates a section break title
-     *
-     * @param stdClass $section Section to update
-     * @param string $itemtype The item type
-     * @param string $newvalue New item value
-     * @return inplace_editable
-     * @throws \core_external\restricted_context_exception
-     * @throws invalid_parameter_exception
-     * @throws required_capability_exception
-     */
-    #[\Override]
-    public function inplace_editable_update_section_name($section, $itemtype, $newvalue): inplace_editable {
-        global $CFG;
-
-        if ($itemtype === 'sectionbreak') {
-
-            $context = context_course::instance($section->course);
-
-            // The external_api class is in a different place in Moodle 4.1.
-            if ($CFG->version < 2023042400) {
-                require_once("$CFG->libdir/externallib.php");
-                \external_api::validate_context($context);
-            } else {
-                \core_external\external_api::validate_context($context);
-            }
-
-            require_capability('moodle/course:update', $context);
-
-            $newtitle = clean_param($newvalue, PARAM_TEXT);
-
-            $break = section_break::get_break_for_section($section);
-            if (strval($break->get('name')) !== strval($newtitle)) {
-                $break->set('name', $newtitle);
-                $break->save();
-
-                // Reset the break cache if the name changes.
-                $cache = cache::make_from_params(
-                    cache_store::MODE_APPLICATION,
-                    'format_edukav',
-                    'section_breaks'
-                );
-                $cache->delete($section->course);
-            }
-
-            return $this->inplace_editable_render_section_break($section, true);
-        }
-
-        return parent::inplace_editable_update_section_name($section, $itemtype, $newvalue);
-    }
-
-    /**
-     * Renders a section break as an inplace editable
-     *
-     * @param stdClass $section Section to update break in
-     * @param bool|null $editable Whether the break should be editable
-     * @return inplace_editable
-     */
-    public function inplace_editable_render_section_break($section, ?bool $editable = null): inplace_editable {
-
-        if ($editable === null) {
-            $editable = $this->show_editor([ 'moodle/course:update' ]);
-        }
-
-        $sectionbreak = section_break::get_break_for_section($section);
-        $break = $sectionbreak->get('name');
-        $display = $break;
-        if (empty($break) && $editable) {
-            $display = get_string('section:break:marker', 'format_edukav');
-        }
-
-        return new inplace_editable(
-            'format_edukav',
-            'sectionbreak',
-            $section->id,
-            $editable,
-            $display,
-            $break,
-            new lang_string('section:break:edit', 'format_edukav'),
-            new lang_string('section:break', 'format_edukav')
-        );
-    }
-
-    /**
      * When a section is deleted successfully, make sure we also delete
      * the card image
      *
@@ -648,6 +557,11 @@ class format_edukav extends format_topics {
         global $PAGE;
 
         $elements = parent::create_edit_form_elements($mform, $forsection);
+
+        if (!$forsection && $this->bannervideodraftitemid) {
+            // The course form may already contain an empty value from set_data().
+            $mform->setDefault('banner_video_file', $this->bannervideodraftitemid);
+        }
 
         if ($this->course_has_grid_images() && !$forsection) {
             $elements[] = $mform->addElement(
@@ -1165,7 +1079,7 @@ function format_edukav_inplace_editable($itemtype, $itemid, $newvalue) {
     global $DB, $CFG;
     require_once("$CFG->dirroot/course/lib.php");
 
-    if (!in_array($itemtype, ['sectionname', 'sectionnamenl', 'sectionbreak'])) {
+    if (!in_array($itemtype, ['sectionname', 'sectionnamenl'])) {
         return;
     }
 

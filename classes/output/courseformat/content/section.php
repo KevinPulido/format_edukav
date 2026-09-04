@@ -19,11 +19,8 @@ namespace format_edukav\output\courseformat\content;
 use completion_info;
 use core_courseformat\base as course_format;
 use format_edukav\output\courseformat\content\section\header as section_header_renderer;
-use format_edukav\output\courseformat\content\section\sectionbreak;
 use format_edukav\versionable_template;
 use format_topics\output\courseformat\content\section as section_base;
-use moodle_exception;
-use moodle_url;
 use renderer_base;
 use section_info;
 use stdClass;
@@ -40,11 +37,6 @@ class section extends section_base {
     use versionable_template;
 
     /**
-     * @var sectionbreak Section break renderer
-     */
-    protected sectionbreak $sectionbreak;
-
-    /**
      * @var section_header_renderer Section header renderer
      */
     protected section_header_renderer $sectionheader;
@@ -58,7 +50,6 @@ class section extends section_base {
     public function __construct(course_format $format, section_info $section) {
         parent::__construct($format, $section);
 
-        $this->sectionbreak = new sectionbreak($format, $section);
         $this->sectionheader = new section_header_renderer($format, $section);
     }
 
@@ -133,8 +124,6 @@ class section extends section_base {
         // Don't show the "insert new topic" button after every section in editing mode.
         $data->insertafter = false;
 
-        $this->add_section_break($data, $output);
-
         // Reuse the dedicated section header renderer so the single-section top bar can show a consistent title.
         $data->sectionheader = $this->sectionheader->export_for_template($output);
 
@@ -147,6 +136,11 @@ class section extends section_base {
             'progress' => $data->sectionprogresspercentage,
         ];
 
+        $data->moduleduration = trim((string) $this->format->get_format_option('moduleduration', $this->section));
+        $data->hasmoduleduration = $data->moduleduration !== '';
+        $data->lessoncount = $this->get_section_lesson_count();
+        $data->haslessoncount = $data->lessoncount > 0;
+
         if (!$showascard) {
             if ($issinglesectionpage) {
                 $data->header = false;
@@ -154,13 +148,9 @@ class section extends section_base {
             return $data;
         }
 
-        switch ($this->format->get_format_option('cardorientation')) {
-            case FORMAT_EDUKAV_ORIENTATION_HORIZONTAL:
-                $data->classes[] = "card-horizontal";
-                break;
-            case FORMAT_EDUKAV_ORIENTATION_SQUARE:
-                $data->classes[] = "card-square";
-                break;
+        if (!empty($data->header) && is_object($data->header)) {
+            // Keep completion available inside the public card header context.
+            $data->header->completion = $completion;
         }
 
         // Shorten the card's summary text, if applicable.
@@ -183,6 +173,35 @@ class section extends section_base {
         }
 
         return $data;
+    }
+
+    /**
+     * Count the visible activities represented by this section.
+     *
+     * The count is informational only; it is intentionally independent from
+     * the manually entered module duration.
+     *
+     * @return int
+     */
+    private function get_section_lesson_count(): int {
+        $modinfo = $this->section->modinfo;
+        $lessonmodules = ['lesson', 'book', 'page', 'h5pactivity', 'imscp', 'scorm'];
+
+        if (!array_key_exists($this->section->section, $modinfo->sections)) {
+            return 0;
+        }
+
+        $count = 0;
+        foreach ($modinfo->sections[$this->section->section] as $cmid) {
+            $cminfo = $modinfo->cms[$cmid];
+            if (!$cminfo->uservisible || $cminfo->deletioninprogress
+                || !in_array($cminfo->modname, $lessonmodules, true)) {
+                continue;
+            }
+            $count++;
+        }
+
+        return $count;
     }
 
     /**
@@ -288,35 +307,6 @@ class section extends section_base {
             'showpercentage' => !$iscomplete && $progressformat == FORMAT_EDUKAV_PROGRESSFORMAT_PERCENTAGE,
             'showcount' => !$iscomplete && $progressformat == FORMAT_EDUKAV_PROGRESSFORMAT_COUNT,
         ];
-    }
-
-    /**
-     * Adds section break data, if available
-     *
-     * @param stdClass $data
-     * @param renderer_base $output
-     * @return void
-     * @throws moodle_exception
-     */
-    private function add_section_break(stdClass $data, renderer_base $output): void {
-
-        // Add the sectionbreak key if there's a break before this section.
-        $data->sectionbreak = $this->sectionbreak->export_for_template($output);
-
-        // Show the 'add section break' button in edit mode if there isn't already
-        // a section break.
-        if (!$data->sectionbreak && $this->format->show_editor(['moodle/course:update'])) {
-            $data->addsectionbreak = [
-                'url' => (new moodle_url(
-                    '/course/format/edukav/editsectionbreak.php',
-                    [
-                        'courseid' => $this->section->course,
-                        'sectionid' => $this->section->id,
-                        'action' => 'add',
-                    ]
-                ))->out(false),
-            ];
-        }
     }
 
 }
