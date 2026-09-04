@@ -1377,6 +1377,20 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
   box-shadow:0 0 10px 0 rgba(0, 0, 0, 0.06);
 }
 
+/* Course home hero. Keep Moodle's secondary navigation outside this panel. */
+.format-edukav .edukav-breadcrumb-container {
+  max-width: 1180px;
+  margin: 24px auto 28px;
+  padding: 34px 42px;
+  border: 1px solid #e5eaf2;
+  border-radius: 18px;
+  background: #fff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+}
+
 .format-edukav .custom-breadcrumb-container {
   width: 90%;
   max-width: 1200px;
@@ -1393,7 +1407,7 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
 }
 
 .format-edukav .edukav-breadcrumb-title {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 14px;
@@ -1401,11 +1415,78 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
 }
 
 .format-edukav .edukav-breadcrumb-description {
-  font-size: 17px;
+  font-size: 15px;
   text-align: left;
   color: #475569;
   margin-bottom: 20px;
   text-align: justify;
+}
+
+.format-edukav .edukav-hero-subtitle {
+  margin: -2px 0 18px;
+  color: #475569;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.format-edukav .edukav-hero-summary p {
+  margin-bottom: 0.6rem;
+}
+
+.format-edukav .edukav-hero-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 20px;
+}
+
+.format-edukav .edukav-hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  background: #fff;
+  color: #18233d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.format-edukav .edukav-hero-chip i {
+  color: #2563eb;
+}
+
+.format-edukav .edukav-hero-progress {
+  max-width: 680px;
+  margin-top: 8px;
+}
+
+.format-edukav .edukav-hero-progress-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #18233d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.format-edukav .edukav-hero-progress-heading strong {
+  color: #16a34a;
+}
+
+.format-edukav .edukav-hero-progress-track {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e8f0;
+}
+
+.format-edukav .edukav-hero-progress-value {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #16a34a;
 }
 
 /* META INFO */
@@ -1506,6 +1587,26 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
 .format-edukav .placeholder-image {
   width: 100%;
   background-size: cover;
+}
+
+@media (max-width: 767px) {
+  .format-edukav .edukav-breadcrumb-container {
+    margin: 16px 12px 22px;
+    padding: 24px 20px;
+  }
+
+  .format-edukav .edukav-breadcrumb-title {
+    font-size: 32px;
+  }
+
+  .format-edukav .edukav-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .format-edukav .edukav-hero-media-card {
+    margin-top: 12px !important;
+    padding: 12px;
+  }
 }
 
 .format-edukav .edukav-content-intro {
