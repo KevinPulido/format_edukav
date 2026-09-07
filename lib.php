@@ -52,7 +52,9 @@ define('FORMAT_EDUKAV_SECTIONNAVIGATIONHOME_SHOW', '2');
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS', 1);
 define('FORMAT_EDUKAV_SUBSECTIONS_AS_ACTIVITIES', 2);
 define('FORMAT_EDUKAV_FILEAREA_OBJECTIVES', 'objectives');
+define('FORMAT_EDUKAV_FILEAREA_OBJECTIVES_SPECIFIC', 'objectivesspecific');
 define('FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA', 'generalcronograma');
+define('FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE', 'generalcronogramaimage');
 define('FORMAT_EDUKAV_FILEAREA_BANNER_VIDEO', 'bannervideo');
 
 /**
@@ -197,6 +199,18 @@ class format_edukav extends format_topics {
             'element_type' => 'hidden',
         ];
 
+        $options['objectivesspecific'] = [
+            'default' => '',
+            'type' => PARAM_RAW,
+            'element_type' => 'hidden',
+        ];
+
+        $options['objectivesspecificformat'] = [
+            'default' => FORMAT_HTML,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
         $options['generalcronograma'] = [
             'default' => '',
             'type' => PARAM_RAW,
@@ -206,6 +220,24 @@ class format_edukav extends format_topics {
         $options['generalcronogramaformat'] = [
             'default' => FORMAT_HTML,
             'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['welcomeprefix'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['showcoursename'] = [
+            'default' => 1,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['welcomemessage'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
             'element_type' => 'hidden',
         ];
 
@@ -324,6 +356,15 @@ class format_edukav extends format_topics {
             'element_type' => 'text',
         ];
 
+        $options['modulelabel'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'label' => new lang_string('modulelabel', 'format_edukav'),
+            'element_type' => 'text',
+            'help' => 'modulelabel',
+            'help_component' => 'format_edukav',
+        ];
+
         $options['level'] = [
             'default' => '',
             'type' => PARAM_TEXT,
@@ -331,6 +372,7 @@ class format_edukav extends format_topics {
             'element_type' => 'select',
             'element_attributes' => [[
                 '' => new lang_string('level:select', 'format_edukav'),
+                'nolevelrequired' => new lang_string('level:nolevelrequired', 'format_edukav'),
                 'beginner' => new lang_string('level:beginner', 'format_edukav'),
                 'intermediate' => new lang_string('level:intermediate', 'format_edukav'),
                 'advanced' => new lang_string('level:advanced', 'format_edukav'),
@@ -410,6 +452,18 @@ class format_edukav extends format_topics {
             'element_type' => 'hidden',
         ];
 
+        $options['objectivesspecific'] = [
+            'default' => '',
+            'type' => PARAM_RAW,
+            'element_type' => 'hidden',
+        ];
+
+        $options['objectivesspecificformat'] = [
+            'default' => FORMAT_HTML,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
         $options['generalcronograma'] = [
             'default' => '',
             'type' => PARAM_RAW,
@@ -419,6 +473,24 @@ class format_edukav extends format_topics {
         $options['generalcronogramaformat'] = [
             'default' => FORMAT_HTML,
             'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['welcomeprefix'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['showcoursename'] = [
+            'default' => 1,
+            'type' => PARAM_INT,
+            'element_type' => 'hidden',
+        ];
+
+        $options['welcomemessage'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
             'element_type' => 'hidden',
         ];
 
@@ -459,6 +531,17 @@ class format_edukav extends format_topics {
 
         $customdata['image'] = $draftimageid;
 
+        $draftcronogramaimageid = file_get_submitted_draft_itemid('generalcronogramaimage');
+        file_prepare_draft_area(
+            $draftcronogramaimageid,
+            context_course::instance($this->get_courseid())->id,
+            'format_edukav',
+            FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE,
+            $customdata['cs']->id
+        );
+
+        $customdata['generalcronogramaimage'] = $draftcronogramaimageid;
+
         return new editcard_form($action, $customdata);
     }
 
@@ -474,6 +557,8 @@ class format_edukav extends format_topics {
     public function update_section_format_options($data): bool {
         $changes = parent::update_section_format_options($data);
 
+        $sectionid = is_array($data) ? ($data['id'] ?? 0) : ($data->id ?? 0);
+
         // Make sure we don't accidentally clobber any existing saved images if we get here
         // from inplace_editable.
         if (!array_key_exists('image', $data)) {
@@ -481,17 +566,17 @@ class format_edukav extends format_topics {
         }
 
         file_save_draft_area_files(
-            $data['image'],
+            is_array($data) ? $data['image'] : $data->image,
             context_course::instance($this->get_courseid())->id,
             'format_edukav',
             FORMAT_EDUKAV_FILEAREA_IMAGE,
-            $data['id']
+            $sectionid
         );
 
         // Try and resize the image. It's no big deal if this fails -- we still
         // have the image, it'll just affect page load times.
         try {
-            $this->resize_card_image($data['id']);
+            $this->resize_card_image($sectionid);
         } catch (moodle_exception $e) {
             notification::add(
                 get_string('editimage:resizefailed', 'format_edukav'),
@@ -1113,7 +1198,9 @@ function format_edukav_pluginfile(stdClass $course,
     $allowedfileareas = [
         FORMAT_EDUKAV_FILEAREA_IMAGE,
         FORMAT_EDUKAV_FILEAREA_OBJECTIVES,
+        FORMAT_EDUKAV_FILEAREA_OBJECTIVES_SPECIFIC,
         FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+        FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE,
         FORMAT_EDUKAV_FILEAREA_BANNER_VIDEO,
     ];
 

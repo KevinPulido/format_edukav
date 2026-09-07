@@ -8,42 +8,109 @@
         {{> format_edukav/local/content/section }}
       {{/ format_edukav/local/content/section }}
     </ul>
-    <div class="edukav-general-objectives{{^sectionheader.image}} edukav-general-objectives--textonly{{/sectionheader.image}}">
-      {{#sectionheader.image}}
-        <div class="edukav-general-objectives-media" style="background-image: url('{{{sectionheader.image}}}')"></div>
-      {{/sectionheader.image}}
-      <div class="edukav-general-objectives-copy">
-        <div class="edukav-general-objectives-kicker">{{#str}}general:section_objectives,format_edukav{{/str}}</div>
-        <div class="edukav-general-objectives-text">
-          {{#objectiveshtml}}
-            <div class="edukav-objectives-table-wrap">
-              {{{objectiveshtml}}}
-            </div>
-          {{/objectiveshtml}}
-          {{^objectiveshtml}}
-            <p class="edukav-general-objectives-placeholder">Sin contenido.</p>
-          {{/objectiveshtml}}
+    <div class="edukav-general-overview">
+      <section class="edukav-general-objectives" aria-labelledby="edukav-objectives-title">
+        <div class="edukav-overview-card-header">
+          <span class="edukav-overview-card-icon" aria-hidden="true"><i class="bi bi-bullseye"></i></span>
+          <h2 id="edukav-objectives-title">{{#str}}general:section_objectives,format_edukav{{/str}}</h2>
         </div>
-      </div>
-    </div>
-    <div class="edukav-general-chrono">
-      <div class="edukav-general-chrono-title">{{#str}}general:section_schedule,format_edukav{{/str}}</div>
-      <div class="edukav-general-chrono-text">
-        {{#generalcronogramahtml}}
-          {{{generalcronogramahtml}}}
-        {{/generalcronogramahtml}}
-        {{^generalcronogramahtml}}
-          <p class="edukav-general-chrono-placeholder">
-            Agrega aqui fechas, hitos y el orden recomendado de trabajo.
-          </p>
-        {{/generalcronogramahtml}}
-      </div>
+        <div class="edukav-objectives-content">
+          <h3>{{#str}}general:objective_general,format_edukav{{/str}}</h3>
+          <div class="edukav-objective-general">
+            {{#objectiveshtml}}
+              {{{objectiveshtml}}}
+            {{/objectiveshtml}}
+            {{^objectiveshtml}}
+              <p class="edukav-general-objectives-placeholder">{{#str}}general:empty_content,format_edukav{{/str}}</p>
+            {{/objectiveshtml}}
+          </div>
+          <h3>{{#str}}general:objectives_specific,format_edukav{{/str}}</h3>
+          <div class="edukav-objectives-specific">
+            {{#objectivesspecifichtml}}
+              {{{objectivesspecifichtml}}}
+            {{/objectivesspecifichtml}}
+            {{^objectivesspecifichtml}}
+              <p class="edukav-objectives-hint">{{#str}}general:objectives_specific_hint,format_edukav{{/str}}</p>
+            {{/objectivesspecifichtml}}
+          </div>
+          <button type="button" class="btn btn-link edukav-objectives-more" data-action="toggle-objectives" aria-expanded="false">
+            {{#str}}general:objectives_more,format_edukav{{/str}}
+          </button>
+        </div>
+      </section>
+
+      <section class="edukav-general-chrono" aria-labelledby="edukav-chrono-title">
+        <div class="edukav-overview-card-header">
+          <span class="edukav-overview-card-icon" aria-hidden="true"><i class="bi bi-calendar4-week"></i></span>
+          <h2 id="edukav-chrono-title">{{#str}}general:section_schedule,format_edukav{{/str}}</h2>
+        </div>
+        <div class="edukav-general-chrono-text">
+          {{#generalcronogramaimageurl}}
+            <img class="edukav-general-cronograma-image" src="{{{generalcronogramaimageurl}}}" alt="{{#str}}form:course:generalcronograma,format_edukav{{/str}}">
+          {{/generalcronogramaimageurl}}
+          {{^generalcronogramaimageurl}}
+            <div class="edukav-general-chrono-empty">
+              <span class="edukav-general-chrono-empty-icon" aria-hidden="true"><i class="bi bi-calendar-x"></i></span>
+              <h3>{{#str}}general:schedule_unavailable,format_edukav{{/str}}</h3>
+              <p>{{#str}}general:schedule_configure,format_edukav{{/str}}</p>
+            </div>
+          {{/generalcronogramaimageurl}}
+        </div>
+      </section>
+
+      <aside class="edukav-general-side">
+        {{#coursesEdukav.activityprogress}}
+          <section class="edukav-general-progress" aria-labelledby="edukav-progress-title">
+            <div class="edukav-overview-card-header">
+              <span class="edukav-overview-card-icon" aria-hidden="true"><i class="bi bi-bar-chart-line"></i></span>
+              <h2 id="edukav-progress-title">{{#str}}progresssummary,format_edukav{{/str}}</h2>
+            </div>
+            <div class="edukav-progress-summary">
+              <div class="edukav-progress-ring" style="--progress: {{percentage}}%;">
+                <span>{{percentage}}%<small>{{#str}}progresscompleted,format_edukav{{/str}}</small></span>
+              </div>
+            </div>
+            {{#coursesEdukav.duration}}
+              <div class="edukav-duration-summary">
+                <span class="edukav-overview-card-icon" aria-hidden="true"><i class="fa fa-clock-o"></i></span>
+                <div>
+                  <strong>{{#str}}duration,format_edukav{{/str}}</strong>
+                  <span>{{coursesEdukav.duration}}</span>
+                </div>
+              </div>
+            {{/coursesEdukav.duration}}
+          </section>
+        {{/coursesEdukav.activityprogress}}
+
+        <section class="edukav-general-library" aria-labelledby="edukav-library-title">
+          <div class="edukav-overview-card-header">
+            <span class="edukav-overview-card-icon" aria-hidden="true"><i class="bi bi-journal-album"></i></span>
+            <h2 id="edukav-library-title">{{#str}}general:section_library,format_edukav{{/str}}</h2>
+          </div>
+          <div class="edukav-library-placeholder" aria-label="{{#str}}general:section_library,format_edukav{{/str}}">
+            <span class="edukav-library-placeholder-icon" aria-hidden="true"><i class="bi bi-journal-album"></i></span>
+            <p>{{#str}}general:library_coming_soon,format_edukav{{/str}}</p>
+            <span class="badge badge-light">{{#str}}general:coming_soon,format_edukav{{/str}}</span>
+          </div>
+        </section>
+      </aside>
     </div>
     <div class="edukav-chrono-zoom-overlay" aria-hidden="true" hidden>
-      <button type="button" class="edukav-chrono-zoom-close" aria-label="Cerrar vista ampliada">×</button>
-      <img class="edukav-chrono-zoom-image" alt="">
+        <button type="button" class="edukav-chrono-zoom-close" aria-label="Cerrar vista ampliada">×</button>
+        <img class="edukav-chrono-zoom-image" alt="">
     </div>
-  </div>
+  {{#js}}
+  require([], function() {
+      document.querySelectorAll('[data-action="toggle-objectives"]').forEach(function(button) {
+          button.addEventListener('click', function() {
+              var content = button.closest('.edukav-general-objectives').querySelector('.edukav-objective-general');
+              var expanded = content.classList.toggle('is-expanded');
+              button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          });
+      });
+  });
+  {{/js}}
+</div>
 {{/isgeneralsection}}
 {{^isgeneralsection}}
   <div class="edukav-splitview" data-region="edukav-splitview">

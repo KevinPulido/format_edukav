@@ -1020,6 +1020,43 @@ body.format-edukav:not(.editing) .edukav-module-card-meta i {
   color: #64748b;
 }
 
+/* The progress summary belongs to the learner view. Keep it out of the
+ * course editor and constrain the SVG when the markup is still present. */
+body.format-edukav.editing .edukav-course-progress-summary {
+  display: none;
+}
+
+body.format-edukav .edukav-course-progress-ring {
+  position: relative;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+body.format-edukav .edukav-course-progress-ring svg {
+  width: 20px;
+  height: 20px;
+  transform: rotate(-90deg);
+}
+
+body.format-edukav .edukav-course-progress-ring circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+body.format-edukav .edukav-course-progress-ring circle.outer {
+  stroke: #e6eaf0;
+}
+
+body.format-edukav .edukav-course-progress-ring circle.inner {
+  stroke: #05df72;
+  stroke-dasharray: 100;
+  stroke-linecap: round;
+}
+
 body.format-edukav:not(.editing) .edukav-course-progress-summary {
   display: flex;
   align-items: center;
@@ -1087,6 +1124,237 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
 
   body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
     margin-left: 0;
+  }
+}
+
+/* Initial course overview: welcome, objectives, schedule and future library. */
+.format-edukav .edukav-welcome-card {
+  display: block;
+  padding: 1.5rem 1.75rem;
+}
+
+.format-edukav .edukav-welcome-copy {
+  max-width: 760px;
+}
+
+.format-edukav .edukav-welcome-copy .edukav-section-nav-btn-next {
+  display: inline-flex;
+}
+
+.format-edukav .edukav-general-overview {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.45fr) minmax(210px, 0.9fr);
+  gap: 1rem;
+  align-items: stretch;
+  margin-bottom: 1.25rem;
+}
+
+.format-edukav .edukav-general-overview > section {
+  min-width: 0;
+  margin: 0;
+  padding: 1.15rem;
+  border: 1px solid rgba(115, 127, 180, 0.14);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(36, 56, 116, 0.05);
+}
+
+.format-edukav .edukav-overview-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #e6eaf3;
+}
+
+.format-edukav .edukav-overview-card-header h2 {
+  margin: 0;
+  color: #17213a;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.format-edukav .edukav-overview-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 3rem;
+  color: #4e5af6;
+  border-radius: 10px;
+  background: #eef2ff;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.format-edukav .edukav-general-objectives {
+  display: flex;
+  flex-direction: column;
+}
+
+.format-edukav .edukav-objectives-content h3 {
+  margin: 0 0 0.55rem;
+  color: #17213a;
+  font-size: 0.88rem;
+}
+
+.format-edukav .edukav-objective-general {
+  max-height: 230px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  color: #49566f;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.format-edukav .edukav-objective-general.is-expanded {
+  max-height: none;
+}
+
+.format-edukav .edukav-objective-general {
+  margin-bottom: 1.25rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid #d7e5ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 10px;
+  background: #f5f8ff;
+  color: #334155;
+}
+
+.format-edukav .edukav-objective-general p {
+  margin: 0;
+}
+
+.format-edukav .edukav-objectives-specific {
+  color: #334155;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.format-edukav .edukav-objectives-specific ul,
+.format-edukav .edukav-objectives-specific ol {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.format-edukav .edukav-objectives-specific li {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.format-edukav .edukav-objectives-specific li::before {
+  position: absolute;
+  top: 0.28rem;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid #2563eb;
+  border-radius: 50%;
+  color: #2563eb;
+  content: '\2713';
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.format-edukav .edukav-objective-general table {
+  min-width: 0 !important;
+  font-size: 0.8rem !important;
+}
+
+.format-edukav .edukav-objectives-hint {
+  margin: 0 0 0.9rem;
+  color: #64748b;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.format-edukav .edukav-objectives-more {
+  align-self: flex-start;
+  padding-left: 0;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.format-edukav .edukav-general-chrono {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(115, 127, 180, 0.14);
+}
+
+.format-edukav .edukav-general-chrono-title {
+  display: none;
+}
+
+.format-edukav .edukav-general-chrono-text {
+  flex: 1 1 auto;
+  margin-top: 0;
+  text-align: left;
+}
+
+.format-edukav .edukav-chrono-note {
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
+  color: #64748b;
+  border-top: 1px solid #e6eaf3;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.format-edukav .edukav-general-library {
+  display: flex;
+  flex-direction: column;
+}
+
+.format-edukav .edukav-library-placeholder {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  min-height: 210px;
+  color: #64748b;
+  text-align: center;
+}
+
+.format-edukav .edukav-library-placeholder p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.format-edukav .edukav-library-placeholder-icon {
+  color: #4e5af6;
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+@media (max-width: 1000px) {
+  .format-edukav .edukav-general-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .format-edukav .edukav-general-library {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .format-edukav .edukav-general-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .format-edukav .edukav-general-library {
+    grid-column: auto;
   }
 }
 
@@ -1251,7 +1519,7 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
   > .activity.activity-wrapper
   .activity-item {
   height: 100%;
-  padding: 0.5rem;
+  padding: 1rem;
   border-radius: 14px;
   background: #fff;
 }
@@ -1805,7 +2073,6 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
   grid-template-columns: 1fr auto;
   gap: 1.25rem;
   align-items: center;
-  margin: 0 0 1rem;
   padding: 1.15rem 1.25rem;
   border-radius: 24px;
   background:
@@ -2965,7 +3232,7 @@ body.edukav-zoom-open {
 
 /* Ajusta el encabezado de actividades para que las fechas y el estado no queden descolocados. */
 .format-edukav .course-content .section-item {
-  padding: 1rem;
+  padding: 0 !important;
   background: transparent;
   border: none;
   border-radius: 18px;
@@ -3561,4 +3828,238 @@ body.edukav-zoom-open {
   .format-edukav .edukav-content-panel > .edukav-section-navigation-bar {
     scroll-margin-top: 0.5rem;
   }
+}
+
+/* Keep the initial overview rules after the legacy responsive styles. */
+.format-edukav .edukav-welcome-card {
+  display: block;
+  position: relative;
+  background: #fff;
+}
+
+.format-edukav .edukav-welcome-copy {
+  min-width: 0;
+}
+
+.format-edukav .edukav-welcome-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  z-index: 1;
+}
+
+@media (max-width: 650px) {
+  .format-edukav .edukav-welcome-actions {
+    position: static;
+    justify-content: flex-start;
+    margin-top: 1rem;
+  }
+}
+
+.format-edukav .edukav-general-objectives {
+  display: flex;
+  grid-template-columns: none;
+  flex-direction: column;
+}
+
+.format-edukav .edukav-general-chrono {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(115, 127, 180, 0.14);
+}
+
+.format-edukav .edukav-general-chrono-title {
+  display: none;
+}
+
+.format-edukav .edukav-general-chrono-text {
+  margin-top: 0;
+  text-align: left;
+}
+
+.format-edukav .edukav-objective-general {
+  max-height: 230px;
+  overflow: hidden;
+}
+
+.format-edukav .edukav-objective-general.is-expanded {
+  max-height: none;
+}
+
+@media (max-width: 1000px) {
+  .format-edukav .edukav-general-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .format-edukav .edukav-general-overview {
+    grid-template-columns: 1fr;
+  }
+}
+
+.format-edukav .edukav-general-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.format-edukav .edukav-general-side > section {
+  margin: 0;
+  padding: 1.15rem;
+  border: 1px solid rgba(115, 127, 180, 0.14);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(36, 56, 116, 0.05);
+}
+
+.format-edukav .edukav-progress-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0;
+}
+
+.format-edukav .edukav-progress-ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
+  border-radius: 50%;
+  background: conic-gradient(#16a34a var(--progress), #e6eaf0 0);
+  color: #17213a;
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.format-edukav .edukav-progress-ring::before {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #fff;
+  content: '';
+}
+
+.format-edukav .edukav-progress-ring span {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.05;
+}
+
+.format-edukav .edukav-progress-ring span small {
+  margin-top: 0.25rem;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.format-edukav .edukav-progress-details {
+  min-width: 0;
+}
+
+.format-edukav .edukav-progress-summary strong {
+  color: #17213a;
+  font-size: 0.85rem;
+}
+
+.format-edukav .edukav-progress-summary p {
+  margin: 0.25rem 0 0;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.format-edukav .edukav-general-cronograma-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: top center;
+  border-radius: 10px;
+}
+
+.format-edukav .edukav-general-chrono-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  flex-direction: column;
+}
+
+.format-edukav .edukav-general-chrono-empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 1rem;
+  border-radius: 22px;
+  background: #eef4ff;
+  color: #4265e8;
+  font-size: 2.6rem;
+}
+
+.format-edukav .edukav-general-chrono-empty h3 {
+  margin: 0 0 0.55rem;
+  color: #17213a;
+  font-size: 1.15rem;
+}
+
+.format-edukav .edukav-general-chrono-empty p {
+  max-width: 320px;
+  margin: 0;
+  color: #64748b;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.format-edukav .edukav-duration-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #e6eaf3;
+}
+
+.format-edukav .edukav-duration-summary .edukav-overview-card-icon {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-basis: 2.25rem;
+  font-size: 1rem;
+}
+
+.format-edukav .edukav-duration-summary strong,
+.format-edukav .edukav-duration-summary span {
+  display: block;
+}
+
+.format-edukav .edukav-duration-summary strong {
+  color: #17213a;
+  font-size: 0.8rem;
+}
+
+.format-edukav .edukav-duration-summary div span {
+  margin-top: 0.15rem;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.format-edukav .edukav-general-side .edukav-general-library {
+  flex: 1 1 auto;
 }
