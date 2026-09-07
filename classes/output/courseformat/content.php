@@ -195,6 +195,15 @@ class content extends content_base {
         $data->subsectionsascards = $this->format->get_format_option("subsectionsascards") == FORMAT_EDUKAV_SUBSECTIONS_AS_CARDS;
 
         $generalsection = $this->format->get_section(0);
+        $data->welcomeprefix = trim((string)$this->format->get_format_option('welcomeprefix', $generalsection));
+        $data->showcoursename = (bool)$this->format->get_format_option('showcoursename', $generalsection);
+        $data->welcomemessage = trim((string)$this->format->get_format_option('welcomemessage', $generalsection));
+        if ($data->welcomeprefix === '') {
+            $data->welcomeprefix = get_string('general:welcome_title', 'format_edukav');
+        }
+        if ($data->welcomemessage === '') {
+            $data->welcomemessage = get_string('general:welcome_text', 'format_edukav');
+        }
         $objectives = $generalsection ? $this->format->get_format_option('objectives', $generalsection) : '';
         $objectivesformat = $generalsection
             ? (int)$this->format->get_format_option('objectivesformat', $generalsection)
@@ -218,28 +227,52 @@ class content extends content_base {
             )
             : '';
 
-        $generalcronograma = $generalsection ? $this->format->get_format_option('generalcronograma', $generalsection) : '';
-        $generalcronogramaformat = $generalsection
-            ? (int)$this->format->get_format_option('generalcronogramaformat', $generalsection)
+        $objectivesspecific = $generalsection ? $this->format->get_format_option('objectivesspecific', $generalsection) : '';
+        $objectivesspecificformat = $generalsection
+            ? (int)$this->format->get_format_option('objectivesspecificformat', $generalsection)
             : FORMAT_HTML;
-        if ($generalcronograma === '') {
-            $generalcronograma = $this->format->get_format_option('generalcronograma');
-            $generalcronogramaformat = (int)$this->format->get_format_option('generalcronogramaformat');
+        if ($objectivesspecific === '') {
+            $objectivesspecific = $this->format->get_format_option('objectivesspecific');
+            $objectivesspecificformat = (int)$this->format->get_format_option('objectivesspecificformat');
         }
-        $data->generalcronogramahtml = !empty($generalcronograma)
+        $data->objectivesspecifichtml = !empty($objectivesspecific)
             ? format_text(
                 file_rewrite_pluginfile_urls(
-                    $generalcronograma,
+                    $objectivesspecific,
                     'pluginfile.php',
                     $context->id,
                     'format_edukav',
-                    FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+                    FORMAT_EDUKAV_FILEAREA_OBJECTIVES_SPECIFIC,
                     $generalsection->id
                 ),
-                $generalcronogramaformat ?: FORMAT_HTML,
+                $objectivesspecificformat ?: FORMAT_HTML,
                 ['context' => $context]
             )
             : '';
+
+        $data->generalcronogramaimageurl = '';
+        if ($generalsection) {
+            $cronogramafiles = get_file_storage()->get_area_files(
+                $context->id,
+                'format_edukav',
+                FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE,
+                $generalsection->id,
+                'filename,filepath',
+                false
+            );
+            $cronogramafile = $cronogramafiles ? reset($cronogramafiles) : null;
+            if ($cronogramafile) {
+                $data->generalcronogramaimageurl = moodle_url::make_pluginfile_url(
+                    $context->id,
+                    'format_edukav',
+                    FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE,
+                    $generalsection->id,
+                    $cronogramafile->get_filepath(),
+                    $cronogramafile->get_filename()
+                )->out(false);
+            }
+
+        }
 
         $data->generalnavigation = $this->get_general_navigation_data($course);
 

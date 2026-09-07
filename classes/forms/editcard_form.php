@@ -64,24 +64,66 @@ class editcard_form extends editsection_form {
             $form->setExpanded('generalcontent');
 
             $form->addElement(
+                'text',
+                'welcomeprefix_input',
+                get_string('form:course:welcomeprefix', 'format_edukav')
+            );
+            $form->setType('welcomeprefix_input', PARAM_TEXT);
+            $form->addHelpButton('welcomeprefix_input', 'form:course:welcomeprefix', 'format_edukav');
+
+            $form->addElement(
+                'advcheckbox',
+                'showcoursename_input',
+                get_string('form:course:showcoursename', 'format_edukav')
+            );
+            $form->setDefault('showcoursename_input', 1);
+            $form->addHelpButton('showcoursename_input', 'form:course:showcoursename', 'format_edukav');
+
+            $form->addElement(
+                'textarea',
+                'welcomemessage_input',
+                get_string('form:course:welcomemessage', 'format_edukav'),
+                ['rows' => 3]
+            );
+            $form->setType('welcomemessage_input', PARAM_TEXT);
+            $form->addHelpButton('welcomemessage_input', 'form:course:welcomemessage', 'format_edukav');
+
+            $form->addElement(
                 'editor',
                 'objectives_editor',
-                get_string('form:course:objectives', 'format_edukav'),
+                get_string('form:course:objectivegeneral', 'format_edukav'),
                 null,
                 $editoroptions
             );
             $form->setType('objectives_editor', PARAM_RAW);
-            $form->addHelpButton('objectives_editor', 'form:course:objectives', 'format_edukav');
+            $form->addHelpButton('objectives_editor', 'form:course:objectivegeneral', 'format_edukav');
 
             $form->addElement(
                 'editor',
-                'generalcronograma_editor',
-                get_string('form:course:generalcronograma', 'format_edukav'),
+                'objectivesspecific_editor',
+                get_string('form:course:objectivesspecific', 'format_edukav'),
                 null,
                 $editoroptions
             );
-            $form->setType('generalcronograma_editor', PARAM_RAW);
-            $form->addHelpButton('generalcronograma_editor', 'form:course:generalcronograma', 'format_edukav');
+            $form->setType('objectivesspecific_editor', PARAM_RAW);
+            $form->addHelpButton('objectivesspecific_editor', 'form:course:objectivesspecific', 'format_edukav');
+
+            $form->addElement(
+                'filemanager',
+                'generalcronogramaimage_filemanager',
+                get_string('form:course:generalcronograma', 'format_edukav'),
+                null,
+                [
+                    'subdirs' => 0,
+                    'maxfiles' => 1,
+                    'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp'],
+                ]
+            );
+            $form->addHelpButton('generalcronogramaimage_filemanager', 'form:course:generalcronograma', 'format_edukav');
+
+            if (array_key_exists('generalcronogramaimage', $this->_customdata)) {
+                $form->setDefault('generalcronogramaimage_filemanager', $this->_customdata['generalcronogramaimage']);
+            }
         }
 
         $form->addElement('header', 'cardimage', get_string('editcard', 'format_edukav'));
@@ -128,10 +170,32 @@ class editcard_form extends editsection_form {
                     : $this->get_default_objectives_html();
                 $default_values->objectivesformat = $courseformat->get_format_option('objectivesformat') ?: FORMAT_HTML;
             }
+            if (!property_exists($default_values, 'objectivesspecific')) {
+                $default_values->objectivesspecific = $courseformat->get_format_option('objectivesspecific');
+                $default_values->objectivesspecificformat = $courseformat->get_format_option('objectivesspecificformat') ?: FORMAT_HTML;
+            }
             if (!property_exists($default_values, 'generalcronograma')) {
                 $default_values->generalcronograma = $courseformat->get_format_option('generalcronograma');
                 $default_values->generalcronogramaformat = $courseformat->get_format_option('generalcronogramaformat');
             }
+            if (!property_exists($default_values, 'welcomeprefix')) {
+                $default_values->welcomeprefix = $courseformat->get_format_option('welcomeprefix', $section);
+                if (trim((string)$default_values->welcomeprefix) === '') {
+                    $default_values->welcomeprefix = get_string('general:welcome_title', 'format_edukav');
+                }
+            }
+            if (!property_exists($default_values, 'showcoursename')) {
+                $default_values->showcoursename = $courseformat->get_format_option('showcoursename', $section);
+            }
+            if (!property_exists($default_values, 'welcomemessage')) {
+                $default_values->welcomemessage = $courseformat->get_format_option('welcomemessage', $section);
+                if (trim((string)$default_values->welcomemessage) === '') {
+                    $default_values->welcomemessage = get_string('general:welcome_text', 'format_edukav');
+                }
+            }
+            $default_values->welcomeprefix_input = $default_values->welcomeprefix;
+            $default_values->showcoursename_input = $default_values->showcoursename;
+            $default_values->welcomemessage_input = $default_values->welcomemessage;
         }
 
         if ($section->section === 0) {
@@ -146,11 +210,33 @@ class editcard_form extends editsection_form {
             );
             $default_values = file_prepare_standard_editor(
                 $default_values,
+                'objectivesspecific',
+                $editoroptions,
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_OBJECTIVES_SPECIFIC,
+                $default_values->id
+            );
+            $default_values = file_prepare_standard_editor(
+                $default_values,
                 'generalcronograma',
                 $editoroptions,
                 $editoroptions['context'],
                 'format_edukav',
                 \FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+                $default_values->id
+            );
+            $default_values = file_prepare_standard_filemanager(
+                $default_values,
+                'generalcronogramaimage',
+                [
+                    'subdirs' => 0,
+                    'maxfiles' => 1,
+                    'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp'],
+                ],
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE,
                 $default_values->id
             );
         }
@@ -213,6 +299,11 @@ class editcard_form extends editsection_form {
 
         $section = $this->_customdata['cs'];
         if ($section->section === 0) {
+            $data->welcomeprefix = $data->welcomeprefix_input ?? '';
+            $data->showcoursename = isset($data->showcoursename_input)
+                ? (int)$data->showcoursename_input
+                : 0;
+            $data->welcomemessage = $data->welcomemessage_input ?? '';
             $editoroptions = $this->_customdata['editoroptions'];
             $data = file_postupdate_standard_editor(
                 $data,
@@ -225,11 +316,24 @@ class editcard_form extends editsection_form {
             );
             $data = file_postupdate_standard_editor(
                 $data,
-                'generalcronograma',
+                'objectivesspecific',
                 $editoroptions,
                 $editoroptions['context'],
                 'format_edukav',
-                \FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA,
+                \FORMAT_EDUKAV_FILEAREA_OBJECTIVES_SPECIFIC,
+                $data->id
+            );
+            $data = file_postupdate_standard_filemanager(
+                $data,
+                'generalcronogramaimage',
+                [
+                    'subdirs' => 0,
+                    'maxfiles' => 1,
+                    'accepted_types' => ['.png', '.jpg', '.jpeg', '.webp'],
+                ],
+                $editoroptions['context'],
+                'format_edukav',
+                \FORMAT_EDUKAV_FILEAREA_GENERALCRONOGRAMA_IMAGE,
                 $data->id
             );
         }
