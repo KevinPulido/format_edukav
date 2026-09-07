@@ -1020,6 +1020,43 @@ body.format-edukav:not(.editing) .edukav-module-card-meta i {
   color: #64748b;
 }
 
+/* The progress summary belongs to the learner view. Keep it out of the
+ * course editor and constrain the SVG when the markup is still present. */
+body.format-edukav.editing .edukav-course-progress-summary {
+  display: none;
+}
+
+body.format-edukav .edukav-course-progress-ring {
+  position: relative;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+body.format-edukav .edukav-course-progress-ring svg {
+  width: 20px;
+  height: 20px;
+  transform: rotate(-90deg);
+}
+
+body.format-edukav .edukav-course-progress-ring circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+body.format-edukav .edukav-course-progress-ring circle.outer {
+  stroke: #e6eaf0;
+}
+
+body.format-edukav .edukav-course-progress-ring circle.inner {
+  stroke: #05df72;
+  stroke-dasharray: 100;
+  stroke-linecap: round;
+}
+
 body.format-edukav:not(.editing) .edukav-course-progress-summary {
   display: flex;
   align-items: center;
