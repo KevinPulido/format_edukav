@@ -108,6 +108,10 @@ class content extends content_base {
         $bannervideo = $this->format->get_format_option('banner_video');
         $videotype = (string) $this->format->get_format_option('banner_video_type');
         $level = trim((string) $this->format->get_format_option('level'));
+        // "nolevelrequired" means the course should not show any level badge.
+        if ($level === 'nolevelrequired') {
+            $level = '';
+        }
         $leveldisplay = $level !== '' && get_string_manager()->string_exists('level:' . $level, 'format_edukav')
             ? get_string('level:' . $level, 'format_edukav')
             : $level;
@@ -170,6 +174,8 @@ class content extends content_base {
             'placeholder_image' => $placeholderimage,
             'hero_background' => $herobackground,
             'duration' => trim((string) $this->format->get_format_option('duration')),
+            'modulelabel' => trim((string) $this->format->get_format_option('modulelabel'))
+                ?: get_string('modulelabel_default', 'format_edukav'),
             'level' => $leveldisplay,
             'modulecount' => $this->get_visible_module_count(),
             'activityprogress' => $moodlecourseprogress,

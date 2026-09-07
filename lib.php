@@ -324,6 +324,15 @@ class format_edukav extends format_topics {
             'element_type' => 'text',
         ];
 
+        $options['modulelabel'] = [
+            'default' => '',
+            'type' => PARAM_TEXT,
+            'label' => new lang_string('modulelabel', 'format_edukav'),
+            'element_type' => 'text',
+            'help' => 'modulelabel',
+            'help_component' => 'format_edukav',
+        ];
+
         $options['level'] = [
             'default' => '',
             'type' => PARAM_TEXT,
@@ -331,6 +340,7 @@ class format_edukav extends format_topics {
             'element_type' => 'select',
             'element_attributes' => [[
                 '' => new lang_string('level:select', 'format_edukav'),
+                'nolevelrequired' => new lang_string('level:nolevelrequired', 'format_edukav'),
                 'beginner' => new lang_string('level:beginner', 'format_edukav'),
                 'intermediate' => new lang_string('level:intermediate', 'format_edukav'),
                 'advanced' => new lang_string('level:advanced', 'format_edukav'),
