@@ -706,7 +706,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 
   .format-edukav .edukav-content-panel > .edukav-section-navigation-bar {
     grid-template-columns: 1fr;
-    row-gap: 0.7rem;
+    row-gap: 2rem;
     padding: 0.75rem 0.85rem;
   }
 
