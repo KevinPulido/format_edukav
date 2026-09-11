@@ -596,6 +596,10 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   border: 1px solid #d7def0;
 }
 
+.format-edukav .edukav-section-general-nav-btn-home:hover{
+  border-color: var(--color-primary);
+}
+
 .format-edukav .edukav-general-navigation .edukav-section-nav-btn-home {
   min-width: 3.25rem;
   justify-content: center;
