@@ -475,7 +475,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   display: grid !important;
   grid-template-columns: auto minmax(0, 620px) auto;
   align-items: center;
-  column-gap: 0.65rem;
+  column-gap: 2rem;
   width: 100%;
   margin: 0 0 0.85rem;
   padding: 0.75rem 0.85rem;
@@ -706,7 +706,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
 
   .format-edukav .edukav-content-panel > .edukav-section-navigation-bar {
     grid-template-columns: 1fr;
-    row-gap: 2rem;
+    row-gap: 0.7rem;
     padding: 0.75rem 0.85rem;
   }
 
