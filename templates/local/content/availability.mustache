@@ -34,16 +34,13 @@
 {{#availability}}
     {{#hasavailability}}
         {{#info}}
-            <button class="bg-secondary small icon-no-margin section-availability"
+            <button type="button"
+                    class="section-availability edukav-module-lock"
                     data-toggle="popover"
                     data-content="{{text}}"
-                    data-html="true">
-                {{#isrestricted}}
-                    {{#pix}} t/unlock, core {{/pix}}
-                {{/isrestricted}}
-                {{^isrestricted}}
-                    {{#pix}} t/lock, core {{/pix}}
-                {{/isrestricted}}
+                    data-html="true"
+                    aria-label="{{#str}}restricted{{/str}}">
+                <i class="bi bi-lock-fill" aria-hidden="true"></i>
             </button>
         {{/info}}
     {{/hasavailability}}

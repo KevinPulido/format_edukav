@@ -1043,6 +1043,67 @@ body.format-edukav:not(.editing) .edukav-module-card .edukav-module-card-media {
   transform: none !important;
 }
 
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(40, 72, 184, 0.16);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #294ac7;
+  box-shadow: 0 7px 18px rgba(28, 45, 95, 0.16);
+  font-size: 16px;
+  line-height: 1;
+  backdrop-filter: blur(8px);
+  transition: transform 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock:hover,
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock:focus-visible {
+  color: #1839ad;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(28, 45, 95, 0.22);
+}
+
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock:focus-visible {
+  outline: 3px solid rgba(52, 91, 220, 0.26);
+  outline-offset: 2px;
+}
+
+.active-dark-mode body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock,
+body.active-dark-mode.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock {
+  border-color: rgba(147, 197, 253, 0.22);
+  background: rgba(22, 31, 55, 0.94);
+  color: #93c5fd;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
 body.format-edukav:not(.editing) .edukav-module-card .edukav-module-card-body {
   display: flex !important;
   flex: 1 1 auto;
