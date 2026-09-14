@@ -27,7 +27,7 @@ const GRADE_URL_PATTERNS = [
 ];
 
 const ASSIGN_PATH_PATTERN = /\/mod\/assign\/view\.php$/i;
-const NORMAL_NAVIGATION_PATTERNS = [];
+const NORMAL_NAVIGATION_PATTERNS = [/\/mod\/quiz\/view\.php(?:[?#]|$)/i];
 
 const SINGLE_SECTION_SELECTOR = ".single-section";
 const ACTIVITY_RELOAD_GUARD_MS = 1500;
@@ -435,22 +435,27 @@ const initSplitView = (splitView) => {
     );
   });
 
-  const firstActivity = splitView.querySelector(SELECTORS.activity);
+  const firstActivity = Array.from(
+    splitView.querySelectorAll(SELECTORS.activity)
+  ).find((activity) => {
+    const link = getActivityLink(activity);
+    const url = link?.getAttribute("href") || "";
+
+    return url && !shouldOpenInNormalNavigation(url);
+  });
   const firstLink = firstActivity
     ? getActivityLink(firstActivity)
     : null;
 
-  if (firstActivity && firstLink && firstLink.getAttribute("href")) {
+  if (firstActivity && firstLink) {
     const firstUrl = firstLink.getAttribute("href");
 
-    if (!shouldOpenInNormalNavigation(firstUrl)) {
-      loadActivity(
-        splitView,
-        firstActivity,
-        firstUrl,
-        firstLink.textContent.trim()
-      );
-    }
+    loadActivity(
+      splitView,
+      firstActivity,
+      firstUrl,
+      firstLink.textContent.trim()
+    );
   }
 };
 
