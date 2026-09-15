@@ -596,7 +596,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   border: 1px solid #d7def0;
 }
 
-.format-edukav .edukav-section-general-nav-btn-home:hover{
+.format-edukav .edukav-section-general-nav-btn-home:hover {
   border-color: var(--color-primary);
 }
 
@@ -1066,7 +1066,10 @@ body.format-edukav:not(.editing)
   font-size: 16px;
   line-height: 1;
   backdrop-filter: blur(8px);
-  transition: transform 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 body.format-edukav:not(.editing)
@@ -1090,7 +1093,8 @@ body.format-edukav:not(.editing)
   outline-offset: 2px;
 }
 
-.active-dark-mode body.format-edukav:not(.editing)
+.active-dark-mode
+  body.format-edukav:not(.editing)
   .edukav-module-card
   .edukav-module-card-media
   .edukav-module-lock,
@@ -3402,6 +3406,14 @@ body.edukav-zoom-open {
 .format-edukav .course-section {
   margin: 0;
   margin-bottom: 1rem;
+}
+
+.format-edukav .course-section .availabilityinfo {
+  margin-top: 0.5rem;
+  background-color: rgb(233, 236, 239);
+  font-size: 0.875em;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
 .format-edukav .course-section .activity-item .activity-grid {
