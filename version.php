@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026090708;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2026091501;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2022112800;        // Requires this Moodle version.
 $plugin->supported = [ 401, 500 ];
 $plugin->component = 'format_edukav';    // Full name of the plugin (used for diagnostics).
@@ -33,4 +33,5 @@ $plugin->release = "v1.0.1";
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = [
     "format_topics" => 2022112800,
+    "local_edukav" => 2026091500,
 ];

@@ -1446,43 +1446,11 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
   line-height: 1.45;
 }
 
-.format-edukav .edukav-general-library {
-  display: flex;
-  flex-direction: column;
-}
-
-.format-edukav .edukav-library-placeholder {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
-  min-height: 210px;
-  color: #64748b;
-  text-align: center;
-}
-
-.format-edukav .edukav-library-placeholder p {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-.format-edukav .edukav-library-placeholder-icon {
-  color: #4e5af6;
-  font-size: 3.5rem;
-  line-height: 1;
-}
-
 @media (max-width: 1000px) {
   .format-edukav .edukav-general-overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .format-edukav .edukav-general-library {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 650px) {
@@ -1490,9 +1458,6 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
     grid-template-columns: 1fr;
   }
 
-  .format-edukav .edukav-general-library {
-    grid-column: auto;
-  }
 }
 
 body.format-edukav:not(.editing) .edukav-module-card .summary {
@@ -4272,6 +4237,3 @@ body.edukav-zoom-open {
   font-size: 0.78rem;
 }
 
-.format-edukav .edukav-general-side .edukav-general-library {
-  flex: 1 1 auto;
-}

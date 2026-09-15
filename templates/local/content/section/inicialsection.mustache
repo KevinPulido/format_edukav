@@ -81,18 +81,9 @@
             {{/coursesEdukav.duration}}
           </section>
         {{/coursesEdukav.activityprogress}}
-
-        <section class="edukav-general-library" aria-labelledby="edukav-library-title">
-          <div class="edukav-overview-card-header">
-            <span class="edukav-overview-card-icon" aria-hidden="true"><i class="bi bi-journal-album"></i></span>
-            <h2 id="edukav-library-title">{{#str}}general:section_library,format_edukav{{/str}}</h2>
-          </div>
-          <div class="edukav-library-placeholder" aria-label="{{#str}}general:section_library,format_edukav{{/str}}">
-            <span class="edukav-library-placeholder-icon" aria-hidden="true"><i class="bi bi-journal-album"></i></span>
-            <p>{{#str}}general:library_coming_soon,format_edukav{{/str}}</p>
-            <span class="badge badge-light">{{#str}}general:coming_soon,format_edukav{{/str}}</span>
-          </div>
-        </section>
+        {{#courselibrary}}
+          {{> theme_edukav/edukav/course_library/summary }}
+        {{/courselibrary}}
       </aside>
     </div>
     <div class="edukav-chrono-zoom-overlay" aria-hidden="true" hidden>
