@@ -29,6 +29,7 @@ use coding_exception;
 use completion_info;
 use format_edukav\versionable_template;
 use local_edukav\service\partners_service;
+use local_edukav\service\course_library_service;
 use format_topics\output\courseformat\content as content_base;
 use moodle_exception;
 use moodle_url;
@@ -180,6 +181,9 @@ class content extends content_base {
             'modulecount' => $this->get_visible_module_count(),
             'activityprogress' => $moodlecourseprogress,
         ];
+        $data->courselibrary = class_exists(course_library_service::class)
+            ? course_library_service::get_library_context((int)$course->id)
+            : false;
 
         // Add version variables.
         $this->add_version_variables($data);

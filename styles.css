@@ -341,7 +341,7 @@ body.format-edukav.edukav-splitview-page:not(.editing) .single-section {
   display: flex;
   flex-direction: column;
   height: var(--edukav-single-section-height, calc(100dvh - 76px));
-  padding:0;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -429,7 +429,6 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   box-shadow: none;
 }
 
-
 .format-edukav .edukav-section-nav-btn .edukav-section-nav-icon {
   display: inline-flex;
   align-items: center;
@@ -448,6 +447,11 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   color: var(--color-primary, #0d6efd);
   background: #fff;
   border: 1px solid #d7def0;
+  font-weight: 700;
+}
+
+.format-edukav .edukav-section-nav-btn-home:hover {
+  border-color: var(--color-primary);
 }
 
 .format-edukav .edukav-section-nav-btn-splitview {
@@ -471,7 +475,7 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   display: grid !important;
   grid-template-columns: auto minmax(0, 620px) auto;
   align-items: center;
-  column-gap: 0.65rem;
+  column-gap: 2rem;
   width: 100%;
   margin: 0 0 0.85rem;
   padding: 0.75rem 0.85rem;
@@ -483,23 +487,38 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
     0 10px 24px rgba(15, 23, 42, 0.05);
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection,
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .prevsection,
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .nextsection {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   flex: 0 0 auto;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .prevsection {
   justify-self: start;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .nextsection {
   justify-self: end;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-single-section-header-meta {
   position: static;
   left: auto;
   top: auto;
@@ -511,48 +530,74 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   text-align: center;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-title {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-single-section-title {
   margin-bottom: 0.25rem;
   font-size: 0.98rem;
   line-height: 1.15;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-panel {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-single-section-progress-panel {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-bar {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-single-section-progress-bar {
   min-width: 135px;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-section-nav-btn {
   min-height: 2.5rem;
   padding: 0.55rem 0.85rem;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-home,
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-splitview {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-section-nav-btn-home,
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-section-nav-btn-splitview {
   padding: 0.55rem 0.7rem;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .button-manage {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .button-manage {
   margin-right: 0;
 }
 
-.format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-splitview {
+.format-edukav
+  .edukav-content-panel
+  > .edukav-section-navigation-bar
+  .edukav-section-nav-btn-splitview {
   margin-left: 0.05rem;
   margin-right: 0.15rem;
 }
-
-
 
 .format-edukav .edukav-section-general-nav-btn-home {
   padding: 0.65rem 0.85rem;
   color: var(--color-primary, #0d6efd);
   border: 1px solid #d7def0;
+}
+
+.format-edukav .edukav-section-general-nav-btn-home:hover {
+  border-color: var(--color-primary);
 }
 
 .format-edukav .edukav-general-navigation .edukav-section-nav-btn-home {
@@ -566,12 +611,18 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
   gap: 0.9rem;
 }
 
-.format-edukav .edukav-general-navigation .edukav-section-nav-btn-next .edukav-section-nav-text {
+.format-edukav
+  .edukav-general-navigation
+  .edukav-section-nav-btn-next
+  .edukav-section-nav-text {
   flex: 1 1 auto;
   text-align: center;
 }
 
-.format-edukav .edukav-general-navigation .edukav-section-nav-btn-next .edukav-section-nav-icon {
+.format-edukav
+  .edukav-general-navigation
+  .edukav-section-nav-btn-next
+  .edukav-section-nav-icon {
   flex: 0 0 auto;
 }
 
@@ -659,17 +710,32 @@ body.format-edukav.edukav-splitview-page.editing .single-section {
     padding: 0.75rem 0.85rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection,
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta,
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .prevsection,
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-header-meta,
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .nextsection {
     justify-self: start;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-header-meta {
     text-align: left;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-panel {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-progress-panel {
     justify-content: flex-start;
   }
 }
@@ -925,7 +991,10 @@ body.format-edukav:not(.editing) .course-content .dashboard-card-deck {
   box-sizing: border-box;
 }
 
-body.format-edukav:not(.editing) .course-content .dashboard-card-deck .edukav-module-card {
+body.format-edukav:not(.editing)
+  .course-content
+  .dashboard-card-deck
+  .edukav-module-card {
   display: flex;
   aspect-ratio: auto !important;
   width: 100% !important;
@@ -972,6 +1041,71 @@ body.format-edukav:not(.editing) .edukav-module-card .edukav-module-card-media {
   background-repeat: no-repeat !important;
   background-size: cover !important;
   transform: none !important;
+}
+
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(40, 72, 184, 0.16);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #294ac7;
+  box-shadow: 0 7px 18px rgba(28, 45, 95, 0.16);
+  font-size: 16px;
+  line-height: 1;
+  backdrop-filter: blur(8px);
+  transition:
+    transform 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock:hover,
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock:focus-visible {
+  color: #1839ad;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(28, 45, 95, 0.22);
+}
+
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock:focus-visible {
+  outline: 3px solid rgba(52, 91, 220, 0.26);
+  outline-offset: 2px;
+}
+
+.active-dark-mode
+  body.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock,
+body.active-dark-mode.format-edukav:not(.editing)
+  .edukav-module-card
+  .edukav-module-card-media
+  .edukav-module-lock {
+  border-color: rgba(147, 197, 253, 0.22);
+  background: rgba(22, 31, 55, 0.94);
+  color: #93c5fd;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 body.format-edukav:not(.editing) .edukav-module-card .edukav-module-card-body {
@@ -1063,7 +1197,7 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary {
   gap: 8px;
   margin: 0 0 16px;
   min-height: 32px;
-  padding:16px;
+  padding: 16px;
   border: 1px solid #e7e9f3;
   border-radius: 12px;
   background: #fff;
@@ -1143,7 +1277,10 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
 
 .format-edukav .edukav-general-overview {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.45fr) minmax(210px, 0.9fr);
+  grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.45fr) minmax(
+      210px,
+      0.9fr
+    );
   gap: 1rem;
   align-items: stretch;
   margin-bottom: 1.25rem;
@@ -1259,7 +1396,7 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
   border: 2px solid #2563eb;
   border-radius: 50%;
   color: #2563eb;
-  content: '\2713';
+  content: "\2713";
   font-size: 0.7rem;
   font-weight: 800;
 }
@@ -1309,43 +1446,11 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
   line-height: 1.45;
 }
 
-.format-edukav .edukav-general-library {
-  display: flex;
-  flex-direction: column;
-}
-
-.format-edukav .edukav-library-placeholder {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
-  min-height: 210px;
-  color: #64748b;
-  text-align: center;
-}
-
-.format-edukav .edukav-library-placeholder p {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-.format-edukav .edukav-library-placeholder-icon {
-  color: #4e5af6;
-  font-size: 3.5rem;
-  line-height: 1;
-}
-
 @media (max-width: 1000px) {
   .format-edukav .edukav-general-overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .format-edukav .edukav-general-library {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 650px) {
@@ -1353,9 +1458,6 @@ body.format-edukav:not(.editing) .edukav-course-progress-summary-count {
     grid-template-columns: 1fr;
   }
 
-  .format-edukav .edukav-general-library {
-    grid-column: auto;
-  }
 }
 
 body.format-edukav:not(.editing) .edukav-module-card .summary {
@@ -1400,24 +1502,40 @@ body.format-edukav:not(.editing) .edukav-module-card .section-completion svg {
   transform: rotate(-90deg);
 }
 
-body.format-edukav:not(.editing) .edukav-module-card .section-completion svg circle.outer {
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .section-completion
+  svg
+  circle.outer {
   stroke: #e6e6e6;
   stroke-width: 5;
   fill: none;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card .section-completion svg circle.inner {
-  stroke: #05DF72;
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .section-completion
+  svg
+  circle.inner {
+  stroke: #05df72;
   stroke-width: 5;
   fill: none;
   stroke-dasharray: 100;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card.is-inprogress .section-completion svg circle.inner {
+body.format-edukav:not(.editing)
+  .edukav-module-card.is-inprogress
+  .section-completion
+  svg
+  circle.inner {
   stroke: #2563eb;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card .section-completion svg circle.inner.complete {
+body.format-edukav:not(.editing)
+  .edukav-module-card
+  .section-completion
+  svg
+  circle.inner.complete {
   stroke-dasharray: 0;
 }
 
@@ -1431,7 +1549,9 @@ body.format-edukav:not(.editing) .edukav-module-card-status {
   font-weight: 600;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card-meta .edukav-module-card-status {
+body.format-edukav:not(.editing)
+  .edukav-module-card-meta
+  .edukav-module-card-status {
   margin: 0;
 }
 
@@ -1448,7 +1568,9 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-inprogress {
   color: #2563eb;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card-status.is-inprogress .edukav-module-card-status-icon {
+body.format-edukav:not(.editing)
+  .edukav-module-card-status.is-inprogress
+  .edukav-module-card-status-icon {
   color: #2563eb;
 }
 
@@ -1456,11 +1578,15 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-complete {
   color: #16a34a;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card-status.is-complete .edukav-module-card-status-icon {
+body.format-edukav:not(.editing)
+  .edukav-module-card-status.is-complete
+  .edukav-module-card-status-icon {
   color: #16a34a;
 }
 
-body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .edukav-module-card-status-icon {
+body.format-edukav:not(.editing)
+  .edukav-module-card-status.is-notstarted
+  .edukav-module-card-status-icon {
   color: #b9bec8;
 }
 
@@ -1483,11 +1609,14 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
     padding: 0 40px !important;
   }
 
-  body.format-edukav:not(.editing) .course-content .dashboard-card-deck .edukav-module-card {
+  body.format-edukav:not(.editing)
+    .course-content
+    .dashboard-card-deck
+    .edukav-module-card {
     max-width: none !important;
   }
-  
-  .format-edukav .edukav-hero-media-card{
+
+  .format-edukav .edukav-hero-media-card {
     padding: 10px;
   }
 }
@@ -1639,7 +1768,7 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
   overflow: hidden;
   background: #fff;
   margin: 1rem 0;
-  box-shadow:0 0 10px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.06);
 }
 
 /* Course home hero. Keep Moodle's secondary navigation outside this panel. */
@@ -2048,7 +2177,7 @@ body.format-edukav:not(.editing) .edukav-module-card-status.is-notstarted .eduka
 
 .format-edukav .edukav-single-section-progress-bar .progress-bar {
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--primary, #0d6efd), #4f7cff);
+  background: linear-gradient(90deg, var(--color-primary, #0d6efd), #4f7cff);
 }
 
 .format-edukav .edukav-single-section-progress-bar p.mb-0 {
@@ -2823,7 +2952,7 @@ body.edukav-zoom-open {
   border: 1px solid #eef2f7;
   border-radius: 20px;
 
-  box-shadow:var(--shadow-light);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
 }
 
@@ -3134,7 +3263,6 @@ body.edukav-zoom-open {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
-
 .format-edukav .edukav-content-panel-title {
   margin: 0;
   font-size: 1.1rem;
@@ -3162,6 +3290,7 @@ body.edukav-zoom-open {
   min-height: 0;
   height: auto;
   border: 0;
+  padding: 10px;
   background: white;
   display: block;
 }
@@ -3236,12 +3365,20 @@ body.edukav-zoom-open {
   background: transparent;
   border: none;
   border-radius: 18px;
-  box-shadow:none;
+  box-shadow: none;
 }
 
 .format-edukav .course-section {
   margin: 0;
   margin-bottom: 1rem;
+}
+
+.format-edukav .course-section .availabilityinfo {
+  margin-top: 0.5rem;
+  background-color: rgb(233, 236, 239);
+  font-size: 0.875em;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
 .format-edukav .course-section .activity-item .activity-grid {
@@ -3409,6 +3546,7 @@ body.edukav-zoom-open {
   border: 0;
   border-bottom: 0;
   border-radius: 6px;
+  padding: 0;
   background: #fff;
   box-shadow: none;
 }
@@ -3728,7 +3866,10 @@ body.edukav-zoom-open {
     padding: 0.7rem 0.75rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .prevsection {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .prevsection {
     grid-area: prev;
     display: flex;
     align-items: center;
@@ -3739,7 +3880,10 @@ body.edukav-zoom-open {
     justify-self: start;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-header-meta {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-header-meta {
     grid-area: meta;
     width: 100%;
     min-width: 0;
@@ -3747,30 +3891,51 @@ body.edukav-zoom-open {
     text-align: left;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-title {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-title {
     font-size: 1.02rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-panel {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-progress-panel {
     justify-content: flex-start;
     gap: 0.4rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-bar {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-progress-bar {
     min-width: 160px;
     flex: 1 1 160px;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-title,
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-progress-panel {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-title,
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-progress-panel {
     max-width: 100%;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-single-section-title {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-single-section-title {
     max-width: 22rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .nextsection {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .nextsection {
     grid-area: next;
     justify-self: end;
     width: 100%;
@@ -3780,24 +3945,36 @@ body.edukav-zoom-open {
     margin-top: 0.15rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-section-nav-btn {
     width: auto;
     min-height: 2.4rem;
     padding: 0.5rem 0.7rem;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-prev {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-section-nav-btn-prev {
     flex: 1 1 auto;
     min-width: 0;
     max-width: calc(100% - 4.2rem);
     justify-content: flex-start;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-splitview {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-section-nav-btn-splitview {
     margin-right: 0;
   }
 
-  .format-edukav .edukav-content-panel > .edukav-section-navigation-bar .edukav-section-nav-btn-next {
+  .format-edukav
+    .edukav-content-panel
+    > .edukav-section-navigation-bar
+    .edukav-section-nav-btn-next {
     width: auto;
     min-width: 8.75rem;
     max-width: 100%;
@@ -3946,7 +4123,7 @@ body.edukav-zoom-open {
   height: 88px;
   border-radius: 50%;
   background: #fff;
-  content: '';
+  content: "";
 }
 
 .format-edukav .edukav-progress-ring span {
@@ -4060,6 +4237,3 @@ body.edukav-zoom-open {
   font-size: 0.78rem;
 }
 
-.format-edukav .edukav-general-side .edukav-general-library {
-  flex: 1 1 auto;
-}
